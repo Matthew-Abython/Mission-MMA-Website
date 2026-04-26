@@ -1,0 +1,138 @@
+/**
+ * Per-page metadata helper.
+ *
+ * Wraps Next.js's Metadata type to enforce consistency across all routes.
+ * Every page exports `metadata` built from this function — never hand-rolled.
+ *
+ * Defaults pulled from app/layout.tsx site-wide metadata; this helper
+ * overrides on a per-page basis.
+ */
+
+import type { Metadata } from "next";
+
+export const SITE = {
+  name: "Mission MMA & Fitness",
+  url: "https://missionmmachicago.com",
+  defaultOgImage: "/og-image.jpg",
+  twitterHandle: "@MissionMMAChi",
+} as const;
+
+export interface PageMetadataInput {
+  /** Page-specific title. Will be appended with " | Mission MMA & Fitness" via the layout's title.template */
+  title: string;
+  /** Meta description. Aim for 140–160 characters. */
+  description: string;
+  /** Canonical path, leading slash. Example: "/classes/brazilian-jiu-jitsu". Use "/" for home. */
+  path: string;
+  /** Optional page-specific OG image path (absolute or relative to /public). Falls back to site default. */
+  ogImage?: string;
+  /** Optional keywords array — Google ignores them, but some local SEO pipelines and a few LLM crawlers still parse them. Cheap to include. */
+  keywords?: string[];
+  /** Set to true for thank-you pages, internal pages, etc. that should not be indexed. */
+  noIndex?: boolean;
+  /** Override the title template behavior. Set to true on the home page where the raw title should appear without the "| Mission MMA" suffix. */
+  absoluteTitle?: boolean;
+}
+
+/**
+ * Build a Next.js Metadata object for a page.
+ *
+ * Usage in a page.tsx:
+ *
+ *   import { buildMetadata } from "@/lib/seo";
+ *
+ *   export const metadata = buildMetadata({
+ *     title: "Brazilian Jiu-Jitsu Chicago — High-Quality BJJ Instruction",
+ *     description: "Train BJJ at Mission MMA in Chicago's West Loop...",
+ *     path: "/classes/brazilian-jiu-jitsu",
+ *   });
+ */
+export function buildMetadata(input: PageMetadataInput): Metadata {
+  const url = `${SITE.url}${input.path}`;
+  const ogImage = input.ogImage ?? SITE.defaultOgImage;
+  const ogImageUrl = ogImage.startsWith("http")
+    ? ogImage
+    : `${SITE.url}${ogImage}`;
+
+  return {
+    title: input.absoluteTitle ? { absolute: input.title } : input.title,
+    description: input.description,
+    ...(input.keywords && input.keywords.length > 0
+      ? { keywords: input.keywords }
+      : {}),
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      url,
+      siteName: SITE.name,
+      title: input.title,
+      description: input.description,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: input.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: SITE.twitterHandle,
+      creator: SITE.twitterHandle,
+      title: input.title,
+      description: input.description,
+      images: [ogImageUrl],
+    },
+    robots: input.noIndex
+      ? {
+          index: false,
+          follow: false,
+          nocache: true,
+          googleBot: {
+            index: false,
+            follow: false,
+            noimageindex: true,
+          },
+        }
+      : {
+          index: true,
+          follow: true,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-video-preview": -1,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+          },
+        },
+  };
+}
+
+/**
+ * Convenience builder for class pages — applies consistent keyword + path patterns.
+ */
+export interface ClassPageMetadataInput {
+  /** The display name of the class, e.g. "Brazilian Jiu-Jitsu" */
+  className: string;
+  /** The URL slug, e.g. "brazilian-jiu-jitsu" */
+  slug: string;
+  /** Pull the H1-style title from the content brief */
+  title: string;
+  /** Pull the meta description from the content brief */
+  description: string;
+  /** Discipline-specific keyword list — pull the full set from the content brief */
+  keywords: string[];
+}
+
+export function buildClassPageMetadata(input: ClassPageMetadataInput): Metadata {
+  return buildMetadata({
+    title: input.title,
+    description: input.description,
+    path: `/classes/${input.slug}`,
+    keywords: input.keywords,
+  });
+}
