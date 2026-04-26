@@ -5,11 +5,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* shadcn token mappings (unchanged) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -36,7 +34,7 @@
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
+  --color-popover: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
   --radius-sm: calc(var(--radius) * 0.6);
@@ -46,17 +44,46 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Mission brand tokens */
+  --color-mission-red: var(--mission-red);
+  --color-mission-red-dark: var(--mission-red-dark);
+  --color-mission-black: var(--mission-black);
+  --color-mission-white: var(--mission-white);
+  --color-mission-gray-900: var(--mission-gray-900);
+  --color-mission-gray-700: var(--mission-gray-700);
+  --color-mission-gray-500: var(--mission-gray-500);
+  --color-mission-gray-300: var(--mission-gray-300);
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-oswald), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Mission easing curve — confident, decisive, ease-out-quart */
+  --ease-mission: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
+  /* Mission brand palette (light theme retained for printing/embed scenarios; dark is the default) */
+  --mission-red: oklch(0.572 0.207 25.5);          /* #C8102E */
+  --mission-red-dark: oklch(0.475 0.197 25.5);     /* darker red for hover */
+  --mission-black: oklch(0.04 0 0);                /* near pure black */
+  --mission-white: oklch(0.96 0 0);                /* slightly off-white */
+  --mission-gray-900: oklch(0.14 0 0);
+  --mission-gray-700: oklch(0.28 0 0);
+  --mission-gray-500: oklch(0.48 0 0);
+  --mission-gray-300: oklch(0.82 0 0);
+
+  /* shadcn defaults (light theme) */
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
+  --primary: var(--mission-red);
+  --primary-foreground: var(--mission-white);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.205 0 0);
   --muted: oklch(0.97 0 0);
@@ -66,55 +93,56 @@
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --ring: var(--mission-red);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
+  --radius: 0.5rem;
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-primary: var(--mission-red);
+  --sidebar-primary-foreground: var(--mission-white);
   --sidebar-accent: oklch(0.97 0 0);
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar-ring: var(--mission-red);
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
+  /* Dark theme — the Mission default. Black-dominant with red accents. */
+  --background: var(--mission-black);
+  --foreground: var(--mission-white);
+  --card: var(--mission-gray-900);
+  --card-foreground: var(--mission-white);
+  --popover: var(--mission-gray-900);
+  --popover-foreground: var(--mission-white);
+  --primary: var(--mission-red);
+  --primary-foreground: var(--mission-white);
+  --secondary: var(--mission-gray-700);
+  --secondary-foreground: var(--mission-white);
+  --muted: var(--mission-gray-900);
+  --muted-foreground: var(--mission-gray-300);
+  --accent: var(--mission-red);
+  --accent-foreground: var(--mission-white);
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --ring: var(--mission-red);
+  --chart-1: var(--mission-red);
+  --chart-2: var(--mission-gray-300);
+  --chart-3: var(--mission-gray-500);
+  --chart-4: var(--mission-gray-700);
+  --chart-5: var(--mission-gray-900);
+  --sidebar: var(--mission-black);
+  --sidebar-foreground: var(--mission-white);
+  --sidebar-primary: var(--mission-red);
+  --sidebar-primary-foreground: var(--mission-white);
+  --sidebar-accent: var(--mission-gray-900);
+  --sidebar-accent-foreground: var(--mission-white);
   --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --sidebar-ring: var(--mission-red);
 }
 
 @layer base {
@@ -122,9 +150,29 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
   html {
     @apply font-sans;
+  }
+
+  /* Display typography defaults — Oswald, uppercase, tight tracking */
+  h1, h2, h3, h4 {
+    @apply font-display uppercase tracking-tight;
+  }
+
+  h1 { @apply text-4xl md:text-6xl font-bold; }
+  h2 { @apply text-3xl md:text-5xl font-bold; }
+  h3 { @apply text-2xl md:text-3xl font-bold; }
+  h4 { @apply text-xl md:text-2xl font-bold; }
+
+  /* Reduced motion respect — site-wide */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
