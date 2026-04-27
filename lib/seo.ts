@@ -134,5 +134,6 @@ export function buildClassPageMetadata(input: ClassPageMetadataInput): Metadata 
     description: input.description,
     path: `/classes/${input.slug}`,
     keywords: input.keywords,
+    absoluteTitle: true,
   });
 }

@@ -9,7 +9,7 @@ import type { NextConfig } from "next";
  * correct new page instead of a 404. This preserves ~5 years of accumulated
  * backlinks and ranking signals.
  *
- * `permanent: true` => 301 (Moved Permanently). Browsers and search engines
+ * `permanent: true` => 308 (Moved Permanently). Browsers and search engines
  * cache these aggressively. Triple-check before changing once we're live.
  */
 
@@ -21,12 +21,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // Class pages — old capitalized hyphenated URLs to new lowercase slugs
-      {
-        source: "/classes/Brazilian-Jiu-Jitsu",
-        destination: "/classes/brazilian-jiu-jitsu",
-        permanent: true,
-      },
+      // Class pages — old capitalized hyphenated URLs to new lowercase slugs.
+      // Note: /classes/Brazilian-Jiu-Jitsu, /classes/MMA, and /Contact are
+      // handled in middleware.ts — Next.js redirect matching is case-insensitive
+      // and those three sources would self-redirect their own destination URL.
       {
         source: "/classes/Muay-Thai-Kickboxing",
         destination: "/classes/muay-thai",
@@ -45,11 +43,6 @@ const nextConfig: NextConfig = {
       {
         source: "/classes/Womens-Brazilian-Jiu-Jitsu",
         destination: "/classes/womens-bjj",
-        permanent: true,
-      },
-      {
-        source: "/classes/MMA",
-        destination: "/classes/mma",
         permanent: true,
       },
       {
@@ -107,11 +100,6 @@ const nextConfig: NextConfig = {
       {
         source: "/Gallery",
         destination: "/about",
-        permanent: true,
-      },
-      {
-        source: "/Contact",
-        destination: "/contact",
         permanent: true,
       },
       {
