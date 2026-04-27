@@ -1,106 +1,103 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
-import { JsonLdScript, buildScheduleEvent, buildBreadcrumbList, GYM } from "@/lib/schema";
 import {
-  WEEKLY_SCHEDULE,
-  DAYS_OF_WEEK,
-  DAY_LABELS,
-  classesByDay,
-  type Discipline,
-} from "@/lib/schedule";
-import type { ScheduleEventInput } from "@/lib/schema";
+  JsonLdScript,
+  buildScheduleEvent,
+  buildBreadcrumbList,
+  GYM,
+} from "@/lib/schema";
+import { WEEKLY_SCHEDULE, totalWeeklyClasses } from "@/lib/schedule";
+import { WeeklySchedule } from "@/components/schedule/weekly-schedule";
+
+const URL = `${GYM.url}/schedule`;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Weekly Class Schedule",
+  title: "Weekly Class Schedule — Mission MMA & Fitness Chicago",
   description:
-    "Mission MMA & Fitness weekly class schedule — 30 classes per week across Brazilian Jiu-Jitsu, Muay Thai, MMA, Women's BJJ, Kids Martial Arts, and Strength & Conditioning in Chicago's West Loop.",
+    "30 weekly classes across Brazilian Jiu-Jitsu, Muay Thai, MMA, women's BJJ, kids martial arts, and strength and conditioning at 1620 W Carroll Ave in Chicago's West Loop.",
   path: "/schedule",
   keywords: [
     "martial arts class schedule chicago",
-    "bjj class schedule chicago",
-    "muay thai class schedule chicago",
-    "west loop martial arts schedule",
+    "bjj schedule chicago",
+    "muay thai schedule chicago",
+    "mission mma schedule",
   ],
 });
 
-const DISCIPLINE_URLS: Record<Discipline, string> = {
-  "muay-thai": `${GYM.url}/classes/muay-thai`,
-  "bjj-no-gi": `${GYM.url}/classes/brazilian-jiu-jitsu`,
-  "bjj-gi": `${GYM.url}/classes/brazilian-jiu-jitsu`,
-  "womens-bjj": `${GYM.url}/classes/womens-bjj`,
-  "kids-muay-thai": `${GYM.url}/classes/kids`,
-  "kids-bjj": `${GYM.url}/classes/kids`,
-  "strength": `${GYM.url}/classes/strength-conditioning`,
-  "open-mat": `${GYM.url}/classes/open-mat`,
-  "sparring": `${GYM.url}/classes/muay-thai`,
-  "open-weight": `${GYM.url}/classes/open-mat`,
-};
-
-const scheduleEvents = WEEKLY_SCHEDULE.map((cls) =>
-  buildScheduleEvent({
-    name: cls.name,
-    dayOfWeek: (cls.day.charAt(0).toUpperCase() + cls.day.slice(1)) as ScheduleEventInput["dayOfWeek"],
-    startTime: cls.time,
-    durationMinutes: cls.durationMinutes ?? 60,
-    url: DISCIPLINE_URLS[cls.discipline],
-  })
-);
+const dayNameMap = {
+  monday: "Monday",
+  tuesday: "Tuesday",
+  wednesday: "Wednesday",
+  thursday: "Thursday",
+  friday: "Friday",
+  saturday: "Saturday",
+  sunday: "Sunday",
+} as const;
 
 export default function SchedulePage() {
+  const total = totalWeeklyClasses();
+
   return (
-    <main className="min-h-screen px-4 py-16 md:px-8 md:py-24">
+    <>
       <JsonLdScript
         data={[
-          ...scheduleEvents,
+          ...WEEKLY_SCHEDULE.map((c) =>
+            buildScheduleEvent({
+              name: c.name,
+              dayOfWeek: dayNameMap[c.day],
+              startTime: c.time,
+              durationMinutes: c.durationMinutes ?? 60,
+              url: `${URL}?discipline=${c.discipline}`,
+            }),
+          ),
           buildBreadcrumbList([
-            { name: "Home", url: "https://missionmmachicago.com" },
-            { name: "Schedule", url: "https://missionmmachicago.com/schedule" },
+            { name: "Home", url: GYM.url },
+            { name: "Schedule", url: URL },
           ]),
         ]}
       />
-      <article className="mx-auto max-w-4xl space-y-6">
-        <nav aria-label="Breadcrumb">
-          <ol className="flex gap-2 text-sm text-muted-foreground">
-            <li><Link href="/">Home</Link></li>
-            <li aria-hidden="true">›</li>
-            <li aria-current="page">Schedule</li>
-          </ol>
-        </nav>
-        <h1>Weekly Class Schedule</h1>
-        <p className="text-lg text-muted-foreground">
-          Mission MMA &amp; Fitness offers 30 classes per week across Brazilian Jiu-Jitsu, Muay
-          Thai, MMA, women&apos;s BJJ, kids martial arts, and strength and conditioning at 1620 W
-          Carroll Ave in Chicago&apos;s West Loop.
-        </p>
-        {DAYS_OF_WEEK.map((day) => {
-          const classes = classesByDay(day);
-          if (classes.length === 0) return null;
-          return (
-            <section key={day}>
-              <h2>{DAY_LABELS[day]}</h2>
-              <ul className="mt-2 space-y-1">
-                {classes.map((cls, i) => (
-                  <li key={i} className="text-muted-foreground">
-                    <span className="font-medium text-foreground">{cls.displayTime}</span>
-                    {" — "}
-                    {cls.name}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          );
-        })}
-        <p className="pt-4 text-sm text-muted-foreground">
-          Sunday — no scheduled classes.
-        </p>
-        {/* TODO Phase 2: interactive WeeklySchedule component with filters */}
-        <p className="pt-2">
-          <Link href="/free-trial" className="font-bold hover:text-mission-red transition-colors">
-            Claim your free trial class →
-          </Link>
-        </p>
-      </article>
-    </main>
+
+      <main className="bg-mission-black px-4 py-16 md:px-8 md:py-24">
+        <div className="mx-auto max-w-7xl">
+          <h1>Weekly Class Schedule</h1>
+          <p className="mt-6 max-w-3xl text-lg text-mission-gray-300 md:text-xl">
+            Mission MMA &amp; Fitness offers {total} classes per week across
+            Brazilian Jiu-Jitsu, Muay Thai, MMA, women&apos;s BJJ, kids martial
+            arts, and strength and conditioning at 1620 W Carroll Ave in
+            Chicago&apos;s West Loop. Filter by discipline to see what fits your
+            schedule.
+          </p>
+
+          <div className="mt-10 md:mt-16">
+            {/* useSearchParams requires Suspense boundary in Next.js 15+ */}
+            <Suspense
+              fallback={
+                <div className="text-mission-gray-300">
+                  Loading schedule&hellip;
+                </div>
+              }
+            >
+              <WeeklySchedule />
+            </Suspense>
+          </div>
+
+          <div className="mt-16 rounded-lg border border-white/10 bg-mission-gray-900/40 p-6 md:p-8">
+            <h2 className="text-2xl">Ready to Train?</h2>
+            <p className="mt-3 text-mission-gray-300">
+              Your first class is on us. Pick a class that fits your schedule
+              and claim a free trial.
+            </p>
+            <Link
+              href="/free-trial"
+              className="mt-6 inline-flex items-center justify-center rounded-md bg-mission-red px-8 py-3 text-base font-bold uppercase tracking-wider text-mission-white transition-all duration-300 hover:bg-mission-red-dark hover:shadow-[0_8px_32px_rgba(200,16,46,0.4)] focus:outline-none focus-visible:ring-2 focus-visible:ring-mission-white focus-visible:ring-offset-2 focus-visible:ring-offset-mission-black md:text-lg"
+            >
+              Claim Your Free Trial
+            </Link>
+          </div>
+        </div>
+      </main>
+    </>
   );
 }
