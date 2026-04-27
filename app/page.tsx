@@ -8,6 +8,7 @@ import { HomeHero } from "@/components/sections/home-hero";
 import { ProgramGrid } from "@/components/sections/program-grid";
 import { WhyTrainHere } from "@/components/sections/why-train-here";
 import { StatCounters } from "@/components/sections/stat-counters";
+import { TestimonialMarquee } from "@/components/sections/testimonial-marquee";
 
 export const metadata: Metadata = buildMetadata({
   title: "Mission MMA & Fitness — Chicago's Premier BJJ & Muay Thai Gym",
@@ -43,6 +44,8 @@ export default function HomePage() {
       <WhyTrainHere />
 
       <StatCounters />
+
+      <TestimonialMarquee />
 
       {/* Below-the-fold content — entity-rich prose for SEO/AIO. Will expand in Steps 2.2–2.4. */}
       <section className="bg-mission-black px-4 py-20 md:py-32">
