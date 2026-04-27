@@ -1,7 +1,121 @@
 import type { NextConfig } from "next";
 
+/**
+ * 301 redirects from the legacy 97Display site URLs to the new structure.
+ * Source of truth: docs/redirect-map.csv.
+ *
+ * Rationale: anyone clicking an old URL from Google's index, an old social
+ * media post, an emailed link, or a saved bookmark gets routed to the
+ * correct new page instead of a 404. This preserves ~5 years of accumulated
+ * backlinks and ranking signals.
+ *
+ * `permanent: true` => 301 (Moved Permanently). Browsers and search engines
+ * cache these aggressively. Triple-check before changing once we're live.
+ */
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      // Class pages — old capitalized hyphenated URLs to new lowercase slugs
+      {
+        source: "/classes/Brazilian-Jiu-Jitsu",
+        destination: "/classes/brazilian-jiu-jitsu",
+        permanent: true,
+      },
+      {
+        source: "/classes/Muay-Thai-Kickboxing",
+        destination: "/classes/muay-thai",
+        permanent: true,
+      },
+      {
+        source: "/classes/Kids-Jiu-Jitsu",
+        destination: "/classes/kids",
+        permanent: true,
+      },
+      {
+        source: "/classes/Kids-Muay-Thai",
+        destination: "/classes/kids",
+        permanent: true,
+      },
+      {
+        source: "/classes/Womens-Brazilian-Jiu-Jitsu",
+        destination: "/classes/womens-bjj",
+        permanent: true,
+      },
+      {
+        source: "/classes/MMA",
+        destination: "/classes/mma",
+        permanent: true,
+      },
+      {
+        source: "/classes/Fitness",
+        destination: "/classes/strength-conditioning",
+        permanent: true,
+      },
+      {
+        source: "/classes/Private-Lessons",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/classes/Mission-Empower",
+        destination: "/about",
+        permanent: true,
+      },
+      {
+        source: "/classes/Training-with-Head-Coach",
+        destination: "/contact",
+        permanent: true,
+      },
+
+      // Top-level legacy paths
+      {
+        source: "/Home/Schedule",
+        destination: "/schedule",
+        permanent: true,
+      },
+      {
+        source: "/Home/Reviews",
+        destination: "/",
+        permanent: true,
+      },
+      {
+        source: "/FAQ",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/Home/Offer",
+        destination: "/free-trial",
+        permanent: true,
+      },
+      {
+        source: "/Home/Offer/9389",
+        destination: "/free-trial?interest=brazilian-jiu-jitsu",
+        permanent: true,
+      },
+      {
+        source: "/Home/Offer/9390",
+        destination: "/free-trial?interest=muay-thai",
+        permanent: true,
+      },
+      {
+        source: "/Gallery",
+        destination: "/about",
+        permanent: true,
+      },
+      {
+        source: "/Contact",
+        destination: "/contact",
+        permanent: true,
+      },
+      {
+        source: "/blog",
+        destination: "/",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
