@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Oswald } from "next/font/google";
 import { LazyMotion, domAnimation } from "framer-motion";
+import { Footer } from "@/components/layout/footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -83,6 +84,7 @@ export default function RootLayout({
         <LazyMotion features={domAnimation} strict>
           {children}
         </LazyMotion>
+        <Footer />
       </body>
     </html>
   );
