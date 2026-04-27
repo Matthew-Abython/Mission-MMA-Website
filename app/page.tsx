@@ -5,6 +5,7 @@ import {
   buildLocalBusiness,
 } from "@/lib/schema";
 import { HomeHero } from "@/components/sections/home-hero";
+import { ProgramGrid } from "@/components/sections/program-grid";
 
 export const metadata: Metadata = buildMetadata({
   title: "Mission MMA & Fitness — Chicago's Premier BJJ & Muay Thai Gym",
@@ -34,6 +35,8 @@ export default function HomePage() {
         ctaLabel="Claim Your Free Class"
         ctaHref="/free-trial"
       />
+
+      <ProgramGrid />
 
       {/* Below-the-fold content — entity-rich prose for SEO/AIO. Will expand in Steps 2.2–2.4. */}
       <section className="bg-mission-black px-4 py-20 md:py-32">
