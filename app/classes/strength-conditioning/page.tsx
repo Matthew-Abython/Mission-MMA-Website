@@ -1,33 +1,21 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import { buildClassPageMetadata } from "@/lib/seo";
 import {
   JsonLdScript,
   buildCourse,
   buildFaqPage,
   buildBreadcrumbList,
+  GYM,
 } from "@/lib/schema";
+import {
+  ClassPageTemplate,
+  type ClassPageContent,
+} from "@/components/sections/class-page-template";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Strength & Conditioning Chicago | Mission MMA & Fitness — Functional Training",
-  description:
-    "Functional strength and conditioning in Chicago's West Loop, designed to support Brazilian Jiu-Jitsu, Muay Thai, and MMA training. Beginner-friendly. Free trial.",
-  path: "/classes/strength-conditioning",
-  keywords: [
-    "strength and conditioning chicago",
-    "martial arts strength training chicago",
-    "fighter strength conditioning chicago",
-    "functional fitness chicago",
-    "functional training chicago",
-    "strength and conditioning for martial artists chicago",
-    "mma strength training chicago",
-    "functional fitness west loop",
-    "strength training west loop chicago",
-  ],
-  absoluteTitle: true,
-});
+const SLUG = "strength-conditioning";
+const URL = `${GYM.url}/classes/${SLUG}`;
 
-const faqItems = [
+const FAQ = [
   {
     question: "Do I need to be a martial artist to take this class?",
     answer:
@@ -54,74 +42,102 @@ const faqItems = [
       "Yes. Coaches scale every session for the experience level in the room. Beginners get instruction and modifications; experienced lifters get the same session at higher intensity.",
   },
   {
-    question: "How often should I add strength training to my martial arts schedule?",
+    question:
+      "How often should I add strength training to my martial arts schedule?",
     answer:
       "1–2 strength sessions per week alongside 3–4 martial arts classes is a sustainable, productive plan for most members.",
   },
 ];
 
+export const metadata: Metadata = buildClassPageMetadata({
+  className: "Strength & Conditioning",
+  slug: SLUG,
+  title:
+    "Strength & Conditioning Chicago | Mission MMA & Fitness — Functional Training",
+  description:
+    "Functional strength and conditioning in Chicago's West Loop, designed to support Brazilian Jiu-Jitsu, Muay Thai, and MMA training. Beginner-friendly. Free trial.",
+  keywords: [
+    "strength and conditioning chicago",
+    "martial arts strength training chicago",
+    "fighter strength conditioning chicago",
+    "functional fitness chicago",
+    "functional training chicago",
+    "strength and conditioning for martial artists chicago",
+    "mma strength training chicago",
+    "functional fitness west loop",
+    "strength training west loop chicago",
+  ],
+});
+
+const CONTENT: ClassPageContent = {
+  title:
+    "Strength and Conditioning in Chicago — Built for Martial Artists at Mission MMA & Fitness",
+  dek: "Functional strength and conditioning designed to support BJJ, Muay Thai, and MMA training. Tuesday and Thursday 6:30 AM at Mission MMA & Fitness in Chicago's West Loop.",
+  heroImage:
+    "https://images.pexels.com/photos/6253310/pexels-photo-6253310.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  heroImageAlt: "Strength and conditioning training at Mission MMA & Fitness",
+  slug: SLUG,
+  introParagraph:
+    "Mission MMA & Fitness offers functional strength and conditioning at 1620 W Carroll Ave in Chicago's West Loop. Our program — sometimes called \"Better Than Bootcamp\" — combines mobility, strength, and conditioning work designed to support and complement martial arts training. Whether you're a Brazilian Jiu-Jitsu or Muay Thai athlete looking to add structured strength work, or a Chicago resident searching for functional fitness that goes beyond generic gym workouts, our coaches build sessions around real movement patterns.",
+  whatYoullLearn: [
+    "Strength patterns that transfer to grappling: hip hinges, pulling, and core stability under load",
+    "Mobility work that keeps you on the mats: spine, hip, and shoulder health built into every session",
+    "Conditioning that matches martial arts demands: work-to-rest intervals, not long slow cardio",
+  ],
+  whoFor: [
+    "BJJ or Muay Thai practitioners who want structured strength work to support their martial arts",
+    "Chicago residents looking for intelligent functional fitness beyond generic gym workouts",
+    "Athletes at any level — sessions are scaled for complete beginners and experienced lifters alike",
+  ],
+  qualitySignals: [
+    {
+      title: "Built for Martial Artists",
+      body: "Programming considers grapplers' shoulder and hip needs, strikers' rotational power, and fighters' work capacity — not generic CrossFit-style volume.",
+    },
+    {
+      title: "Mobility-First",
+      body: "Sessions include real mobility work, not just stretching at the end. Mobility under load is what keeps you on the mats long-term.",
+    },
+    {
+      title: "Tied to the Gym Ecosystem",
+      body: "Members can pair strength sessions with BJJ and Muay Thai for a complete training plan — all under one roof at 1620 W Carroll Ave.",
+    },
+    {
+      title: "Coaches Who Understand Combat Sports",
+      body: "Programming is designed to build attributes that transfer to grappling and striking, not just general fitness aesthetics.",
+    },
+  ],
+  faq: FAQ,
+  finalCtaLabel: "Claim Your Free Strength & Conditioning Trial",
+  finalCtaHref: `/free-trial?interest=${SLUG}`,
+};
+
 export default function StrengthConditioningPage() {
   return (
-    <main className="min-h-screen px-4 py-16 md:px-8 md:py-24">
+    <>
       <JsonLdScript
         data={[
           buildCourse({
             name: "Strength and Conditioning",
-            description:
-              "Functional strength and conditioning designed for martial artists at Mission MMA & Fitness in Chicago's West Loop. Tuesday and Thursday 6:30 AM.",
-            url: "https://missionmmachicago.com/classes/strength-conditioning",
+            description: CONTENT.introParagraph,
+            url: URL,
+            alternateNames: [
+              "Strength and Conditioning",
+              "Functional Fitness",
+              "Martial Arts Strength Training",
+            ],
           }),
-          buildFaqPage(faqItems),
+          buildFaqPage(
+            FAQ.map((f) => ({ question: f.question, answer: f.answer }))
+          ),
           buildBreadcrumbList([
-            { name: "Home", url: "https://missionmmachicago.com" },
-            { name: "Classes", url: "https://missionmmachicago.com/classes" },
-            { name: "Strength & Conditioning", url: "https://missionmmachicago.com/classes/strength-conditioning" },
+            { name: "Home", url: GYM.url },
+            { name: "Classes", url: `${GYM.url}/classes` },
+            { name: "Strength & Conditioning", url: URL },
           ]),
         ]}
       />
-      <article className="mx-auto max-w-4xl space-y-6">
-        <nav aria-label="Breadcrumb">
-          <ol className="flex gap-2 text-sm text-muted-foreground">
-            <li><Link href="/">Home</Link></li>
-            <li aria-hidden="true">›</li>
-            <li><Link href="/classes">Classes</Link></li>
-            <li aria-hidden="true">›</li>
-            <li aria-current="page">Strength &amp; Conditioning</li>
-          </ol>
-        </nav>
-        <h1>Strength and Conditioning in Chicago — Built for Martial Artists at Mission MMA &amp; Fitness</h1>
-        <p className="text-lg text-muted-foreground">
-          Mission MMA &amp; Fitness offers functional strength and conditioning at 1620 W Carroll
-          Ave in Chicago&apos;s West Loop. Our program — sometimes called &ldquo;Better Than
-          Bootcamp&rdquo; — combines mobility, strength, and conditioning work designed to support
-          and complement martial arts training. Whether you&apos;re a Brazilian Jiu-Jitsu or Muay
-          Thai athlete looking to add structured strength work, or a Chicago resident searching for
-          functional fitness that goes beyond generic gym workouts, our coaches build sessions
-          around real movement patterns.
-        </p>
-        <p>
-          <Link href="/free-trial?interest=strength-conditioning" className="font-bold hover:text-mission-red transition-colors">
-            Claim your free Strength &amp; Conditioning trial →
-          </Link>
-        </p>
-        {/* TODO Phase 2: hero image, schedule grid */}
-        <section className="space-y-6 pt-4">
-          <h2>Frequently Asked Questions</h2>
-          {faqItems.map((item, i) => (
-            <div key={i} className="space-y-1">
-              <h3>{item.question}</h3>
-              <p className="text-muted-foreground">{item.answer}</p>
-            </div>
-          ))}
-        </section>
-        <p className="pt-4 text-sm text-muted-foreground">
-          See also:{" "}
-          <Link href="/classes/brazilian-jiu-jitsu" className="hover:text-mission-red transition-colors">Brazilian Jiu-Jitsu</Link> ·{" "}
-          <Link href="/classes/muay-thai" className="hover:text-mission-red transition-colors">Muay Thai</Link> ·{" "}
-          <Link href="/classes/mma" className="hover:text-mission-red transition-colors">MMA</Link> ·{" "}
-          <Link href="/schedule" className="hover:text-mission-red transition-colors">Schedule</Link>
-        </p>
-      </article>
-    </main>
+      <ClassPageTemplate content={CONTENT} />
+    </>
   );
 }

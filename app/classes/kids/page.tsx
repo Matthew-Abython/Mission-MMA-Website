@@ -1,43 +1,30 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import { buildClassPageMetadata } from "@/lib/seo";
 import {
   JsonLdScript,
   buildCourse,
   buildFaqPage,
   buildBreadcrumbList,
+  GYM,
 } from "@/lib/schema";
+import {
+  ClassPageTemplate,
+  type ClassPageContent,
+} from "@/components/sections/class-page-template";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Kids Martial Arts Chicago | Kids Muay Thai & BJJ at Mission MMA",
-  description:
-    "Kids martial arts in Chicago's West Loop — Muay Thai four days a week and Brazilian Jiu-Jitsu (BJJ) on Saturdays. Builds confidence, focus, and discipline. Free trial.",
-  path: "/classes/kids",
-  keywords: [
-    "kids martial arts chicago",
-    "kids muay thai chicago",
-    "kids bjj chicago",
-    "kids jiu jitsu chicago",
-    "kids brazilian jiu jitsu chicago",
-    "childrens martial arts chicago",
-    "kids martial arts west loop",
-    "best kids martial arts chicago",
-    "kids martial arts near me chicago",
-    "kids muay thai west loop",
-    "kids jiu jitsu west loop",
-    "kids self defense chicago",
-  ],
-  absoluteTitle: true,
-});
+const SLUG = "kids";
+const URL = `${GYM.url}/classes/${SLUG}`;
 
-const faqItems = [
+const FAQ = [
   {
+    // TODO: confirm kids age range with gym, then update FAQ #1 answer
     question: "What ages are the kids classes for?",
     answer:
-      "[Confirm with gym. Common range: 4–12. Update FAQ once confirmed.]",
+      "Our kids programs welcome children from approximately 4–12 years old, with placement based on age and experience. Reach out via the contact form to confirm fit for your child.",
   },
   {
-    question: "What's the difference between Kids Muay Thai and Kids BJJ?",
+    question:
+      "What's the difference between Kids Muay Thai and Kids BJJ?",
     answer:
       "Kids Muay Thai is striking-focused — punches, kicks, knees, footwork — taught with safety gear and partner drills. Kids Brazilian Jiu-Jitsu is grappling — body control, takedowns, ground positioning, submissions — without strikes. Both build coordination, discipline, and confidence in different ways.",
   },
@@ -78,65 +65,101 @@ const faqItems = [
   },
 ];
 
+export const metadata: Metadata = buildClassPageMetadata({
+  className: "Kids Martial Arts",
+  slug: SLUG,
+  title: "Kids Martial Arts Chicago | Kids Muay Thai & BJJ at Mission MMA",
+  description:
+    "Kids martial arts in Chicago's West Loop — Muay Thai four days a week and Brazilian Jiu-Jitsu (BJJ) on Saturdays. Builds confidence, focus, and discipline. Free trial.",
+  keywords: [
+    "kids martial arts chicago",
+    "kids muay thai chicago",
+    "kids bjj chicago",
+    "kids jiu jitsu chicago",
+    "kids brazilian jiu jitsu chicago",
+    "childrens martial arts chicago",
+    "kids martial arts west loop",
+    "best kids martial arts chicago",
+    "kids martial arts near me chicago",
+    "kids muay thai west loop",
+    "kids jiu jitsu west loop",
+    "kids self defense chicago",
+  ],
+});
+
+const CONTENT: ClassPageContent = {
+  title:
+    "Kids Martial Arts in Chicago — Muay Thai and Brazilian Jiu-Jitsu for Children",
+  dek: "Two real programs — Kids Muay Thai (four days a week) and Kids Brazilian Jiu-Jitsu (Saturdays) — at Mission MMA & Fitness in Chicago's West Loop. Real instruction, not babysitting.",
+  heroImage:
+    "https://images.pexels.com/photos/8612976/pexels-photo-8612976.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  heroImageAlt: "Kids martial arts training at Mission MMA & Fitness",
+  slug: SLUG,
+  introParagraph:
+    "Mission MMA & Fitness offers two kids martial arts programs in Chicago's West Loop at 1620 W Carroll Ave: Kids Muay Thai (Thai boxing) four days a week and Kids Brazilian Jiu-Jitsu (kids BJJ / kids jiu jitsu) on Saturdays. Unlike many Chicago gyms that combine kids striking and grappling into a single watered-down session, we run them separately so kids actually learn the art. Our programs build confidence, focus, and discipline through real martial arts skills — not babysitting with belts.",
+  whatYoullLearn: [
+    "Muay Thai fundamentals: proper stance, punches, kicks, and footwork taught safely with pads",
+    "Brazilian Jiu-Jitsu basics: body awareness, takedowns, and ground positioning without strikes",
+    "Focus, discipline, and respect — built through structured training rather than lectures",
+    "Confidence that comes from mastering real skills and seeing measurable progress over time",
+  ],
+  whoFor: [
+    "Children new to martial arts looking for structure, discipline, and a healthy physical outlet",
+    "Kids who want to try Muay Thai striking, BJJ grappling, or both",
+    "Parents seeking a serious kids martial arts program — not after-school daycare with belts",
+  ],
+  qualitySignals: [
+    {
+      title: "Two Separate Disciplines, Not Combined",
+      body: "Kids Muay Thai and Kids BJJ each run as their own class with appropriate technique progression — not a single watered-down 'martial arts' session.",
+    },
+    {
+      title: "Five Kids Classes Weekly",
+      body: "Four Kids Muay Thai sessions per week plus Kids BJJ on Saturday morning — one of the most consistent kids schedules in Chicago.",
+    },
+    {
+      title: "Real Instruction, Age-Appropriate",
+      body: "Kids learn proper technique — the same fundamentals as adults, scaled for kid safety and attention spans. Not games masquerading as martial arts.",
+    },
+    {
+      title: "Builds Focus That Translates to School",
+      body: "Parents consistently report improvements in attention, behavior, and confidence within weeks of starting. The structure of martial arts training transfers.",
+    },
+  ],
+  faq: FAQ,
+  finalCtaLabel: "Claim Your Child's Free Trial Class",
+  finalCtaHref: `/free-trial?interest=${SLUG}`,
+};
+
 export default function KidsPage() {
   return (
-    <main className="min-h-screen px-4 py-16 md:px-8 md:py-24">
+    <>
       <JsonLdScript
         data={[
           buildCourse({
             name: "Kids Martial Arts",
-            description:
-              "Kids Muay Thai (four days a week) and Kids Brazilian Jiu-Jitsu (Saturdays) at Mission MMA & Fitness in Chicago's West Loop. Separate programs with real age-appropriate instruction.",
-            url: "https://missionmmachicago.com/classes/kids",
+            description: CONTENT.introParagraph,
+            url: URL,
+            alternateNames: [
+              "Kids Martial Arts",
+              "Kids Muay Thai",
+              "Kids BJJ",
+              "Kids Jiu Jitsu",
+              "Kids Jiu-Jitsu",
+              "Kids Brazilian Jiu-Jitsu",
+            ],
           }),
-          buildFaqPage(faqItems),
+          buildFaqPage(
+            FAQ.map((f) => ({ question: f.question, answer: f.answer }))
+          ),
           buildBreadcrumbList([
-            { name: "Home", url: "https://missionmmachicago.com" },
-            { name: "Classes", url: "https://missionmmachicago.com/classes" },
-            { name: "Kids Martial Arts", url: "https://missionmmachicago.com/classes/kids" },
+            { name: "Home", url: GYM.url },
+            { name: "Classes", url: `${GYM.url}/classes` },
+            { name: "Kids Martial Arts", url: URL },
           ]),
         ]}
       />
-      <article className="mx-auto max-w-4xl space-y-6">
-        <nav aria-label="Breadcrumb">
-          <ol className="flex gap-2 text-sm text-muted-foreground">
-            <li><Link href="/">Home</Link></li>
-            <li aria-hidden="true">›</li>
-            <li><Link href="/classes">Classes</Link></li>
-            <li aria-hidden="true">›</li>
-            <li aria-current="page">Kids Martial Arts</li>
-          </ol>
-        </nav>
-        <h1>Kids Martial Arts in Chicago — Muay Thai and Brazilian Jiu-Jitsu for Children</h1>
-        <p className="text-lg text-muted-foreground">
-          Mission MMA &amp; Fitness offers two kids martial arts programs in Chicago&apos;s West
-          Loop at 1620 W Carroll Ave: Kids Muay Thai (Thai boxing) four days a week and Kids
-          Brazilian Jiu-Jitsu (kids BJJ / kids jiu jitsu) on Saturdays. Unlike many Chicago gyms
-          that combine kids striking and grappling into a single watered-down session, we run them
-          separately so kids actually learn the art. Our programs build confidence, focus, and
-          discipline through real martial arts skills — not babysitting with belts.
-        </p>
-        <p>
-          <Link href="/free-trial?interest=kids" className="font-bold hover:text-mission-red transition-colors">
-            Claim your child&apos;s free trial class →
-          </Link>
-        </p>
-        {/* TODO Phase 2: hero image, schedule grid filtered to kids */}
-        <section className="space-y-6 pt-4">
-          <h2>Frequently Asked Questions</h2>
-          {faqItems.map((item, i) => (
-            <div key={i} className="space-y-1">
-              <h3>{item.question}</h3>
-              <p className="text-muted-foreground">{item.answer}</p>
-            </div>
-          ))}
-        </section>
-        <p className="pt-4 text-sm text-muted-foreground">
-          See also:{" "}
-          <Link href="/schedule" className="hover:text-mission-red transition-colors">Full Schedule</Link> ·{" "}
-          <Link href="/about" className="hover:text-mission-red transition-colors">Mission Empower</Link>
-        </p>
-      </article>
-    </main>
+      <ClassPageTemplate content={CONTENT} />
+    </>
   );
 }

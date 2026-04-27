@@ -1,46 +1,31 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import { buildClassPageMetadata } from "@/lib/seo";
 import {
   JsonLdScript,
   buildCourse,
   buildFaqPage,
   buildBreadcrumbList,
+  GYM,
 } from "@/lib/schema";
+import {
+  ClassPageTemplate,
+  type ClassPageContent,
+} from "@/components/sections/class-page-template";
 
-export const metadata: Metadata = buildMetadata({
-  title: "Muay Thai Chicago | Mission MMA & Fitness — West Loop Thai Boxing",
-  description:
-    "Train authentic Muay Thai (Thai boxing, kickboxing) at Mission MMA in Chicago's West Loop. High-quality instruction for beginners through advanced. Free trial class.",
-  path: "/classes/muay-thai",
-  keywords: [
-    "muay thai chicago",
-    "thai boxing chicago",
-    "muay thai kickboxing chicago",
-    "muay thai classes chicago",
-    "kickboxing chicago",
-    "best muay thai chicago",
-    "high quality muay thai instruction chicago",
-    "legitimate muay thai gym chicago",
-    "authentic muay thai chicago",
-    "muay thai west loop",
-    "thai boxing west loop",
-    "muay thai fulton market",
-    "muay thai near me chicago",
-  ],
-  absoluteTitle: true,
-});
+const SLUG = "muay-thai";
+const URL = `${GYM.url}/classes/${SLUG}`;
 
-const faqItems = [
+const FAQ = [
   {
     question: "Do I need any experience to start Muay Thai at Mission MMA?",
     answer:
       "No — our classes welcome beginners. You'll start with fundamentals: stance, basic punches and kicks, clinch work, and partner drills. Sparring is never required and only happens in the dedicated sparring class.",
   },
   {
-    question: "What's the difference between Muay Thai, kickboxing, and Thai boxing?",
+    question:
+      "What's the difference between Muay Thai, kickboxing, and Thai boxing?",
     answer:
-      "\"Thai boxing\" and \"Muay Thai\" mean the same thing — Thailand's national sport, sometimes called \"the art of eight limbs\" because it uses fists, elbows, knees, and shins. \"Muay Thai kickboxing\" is a common Western label. Generic \"kickboxing\" usually refers to a watered-down cardio version that doesn't include elbows, knees, or clinch work. We teach the full art.",
+      '"Thai boxing" and "Muay Thai" mean the same thing — Thailand\'s national sport, sometimes called "the art of eight limbs" because it uses fists, elbows, knees, and shins. "Muay Thai kickboxing" is a common Western label. Generic "kickboxing" usually refers to a watered-down cardio version that doesn\'t include elbows, knees, or clinch work. We teach the full art.',
   },
   {
     question: "What gear do I need?",
@@ -73,73 +58,103 @@ const faqItems = [
       "Yes — we have members who compete at amateur and professional levels. Competition isn't required and you don't have to spar to be a member.",
   },
   {
-    question: "Are the coaches available outside class for technique questions?",
+    question:
+      "Are the coaches available outside class for technique questions?",
     answer:
       "Yes — coaches stay after class for questions, and private lessons are available for members who want personalized work.",
   },
 ];
 
+export const metadata: Metadata = buildClassPageMetadata({
+  className: "Muay Thai",
+  slug: SLUG,
+  title: "Muay Thai Chicago | Mission MMA & Fitness — West Loop Thai Boxing",
+  description:
+    "Train authentic Muay Thai (Thai boxing, kickboxing) at Mission MMA in Chicago's West Loop. High-quality instruction for beginners through advanced. Free trial class.",
+  keywords: [
+    "muay thai chicago",
+    "thai boxing chicago",
+    "muay thai kickboxing chicago",
+    "muay thai classes chicago",
+    "kickboxing chicago",
+    "best muay thai chicago",
+    "high quality muay thai instruction chicago",
+    "legitimate muay thai gym chicago",
+    "authentic muay thai chicago",
+    "muay thai west loop",
+    "thai boxing west loop",
+    "muay thai fulton market",
+    "muay thai near me chicago",
+  ],
+});
+
+const CONTENT: ClassPageContent = {
+  title:
+    "Muay Thai in Chicago — Authentic Thai Boxing Instruction at Mission MMA & Fitness",
+  dek: "Authentic Thai boxing at Mission MMA & Fitness in Chicago's West Loop. Nine adult classes per week plus a dedicated sparring class — the full art, not cardio kickboxing.",
+  heroImage:
+    "https://images.pexels.com/photos/4754149/pexels-photo-4754149.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  heroImageAlt: "Muay Thai padwork training at Mission MMA & Fitness",
+  slug: SLUG,
+  introParagraph:
+    "Mission MMA & Fitness offers authentic Muay Thai training at 1620 W Carroll Ave in Chicago's West Loop. Known as Thai boxing or Muay Thai kickboxing, this striking art teaches the use of fists, elbows, knees, and shins through traditional Thai padwork, clinch work, and live sparring. Whether you're a complete beginner looking for high-quality kickboxing in Chicago or an experienced striker seeking legitimate Muay Thai instruction, our coaches teach the full art — not a watered-down cardio version. We run nine adult Muay Thai classes a week plus a dedicated sparring class.",
+  whatYoullLearn: [
+    "The eight weapons of Muay Thai: fists, elbows, knees, and shins — combined into striking sequences",
+    "Traditional Thai padwork structure: shadowboxing, technique drilling, pad rounds, and clinch work",
+    "Clinch work and close-range fighting — including the knees and elbows most cardio classes skip",
+    "Conditioning specific to striking: shin conditioning, cardio endurance, and round-based stamina",
+  ],
+  whoFor: [
+    "Complete beginners who want real Muay Thai — not a cardio kickboxing class",
+    "Experienced strikers looking for authentic Thai-style padwork and clinch instruction",
+    "Grapplers and MMA fighters adding a striking discipline to their game",
+  ],
+  qualitySignals: [
+    {
+      title: "Verifiable Coach Lineage",
+      // TODO: update quality signal once instructor bios are provided
+      body: "Our Muay Thai coaches have verifiable training lineage from established Thai-style gyms — specific lineage details will appear on instructor pages once published.",
+    },
+    {
+      title: "Real Thai Padwork, Not Cardio Kickboxing",
+      body: "Our classes follow the structure used in Thailand: shadowboxing, technique, padwork, clinch, conditioning. Not a fitness class with gloves.",
+    },
+    {
+      title: "Dedicated Sparring Class",
+      body: "Adult Muay Thai Sparring on Mondays at 6:30 PM lets advanced members test their work safely with controlled contact — separate from the technique classes.",
+    },
+    {
+      title: "Kids Program",
+      body: "Separate Kids Muay Thai class four days a week — many Chicago gyms only offer one or two kids sessions weekly.",
+    },
+  ],
+  faq: FAQ,
+  finalCtaLabel: "Claim Your Free Muay Thai Trial Class",
+  finalCtaHref: `/free-trial?interest=${SLUG}`,
+};
+
 export default function MuayThaiPage() {
   return (
-    <main className="min-h-screen px-4 py-16 md:px-8 md:py-24">
+    <>
       <JsonLdScript
         data={[
           buildCourse({
             name: "Muay Thai",
-            description:
-              "Authentic Muay Thai (Thai boxing) instruction for beginners through advanced at Mission MMA & Fitness in Chicago's West Loop.",
-            url: "https://missionmmachicago.com/classes/muay-thai",
+            description: CONTENT.introParagraph,
+            url: URL,
             alternateNames: ["Muay Thai", "Thai Boxing", "Muay Thai Kickboxing"],
           }),
-          buildFaqPage(faqItems),
+          buildFaqPage(
+            FAQ.map((f) => ({ question: f.question, answer: f.answer }))
+          ),
           buildBreadcrumbList([
-            { name: "Home", url: "https://missionmmachicago.com" },
-            { name: "Classes", url: "https://missionmmachicago.com/classes" },
-            { name: "Muay Thai", url: "https://missionmmachicago.com/classes/muay-thai" },
+            { name: "Home", url: GYM.url },
+            { name: "Classes", url: `${GYM.url}/classes` },
+            { name: "Muay Thai", url: URL },
           ]),
         ]}
       />
-      <article className="mx-auto max-w-4xl space-y-6">
-        <nav aria-label="Breadcrumb">
-          <ol className="flex gap-2 text-sm text-muted-foreground">
-            <li><Link href="/">Home</Link></li>
-            <li aria-hidden="true">›</li>
-            <li><Link href="/classes">Classes</Link></li>
-            <li aria-hidden="true">›</li>
-            <li aria-current="page">Muay Thai</li>
-          </ol>
-        </nav>
-        <h1>Muay Thai in Chicago — Authentic Thai Boxing Instruction at Mission MMA &amp; Fitness</h1>
-        <p className="text-lg text-muted-foreground">
-          Mission MMA &amp; Fitness offers authentic Muay Thai training at 1620 W Carroll Ave in
-          Chicago&apos;s West Loop. Known as Thai boxing or Muay Thai kickboxing, this striking
-          art teaches the use of fists, elbows, knees, and shins through traditional Thai padwork,
-          clinch work, and live sparring. Whether you&apos;re a complete beginner looking for
-          high-quality kickboxing in Chicago or an experienced striker seeking legitimate Muay Thai
-          instruction, our coaches teach the full art — not a watered-down cardio version. We run
-          nine adult Muay Thai classes a week plus a dedicated sparring class.
-        </p>
-        <p>
-          <Link href="/free-trial?interest=muay-thai" className="font-bold hover:text-mission-red transition-colors">
-            Claim your free Muay Thai trial class →
-          </Link>
-        </p>
-        {/* TODO Phase 2: hero image, schedule grid filtered to Muay Thai */}
-        <section className="space-y-6 pt-4">
-          <h2>Frequently Asked Questions</h2>
-          {faqItems.map((item, i) => (
-            <div key={i} className="space-y-1">
-              <h3>{item.question}</h3>
-              <p className="text-muted-foreground">{item.answer}</p>
-            </div>
-          ))}
-        </section>
-        <p className="pt-4 text-sm text-muted-foreground">
-          See also: <Link href="/classes/mma" className="hover:text-mission-red transition-colors">MMA Classes</Link> ·{" "}
-          <Link href="/schedule" className="hover:text-mission-red transition-colors">Full Schedule</Link> ·{" "}
-          <Link href="/instructors" className="hover:text-mission-red transition-colors">Our Coaches</Link>
-        </p>
-      </article>
-    </main>
+      <ClassPageTemplate content={CONTENT} />
+    </>
   );
 }

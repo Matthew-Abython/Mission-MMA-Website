@@ -1,35 +1,21 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import { buildClassPageMetadata } from "@/lib/seo";
 import {
   JsonLdScript,
   buildCourse,
   buildFaqPage,
   buildBreadcrumbList,
+  GYM,
 } from "@/lib/schema";
+import {
+  ClassPageTemplate,
+  type ClassPageContent,
+} from "@/components/sections/class-page-template";
 
-export const metadata: Metadata = buildMetadata({
-  title: "MMA Classes Chicago | Mission MMA & Fitness — West Loop Mixed Martial Arts",
-  description:
-    "Train mixed martial arts (MMA) at Mission MMA & Fitness in Chicago's West Loop. Striking, grappling, and full-rules MMA for beginners through competitors. Free trial class.",
-  path: "/classes/mma",
-  keywords: [
-    "mma classes chicago",
-    "mixed martial arts chicago",
-    "mma training chicago",
-    "mma gym chicago",
-    "mma west loop",
-    "best mma gym chicago",
-    "legitimate mma training chicago",
-    "high quality mma instruction chicago",
-    "mma west loop chicago",
-    "mixed martial arts west loop",
-    "mma fulton market",
-  ],
-  absoluteTitle: true,
-});
+const SLUG = "mma";
+const URL = `${GYM.url}/classes/${SLUG}`;
 
-const faqItems = [
+const FAQ = [
   {
     question: "Do I need any experience to start MMA?",
     answer:
@@ -72,67 +58,94 @@ const faqItems = [
   },
 ];
 
+export const metadata: Metadata = buildClassPageMetadata({
+  className: "MMA",
+  slug: SLUG,
+  title:
+    "MMA Classes Chicago | Mission MMA & Fitness — West Loop Mixed Martial Arts",
+  description:
+    "Train mixed martial arts (MMA) at Mission MMA & Fitness in Chicago's West Loop. Striking, grappling, and full-rules MMA for beginners through competitors. Free trial class.",
+  keywords: [
+    "mma classes chicago",
+    "mixed martial arts chicago",
+    "mma training chicago",
+    "mma gym chicago",
+    "mma west loop",
+    "best mma gym chicago",
+    "legitimate mma training chicago",
+    "high quality mma instruction chicago",
+    "mma west loop chicago",
+    "mixed martial arts west loop",
+    "mma fulton market",
+  ],
+});
+
+const CONTENT: ClassPageContent = {
+  title: "MMA Training in Chicago — Mixed Martial Arts at Mission MMA & Fitness",
+  dek: "Striking, grappling, and full-rules MMA at Mission MMA & Fitness in Chicago's West Loop. Built on legitimate BJJ and Muay Thai foundations in the same facility.",
+  heroImage:
+    "https://images.pexels.com/photos/9012462/pexels-photo-9012462.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  heroImageAlt: "MMA training at Mission MMA & Fitness",
+  slug: SLUG,
+  introParagraph:
+    "Mission MMA & Fitness offers mixed martial arts (MMA) training at 1620 W Carroll Ave in Chicago's West Loop. MMA combines the striking of Muay Thai with the grappling of Brazilian Jiu-Jitsu, the takedowns of wrestling, and the conditioning to put it all together. Whether you're new to martial arts and curious about the sport that defines the modern UFC, or an experienced striker or grappler looking to round out your skill set, our MMA program meets you where you are.",
+  whatYoullLearn: [
+    "Striking combinations from Muay Thai integrated with takedowns and grappling transitions",
+    "Takedown offense and defense — closing the distance from striking range to the ground",
+    "Ground-and-pound and submission defense from dominant MMA positions",
+    "How to combine all three ranges — stand-up, clinch, and ground — in live sparring",
+  ],
+  whoFor: [
+    "Beginners curious about MMA after watching the UFC who want to learn the real sport",
+    "Experienced BJJ or wrestling practitioners who want to add striking and compete",
+    "Muay Thai athletes looking to add grappling for MMA competition or cross-training",
+  ],
+  qualitySignals: [
+    {
+      title: "Built on Legitimate Foundations",
+      body: "Our MMA program is supported by world-class Brazilian Jiu-Jitsu and Muay Thai instruction at the same facility — not bolted on as a marketing label.",
+    },
+    {
+      title: "Verifiable Coach Competition Experience",
+      // TODO: update quality signal once instructor bios are provided
+      body: "Our MMA coaches have verifiable competition backgrounds — specific records and lineage will appear on instructor pages once published.",
+    },
+    {
+      title: "Real Training, Not Cardio MMA",
+      body: "Sessions integrate striking, takedowns, ground work, and live MMA sparring under controlled rules — the same structure used to prepare fighters.",
+    },
+    {
+      title: "Path for Competitors",
+      body: "Members training for amateur or professional MMA receive structured programming, sparring partners at appropriate experience levels, and corner support at fights.",
+    },
+  ],
+  faq: FAQ,
+  finalCtaLabel: "Claim Your Free MMA Trial Class",
+  finalCtaHref: `/free-trial?interest=${SLUG}`,
+};
+
 export default function MmaPage() {
   return (
-    <main className="min-h-screen px-4 py-16 md:px-8 md:py-24">
+    <>
       <JsonLdScript
         data={[
           buildCourse({
             name: "MMA",
-            description:
-              "Mixed martial arts training combining Brazilian Jiu-Jitsu, Muay Thai, and wrestling for beginners through competitors at Mission MMA & Fitness in Chicago's West Loop.",
-            url: "https://missionmmachicago.com/classes/mma",
+            description: CONTENT.introParagraph,
+            url: URL,
+            alternateNames: ["Mixed Martial Arts"],
           }),
-          buildFaqPage(faqItems),
+          buildFaqPage(
+            FAQ.map((f) => ({ question: f.question, answer: f.answer }))
+          ),
           buildBreadcrumbList([
-            { name: "Home", url: "https://missionmmachicago.com" },
-            { name: "Classes", url: "https://missionmmachicago.com/classes" },
-            { name: "MMA", url: "https://missionmmachicago.com/classes/mma" },
+            { name: "Home", url: GYM.url },
+            { name: "Classes", url: `${GYM.url}/classes` },
+            { name: "MMA", url: URL },
           ]),
         ]}
       />
-      <article className="mx-auto max-w-4xl space-y-6">
-        <nav aria-label="Breadcrumb">
-          <ol className="flex gap-2 text-sm text-muted-foreground">
-            <li><Link href="/">Home</Link></li>
-            <li aria-hidden="true">›</li>
-            <li><Link href="/classes">Classes</Link></li>
-            <li aria-hidden="true">›</li>
-            <li aria-current="page">MMA</li>
-          </ol>
-        </nav>
-        <h1>MMA Training in Chicago — Mixed Martial Arts at Mission MMA &amp; Fitness</h1>
-        <p className="text-lg text-muted-foreground">
-          Mission MMA &amp; Fitness offers mixed martial arts (MMA) training at 1620 W Carroll
-          Ave in Chicago&apos;s West Loop. MMA combines the striking of Muay Thai with the
-          grappling of Brazilian Jiu-Jitsu, the takedowns of wrestling, and the conditioning to
-          put it all together. Whether you&apos;re new to martial arts and curious about the sport
-          that defines the modern UFC, or an experienced striker or grappler looking to round out
-          your skill set, our MMA program meets you where you are.
-        </p>
-        <p>
-          <Link href="/free-trial?interest=mma" className="font-bold hover:text-mission-red transition-colors">
-            Claim your free MMA trial class →
-          </Link>
-        </p>
-        {/* TODO Phase 2: hero image, schedule grid */}
-        <section className="space-y-6 pt-4">
-          <h2>Frequently Asked Questions</h2>
-          {faqItems.map((item, i) => (
-            <div key={i} className="space-y-1">
-              <h3>{item.question}</h3>
-              <p className="text-muted-foreground">{item.answer}</p>
-            </div>
-          ))}
-        </section>
-        <p className="pt-4 text-sm text-muted-foreground">
-          See also:{" "}
-          <Link href="/classes/brazilian-jiu-jitsu" className="hover:text-mission-red transition-colors">Brazilian Jiu-Jitsu</Link> ·{" "}
-          <Link href="/classes/muay-thai" className="hover:text-mission-red transition-colors">Muay Thai</Link> ·{" "}
-          <Link href="/classes/strength-conditioning" className="hover:text-mission-red transition-colors">Strength &amp; Conditioning</Link> ·{" "}
-          <Link href="/schedule" className="hover:text-mission-red transition-colors">Schedule</Link>
-        </p>
-      </article>
-    </main>
+      <ClassPageTemplate content={CONTENT} />
+    </>
   );
 }

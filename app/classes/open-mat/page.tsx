@@ -1,40 +1,29 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { buildMetadata } from "@/lib/seo";
+import { buildClassPageMetadata } from "@/lib/seo";
 import {
   JsonLdScript,
   buildCourse,
   buildFaqPage,
   buildBreadcrumbList,
+  GYM,
 } from "@/lib/schema";
+import {
+  ClassPageTemplate,
+  type ClassPageContent,
+} from "@/components/sections/class-page-template";
 
-export const metadata: Metadata = buildMetadata({
-  title: "BJJ Open Mat Chicago | Mission MMA — Friday Open Mat & Women's Open Mat",
-  description:
-    "Brazilian Jiu-Jitsu (BJJ / jiu-jitsu) open mat in Chicago's West Loop. Friday adult open mat, Saturday women's open mat, plus open weight training. Drop-ins welcome.",
-  path: "/classes/open-mat",
-  keywords: [
-    "bjj open mat chicago",
-    "jiu jitsu open mat chicago",
-    "brazilian jiu jitsu open mat chicago",
-    "open mat west loop",
-    "bjj open mat west loop",
-    "womens open mat chicago",
-    "bjj rolling chicago",
-    "jiu jitsu drop in chicago",
-    "open mat near me",
-  ],
-  absoluteTitle: true,
-});
+const SLUG = "open-mat";
+const URL = `${GYM.url}/classes/${SLUG}`;
 
-const faqItems = [
+const FAQ = [
   {
     question: "Can I drop in for open mat if I'm not a member?",
     answer:
       "Visitors from other gyms are welcome at our open mat sessions. We ask that you bring your own gear and follow standard BJJ open mat etiquette. Contact us before your first visit so we can confirm details.",
   },
   {
-    question: "What's the difference between Open Mat and Open Weight Training?",
+    question:
+      "What's the difference between Open Mat and Open Weight Training?",
     answer:
       "Adult Open Mat is BJJ-focused — rolling and drilling. Open Weight Training is a more general training session for adults that can include grappling, conditioning, or technique work depending on who shows up.",
   },
@@ -60,74 +49,90 @@ const faqItems = [
   },
 ];
 
+export const metadata: Metadata = buildClassPageMetadata({
+  className: "BJJ Open Mat",
+  slug: SLUG,
+  title:
+    "BJJ Open Mat Chicago | Mission MMA — Friday Open Mat & Women's Open Mat",
+  description:
+    "Brazilian Jiu-Jitsu (BJJ / jiu-jitsu) open mat in Chicago's West Loop. Friday adult open mat, Saturday women's open mat, plus open weight training. Drop-ins welcome.",
+  keywords: [
+    "bjj open mat chicago",
+    "jiu jitsu open mat chicago",
+    "brazilian jiu jitsu open mat chicago",
+    "open mat west loop",
+    "bjj open mat west loop",
+    "womens open mat chicago",
+    "bjj rolling chicago",
+    "jiu jitsu drop in chicago",
+    "open mat near me",
+  ],
+});
+
+const CONTENT: ClassPageContent = {
+  title: "BJJ Open Mat in Chicago — Open Mat at Mission MMA & Fitness",
+  dek: "Adult BJJ open mat Fridays at 6:30 PM, women's-only open mat Saturdays at 10:30 AM. Members and visiting grapplers welcome.",
+  heroImage:
+    "https://images.pexels.com/photos/6253307/pexels-photo-6253307.jpeg?auto=compress&cs=tinysrgb&w=1920",
+  heroImageAlt: "BJJ open mat rolling at Mission MMA & Fitness",
+  slug: SLUG,
+  introParagraph:
+    "Mission MMA & Fitness runs Brazilian Jiu-Jitsu open mat sessions at 1620 W Carroll Ave in Chicago's West Loop. Our adult BJJ open mat (Friday 6:30 PM) and women's-only jiu jitsu open mat (Saturday 10:30 AM) give grapplers structured time to roll, drill, and train without a formal class agenda. Whether you're a Mission member looking for extra mat time or a visiting BJJ practitioner from another Chicago gym, you're welcome to roll with us.",
+  whatYoullLearn: [
+    "Unstructured rolling time to apply techniques from your regular classes under live conditions",
+    "Exposure to varied partners — different body types, experience levels, and styles",
+    "The freedom to focus on specific positions or transitions you want to work on",
+  ],
+  whoFor: [
+    "Mission MMA members looking for extra mat time beyond the regular class schedule",
+    "Visiting BJJ practitioners from other Chicago gyms looking for a place to roll",
+    "Women grapplers seeking a dedicated women-only rolling session Saturday mornings",
+  ],
+  qualitySignals: [
+    {
+      title: "Two Dedicated Open Mat Sessions",
+      body: "Adult BJJ open mat on Fridays at 6:30 PM and women's-only open mat Saturdays at 10:30 AM — two distinct sessions each week.",
+    },
+    {
+      title: "All Belt Levels Welcome",
+      body: "Open mat at Mission MMA is not exclusive. White belts through black belts share the mat, and more experienced practitioners often help newer ones.",
+    },
+    {
+      title: "Drop-Ins From Other Gyms Welcome",
+      body: "Visiting grapplers from other Chicago gyms are welcome. Contact us before your first visit to confirm details and mat fee.",
+    },
+  ],
+  faq: FAQ,
+  finalCtaLabel: "Get in Touch About Open Mat",
+  finalCtaHref: "/contact",
+};
+
 export default function OpenMatPage() {
   return (
-    <main className="min-h-screen px-4 py-16 md:px-8 md:py-24">
+    <>
       <JsonLdScript
         data={[
           buildCourse({
             name: "BJJ Open Mat",
-            description:
-              "Adult BJJ open mat (Friday 6:30 PM) and women's-only jiu jitsu open mat (Saturday 10:30 AM) at Mission MMA & Fitness in Chicago's West Loop. Drop-ins welcome.",
-            url: "https://missionmmachicago.com/classes/open-mat",
+            description: CONTENT.introParagraph,
+            url: URL,
+            alternateNames: [
+              "BJJ Open Mat",
+              "Jiu Jitsu Open Mat",
+              "Brazilian Jiu-Jitsu Open Mat",
+            ],
           }),
-          buildFaqPage(faqItems),
+          buildFaqPage(
+            FAQ.map((f) => ({ question: f.question, answer: f.answer }))
+          ),
           buildBreadcrumbList([
-            { name: "Home", url: "https://missionmmachicago.com" },
-            { name: "Classes", url: "https://missionmmachicago.com/classes" },
-            { name: "Open Mat", url: "https://missionmmachicago.com/classes/open-mat" },
+            { name: "Home", url: GYM.url },
+            { name: "Classes", url: `${GYM.url}/classes` },
+            { name: "Open Mat", url: URL },
           ]),
         ]}
       />
-      <article className="mx-auto max-w-4xl space-y-6">
-        <nav aria-label="Breadcrumb">
-          <ol className="flex gap-2 text-sm text-muted-foreground">
-            <li><Link href="/">Home</Link></li>
-            <li aria-hidden="true">›</li>
-            <li><Link href="/classes">Classes</Link></li>
-            <li aria-hidden="true">›</li>
-            <li aria-current="page">Open Mat</li>
-          </ol>
-        </nav>
-        <h1>BJJ Open Mat in Chicago — Open Mat at Mission MMA &amp; Fitness</h1>
-        <p className="text-lg text-muted-foreground">
-          Mission MMA &amp; Fitness runs Brazilian Jiu-Jitsu open mat sessions at 1620 W Carroll
-          Ave in Chicago&apos;s West Loop. Our adult BJJ open mat (Friday 6:30 PM) and
-          women&apos;s-only jiu jitsu open mat (Saturday 10:30 AM) give grapplers structured time
-          to roll, drill, and train without a formal class agenda. Whether you&apos;re a Mission
-          member looking for extra mat time or a visiting BJJ practitioner from another Chicago
-          gym, you&apos;re welcome to roll with us.
-        </p>
-        <section className="space-y-2">
-          <h2>Open Mat Sessions</h2>
-          <ul className="space-y-1 text-muted-foreground">
-            <li><strong>Friday 6:30 PM</strong> — Adult Open Mat</li>
-            <li><strong>Saturday 8:00 AM</strong> — Adult Open Weight Training</li>
-            <li><strong>Saturday 10:30 AM</strong> — Women&apos;s Brazilian Jiu Jitsu Open Mat</li>
-          </ul>
-        </section>
-        <p>
-          <Link href="/contact" className="font-bold hover:text-mission-red transition-colors">
-            Get in touch about open mat →
-          </Link>
-        </p>
-        {/* TODO Phase 2: schedule grid */}
-        <section className="space-y-6 pt-4">
-          <h2>Frequently Asked Questions</h2>
-          {faqItems.map((item, i) => (
-            <div key={i} className="space-y-1">
-              <h3>{item.question}</h3>
-              <p className="text-muted-foreground">{item.answer}</p>
-            </div>
-          ))}
-        </section>
-        <p className="pt-4 text-sm text-muted-foreground">
-          See also:{" "}
-          <Link href="/classes/brazilian-jiu-jitsu" className="hover:text-mission-red transition-colors">Brazilian Jiu-Jitsu</Link> ·{" "}
-          <Link href="/classes/womens-bjj" className="hover:text-mission-red transition-colors">Women&apos;s BJJ</Link> ·{" "}
-          <Link href="/schedule" className="hover:text-mission-red transition-colors">Full Schedule</Link>
-        </p>
-      </article>
-    </main>
+      <ClassPageTemplate content={CONTENT} />
+    </>
   );
 }
