@@ -4,7 +4,7 @@ import {
   JsonLdScript,
   buildLocalBusiness,
 } from "@/lib/schema";
-import { HomeHero } from "@/components/sections/home-hero";
+import { HeroGeometric } from "@/components/sections/hero-geometric";
 import { ProgramGrid } from "@/components/sections/program-grid";
 import { WhyTrainHere } from "@/components/sections/why-train-here";
 import { StatCounters } from "@/components/sections/stat-counters";
@@ -37,12 +37,7 @@ export default function HomePage() {
     <>
       <JsonLdScript data={buildLocalBusiness()} />
 
-      <HomeHero
-        headline="Chicago's Premier BJJ & Muay Thai Gym"
-        subhead="Train Brazilian Jiu-Jitsu, Muay Thai, and MMA at Mission MMA & Fitness in Chicago's West Loop. High-quality instruction for beginners, experienced grapplers and strikers, women, and kids."
-        ctaLabel="Claim Your Free Class"
-        ctaHref="/free-trial"
-      />
+      <HeroGeometric />
 
       <ProgramGrid />
 
