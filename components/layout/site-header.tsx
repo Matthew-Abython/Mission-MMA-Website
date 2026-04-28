@@ -17,6 +17,7 @@ const PRIMARY_NAV = [
   { href: "/instructors", label: "Coaches" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
+  { href: "/faq", label: "FAQ" },
 ];
 
 const PROGRAM_LINKS = [

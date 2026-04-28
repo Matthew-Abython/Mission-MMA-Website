@@ -13,7 +13,7 @@ const PROGRAMS = [
     aka: "BJJ · Jiu Jitsu",
     description: "Gi and No-Gi grappling for all levels.",
     image:
-      "https://images.pexels.com/photos/4384679/pexels-photo-4384679.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "https://images.pexels.com/photos/6253310/pexels-photo-6253310.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     slug: "muay-thai",
@@ -21,7 +21,7 @@ const PROGRAMS = [
     aka: "Thai Boxing",
     description: "Authentic Thai-style striking — fists, elbows, knees, shins.",
     image:
-      "https://images.pexels.com/photos/7045398/pexels-photo-7045398.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "https://images.pexels.com/photos/6456021/pexels-photo-6456021.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     slug: "mma",
@@ -37,7 +37,7 @@ const PROGRAMS = [
     aka: "Women's Jiu-Jitsu",
     description: "Dedicated women's-only classes plus a women's open mat.",
     image:
-      "https://images.pexels.com/photos/6456021/pexels-photo-6456021.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "https://images.pexels.com/photos/7045398/pexels-photo-7045398.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
   {
     slug: "kids",
@@ -62,7 +62,7 @@ const PROGRAMS = [
     description:
       "Functional fitness designed to support BJJ, Muay Thai, and MMA.",
     image:
-      "https://images.pexels.com/photos/6253310/pexels-photo-6253310.jpeg?auto=compress&cs=tinysrgb&w=1200",
+      "https://images.pexels.com/photos/4384679/pexels-photo-4384679.jpeg?auto=compress&cs=tinysrgb&w=1200",
   },
 ] as const;
 
