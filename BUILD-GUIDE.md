@@ -1,5 +1,7 @@
 # Build Guide — Step-by-Step in Antigravity
 
+> **Phase 3 status (as of 2026-04-27):** ✅ Complete. Lead form live across home, free-trial (with ?interest= deep-linking), all 7 class pages (open-mat excepted), contact, and footer. Real n8n webhook integration verified end-to-end with E.164 phone normalization, 6-second timeout, and graceful error handling. Thank-you page renders with Meta Pixel + GA4 conversion stubs (Pixel script in app/layout.tsx pending, Step 4.6).
+
 This is the executable playbook. Follow phases in order. Each step is sized to be either a copy-paste terminal command or a **"ask me for"** marker meaning come back to Claude chat for the next code drop.
 
 The goal is a deployed website at `missionmmachicago.com` in 7 working days.
