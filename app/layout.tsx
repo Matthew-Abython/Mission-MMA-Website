@@ -87,8 +87,8 @@ export default function RootLayout({
           <SiteHeader />
           {children}
           <StickyMobileCta />
+          <Footer />
         </LazyMotion>
-        <Footer />
       </body>
     </html>
   );

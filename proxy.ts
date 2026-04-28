@@ -12,7 +12,7 @@ const EXACT_REDIRECTS: Record<string, string> = {
   "/Contact": "/contact",
 };
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const destination = EXACT_REDIRECTS[request.nextUrl.pathname];
   if (destination) {
     return NextResponse.redirect(new URL(destination, request.url), {
