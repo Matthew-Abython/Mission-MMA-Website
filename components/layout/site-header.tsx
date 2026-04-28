@@ -54,6 +54,12 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
+          <Link
+            href="/book"
+            className="text-sm font-medium uppercase tracking-wider text-mission-red transition-colors hover:text-mission-white"
+          >
+            Book Free Trial
+          </Link>
         </nav>
 
         {/* Desktop phone */}
@@ -113,6 +119,13 @@ export function SiteHeader() {
                       {link.label}
                     </Link>
                   ))}
+                  <Link
+                    href="/book"
+                    onClick={() => setOpen(false)}
+                    className="block rounded-md px-3 py-3 text-base font-medium uppercase tracking-wider text-mission-red hover:bg-white/5 hover:text-mission-white"
+                  >
+                    Book Free Trial
+                  </Link>
                 </div>
 
                 <div className="mt-6 border-t border-white/10 pt-6">
