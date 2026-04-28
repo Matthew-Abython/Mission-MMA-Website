@@ -1,4 +1,4 @@
-import { BookingCalendar } from "@/components/ui/booking-calendar";
+import { CoachSchedulingCard } from "@/components/ui/coach-scheduling-card";
 import { buildMetadata } from "@/lib/seo";
 
 export const metadata = buildMetadata({
@@ -17,10 +17,10 @@ export default function BookPage() {
             Book Your First Class
           </h1>
           <p className="text-mission-gray-300 text-lg">
-            Free trials available Mondays (Muay Thai) and Thursdays (BJJ). Select a date to get started.
+            Select your discipline, pick a time, and we&apos;ll see you on the mat.
           </p>
         </div>
-        <BookingCalendar />
+        <CoachSchedulingCard />
       </div>
     </main>
   );
