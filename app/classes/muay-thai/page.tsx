@@ -130,7 +130,7 @@ const CONTENT: ClassPageContent = {
   ],
   faq: FAQ,
   finalCtaLabel: "Claim Your Free Muay Thai Trial Class",
-  finalCtaHref: `/free-trial?interest=${SLUG}`,
+  finalCtaHref: "/book",
 };
 
 export default function MuayThaiPage() {

@@ -4,6 +4,7 @@ import { m, useReducedMotion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ChevronDown, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { submitBooking } from "@/app/actions/submit-booking";
 
 interface TimeSlot {
   time: string;
@@ -44,7 +45,7 @@ const defaultCoach: Coach = {
   location: "Chicago, IL",
   rating: 5.0,
   reviewCount: 100,
-  imageUrl: "https://images.pexels.com/photos/4384679/pexels-photo-4384679.jpeg?auto=compress&cs=tinysrgb&w=400",
+  imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
 };
 
 const missionLocations = ["Muay Thai", "Brazilian Jiu-Jitsu"];
@@ -74,7 +75,7 @@ function generateWeekSchedule(discipline: string): DaySchedule[] {
       slots = [{ time: "7:30 PM", available: true }];
     }
 
-    if (i < 14) {
+    if (hasAvailability) {
       days.push({ date: dateStr, dayName, dayNumber: date.getDate(), slots, hasAvailability });
     }
   }
@@ -153,35 +154,26 @@ export function CoachSchedulingCard({
     setIsSubmitting(true);
     setSubmitError(false);
 
-    try {
-      const webhookUrl = process.env.NEXT_PUBLIC_N8N_BOOKING_URL;
-      if (!webhookUrl) throw new Error("No webhook URL configured");
+    const result = await submitBooking({
+      firstName,
+      lastName,
+      email,
+      selectedDate: selectedTimeSlot?.day ?? "",
+      selectedClass: selectedDiscipline,
+      selectedTime: selectedTimeSlot?.time ?? "",
+    });
 
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          selectedDate: selectedTimeSlot?.day,
-          selectedClass: selectedDiscipline,
-          selectedTime: selectedTimeSlot?.time,
-          source: "booking-page",
-        }),
-      });
-
+    if (result.ok) {
       const w = window as Window & { gtag?: (...args: unknown[]) => void };
       if (typeof window !== "undefined" && w.gtag) {
         w.gtag("event", "free_trial_booked", { class: selectedDiscipline });
       }
-
       setSubmitSuccess(true);
-    } catch {
+    } else {
       setSubmitError(true);
-    } finally {
-      setIsSubmitting(false);
     }
+
+    setIsSubmitting(false);
   };
 
   const containerVariants = {

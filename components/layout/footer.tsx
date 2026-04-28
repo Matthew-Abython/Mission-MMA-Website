@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { GYM } from "@/lib/schema";
-import { LeadForm } from "@/components/forms/lead-form";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -53,7 +52,7 @@ const COMPANY_LINKS = [
   { href: "/instructors", label: "Coaches" },
   { href: "/schedule", label: "Schedule" },
   { href: "/contact", label: "Contact" },
-  { href: "/free-trial", label: "Free Trial" },
+  { href: "/book", label: "Free Trial" },
 ];
 
 const SOCIAL_LINKS = [
@@ -171,16 +170,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Column 4: Mini lead form */}
-          <div className="space-y-4">
-            <h2 className="font-display text-sm uppercase tracking-wider text-mission-white">
-              Get a Free Class
-            </h2>
-            <p className="text-sm">
-              Drop your first name and phone — we&apos;ll text within 24 hours.
-            </p>
-            <LeadForm source="footer" variant="compact" />
-          </div>
         </div>
       </div>
 

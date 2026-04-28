@@ -26,7 +26,7 @@ export interface ClassPageContent {
 }
 
 export function ClassPageTemplate({ content }: { content: ClassPageContent }) {
-  const trialHref = `/free-trial?interest=${content.slug}`;
+  const trialHref = "/book";
 
   return (
     <>

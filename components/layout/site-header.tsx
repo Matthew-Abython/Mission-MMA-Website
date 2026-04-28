@@ -74,7 +74,7 @@ export function SiteHeader() {
 
         {/* Desktop CTA */}
         <Link
-          href="/free-trial"
+          href="/book"
           className="hidden rounded-md bg-mission-red px-5 py-2 text-sm font-bold uppercase tracking-wider text-mission-white transition-colors hover:bg-mission-red-dark md:inline-flex"
         >
           Free Trial
@@ -162,7 +162,7 @@ export function SiteHeader() {
               {/* Sticky CTA at the bottom of the sheet */}
               <div className="border-t border-white/10 p-6">
                 <Link
-                  href="/free-trial"
+                  href="/book"
                   onClick={() => setOpen(false)}
                   className="block rounded-md bg-mission-red px-5 py-3 text-center text-sm font-bold uppercase tracking-wider text-mission-white transition-colors hover:bg-mission-red-dark"
                 >

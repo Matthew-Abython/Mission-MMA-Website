@@ -272,7 +272,7 @@ export default function ContactPage() {
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <Link
-                href="/free-trial"
+                href="/book"
                 className="inline-flex items-center justify-center rounded-md bg-mission-red px-8 py-3.5 text-base font-bold uppercase tracking-wider text-mission-white transition-all duration-300 hover:bg-mission-red-dark hover:shadow-[0_8px_32px_rgba(200,16,46,0.4)] focus:outline-none focus-visible:ring-2 focus-visible:ring-mission-white focus-visible:ring-offset-2 focus-visible:ring-offset-mission-black md:text-lg"
               >
                 Claim Free Trial

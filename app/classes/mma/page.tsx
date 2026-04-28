@@ -121,7 +121,7 @@ const CONTENT: ClassPageContent = {
   ],
   faq: FAQ,
   finalCtaLabel: "Claim Your Free MMA Trial Class",
-  finalCtaHref: `/free-trial?interest=${SLUG}`,
+  finalCtaHref: "/book",
 };
 
 export default function MmaPage() {

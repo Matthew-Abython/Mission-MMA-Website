@@ -106,12 +106,12 @@ export function HeroGeometric({
         )}
 
         {reduced ? (
-          <Link href="/free-trial" className="inline-block bg-mission-red hover:bg-mission-red-dark text-white font-display uppercase tracking-wider text-lg px-10 py-4 rounded transition-colors duration-200">
+          <Link href="/book" className="inline-block bg-mission-red hover:bg-mission-red-dark text-white font-display uppercase tracking-wider text-lg px-10 py-4 rounded transition-colors duration-200">
             Claim Your Free Class
           </Link>
         ) : (
           <m.div custom={4} variants={textVariants} initial="hidden" animate="visible">
-            <Link href="/free-trial" className="inline-block bg-mission-red hover:bg-mission-red-dark text-white font-display uppercase tracking-wider text-lg px-10 py-4 rounded transition-colors duration-200">
+            <Link href="/book" className="inline-block bg-mission-red hover:bg-mission-red-dark text-white font-display uppercase tracking-wider text-lg px-10 py-4 rounded transition-colors duration-200">
               Claim Your Free Class
             </Link>
           </m.div>

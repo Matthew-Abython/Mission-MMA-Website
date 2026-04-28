@@ -21,6 +21,10 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
+      // Retire /free-trial as an entry point — /book is now canonical.
+      { source: "/free-trial", destination: "/book", permanent: true },
+      { source: "/free-trial/thank-you", destination: "/book", permanent: true },
+
       // Class pages — old capitalized hyphenated URLs to new lowercase slugs.
       // Note: /classes/Brazilian-Jiu-Jitsu, /classes/MMA, and /Contact are
       // handled in middleware.ts — Next.js redirect matching is case-insensitive

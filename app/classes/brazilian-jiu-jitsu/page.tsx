@@ -129,7 +129,7 @@ const CONTENT: ClassPageContent = {
   ],
   faq: FAQ,
   finalCtaLabel: "Claim Your Free BJJ Trial Class",
-  finalCtaHref: `/free-trial?interest=${SLUG}`,
+  finalCtaHref: "/book",
 };
 
 export default function BrazilianJiuJitsuPage() {

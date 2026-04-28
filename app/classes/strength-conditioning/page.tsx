@@ -109,7 +109,7 @@ const CONTENT: ClassPageContent = {
   ],
   faq: FAQ,
   finalCtaLabel: "Claim Your Free Strength & Conditioning Trial",
-  finalCtaHref: `/free-trial?interest=${SLUG}`,
+  finalCtaHref: "/book",
 };
 
 export default function StrengthConditioningPage() {
