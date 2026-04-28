@@ -10,6 +10,8 @@ import { WhyTrainHere } from "@/components/sections/why-train-here";
 import { StatCounters } from "@/components/sections/stat-counters";
 import { TestimonialMarquee } from "@/components/sections/testimonial-marquee";
 import { LeadForm } from "@/components/forms/lead-form";
+import { FaqSection } from "@/components/sections/faq-section";
+import { FAQ_ITEMS, HOME_FAQ_IDS } from "@/lib/faq-data";
 
 export const metadata: Metadata = buildMetadata({
   title: "Mission MMA & Fitness — Chicago's Premier BJJ & Muay Thai Gym",
@@ -29,6 +31,8 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default function HomePage() {
+  const homeFaqs = FAQ_ITEMS.filter((q) => HOME_FAQ_IDS.includes(q.id));
+
   return (
     <>
       <JsonLdScript data={buildLocalBusiness()} />
@@ -62,6 +66,8 @@ export default function HomePage() {
           </p>
         </div>
       </section>
+
+      <FaqSection items={homeFaqs} />
 
       <section className="bg-mission-gray-900 px-4 py-20 md:px-8 md:py-28">
         <div className="mx-auto max-w-3xl">
