@@ -9,6 +9,7 @@ import { ProgramGrid } from "@/components/sections/program-grid";
 import { WhyTrainHere } from "@/components/sections/why-train-here";
 import { StatCounters } from "@/components/sections/stat-counters";
 import { TestimonialMarquee } from "@/components/sections/testimonial-marquee";
+import { LeadForm } from "@/components/forms/lead-form";
 
 export const metadata: Metadata = buildMetadata({
   title: "Mission MMA & Fitness — Chicago's Premier BJJ & Muay Thai Gym",
@@ -59,6 +60,23 @@ export default function HomePage() {
             coaches teach beginners through advanced students with verifiable
             lineage and competition experience.
           </p>
+        </div>
+      </section>
+
+      <section className="bg-mission-gray-900 px-4 py-20 md:px-8 md:py-28">
+        <div className="mx-auto max-w-3xl">
+          <div className="rounded-lg border border-white/10 bg-mission-black/60 p-6 md:p-10">
+            <div className="text-center">
+              <h2>Claim Your Free Class</h2>
+              <p className="mt-3 text-mission-gray-300">
+                Your first class is on us. Brazilian Jiu-Jitsu, Muay Thai, MMA,
+                and more.
+              </p>
+            </div>
+            <div className="mx-auto mt-8 max-w-md">
+              <LeadForm source="home" />
+            </div>
+          </div>
         </div>
       </section>
     </>

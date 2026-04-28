@@ -105,6 +105,7 @@ const CONTENT: ClassPageContent = {
   faq: FAQ,
   finalCtaLabel: "Get in Touch About Open Mat",
   finalCtaHref: "/contact",
+  embedForm: false,
 };
 
 export default function OpenMatPage() {

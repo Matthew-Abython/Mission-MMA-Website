@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { buildMetadata } from "@/lib/seo";
-import { JsonLdScript, buildLocalBusiness, buildBreadcrumbList, GYM } from "@/lib/schema";
+import {
+  JsonLdScript,
+  buildLocalBusiness,
+  buildBreadcrumbList,
+  GYM,
+} from "@/lib/schema";
+import { LeadForm } from "@/components/forms/lead-form";
 
 export const metadata: Metadata = buildMetadata({
   title: "Free Trial Class at Mission MMA & Fitness — Chicago West Loop",
@@ -18,65 +23,94 @@ export const metadata: Metadata = buildMetadata({
   absoluteTitle: true,
 });
 
-export default function FreeTrialPage() {
+const VALID_INTERESTS = new Set([
+  "brazilian-jiu-jitsu",
+  "muay-thai",
+  "mma",
+  "womens-bjj",
+  "kids",
+  "strength-conditioning",
+]);
+
+export default async function FreeTrialPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ interest?: string }>;
+}) {
+  const params = await searchParams;
+  const interest =
+    params.interest && VALID_INTERESTS.has(params.interest)
+      ? params.interest
+      : undefined;
+
   return (
-    <main className="min-h-screen px-4 py-16 md:px-8 md:py-24">
+    <>
       <JsonLdScript
         data={[
           buildLocalBusiness(),
           buildBreadcrumbList([
-            { name: "Home", url: "https://missionmmachicago.com" },
-            { name: "Free Trial", url: "https://missionmmachicago.com/free-trial" },
+            { name: "Home", url: GYM.url },
+            { name: "Free Trial", url: `${GYM.url}/free-trial` },
           ]),
         ]}
       />
-      <article className="mx-auto max-w-4xl space-y-6">
-        <nav aria-label="Breadcrumb">
-          <ol className="flex gap-2 text-sm text-muted-foreground">
-            <li><Link href="/">Home</Link></li>
-            <li aria-hidden="true">›</li>
-            <li aria-current="page">Free Trial</li>
-          </ol>
-        </nav>
-        <h1>Claim Your Free Class at Mission MMA &amp; Fitness</h1>
-        <p className="text-lg text-muted-foreground">
-          Mission MMA &amp; Fitness offers a free trial class for anyone interested in Brazilian
-          Jiu-Jitsu (BJJ), Muay Thai, MMA, Women&apos;s BJJ, Kids Martial Arts, or Strength and
-          Conditioning at our gym at 1620 W Carroll Ave in Chicago&apos;s West Loop. No commitment,
-          no experience required — just show up, meet the coaches, and try a class.
-        </p>
-        <section className="space-y-3">
-          <h2>How to Claim Your Free Class</h2>
-          <p className="text-muted-foreground">
-            Call or text us at{" "}
-            <a href={`tel:${GYM.telephone}`} className="font-medium text-foreground hover:text-mission-red transition-colors">
-              (312) 265-1856
-            </a>{" "}
-            or email{" "}
-            <a href={`mailto:${GYM.email}`} className="font-medium text-foreground hover:text-mission-red transition-colors">
-              {GYM.email}
-            </a>{" "}
-            to schedule your free trial. Let us know which class you&apos;re interested in and we&apos;ll
-            get you set up for the next available session.
-          </p>
+
+      <main>
+        <section className="bg-mission-black px-4 py-20 md:px-8 md:py-28">
+          <div className="mx-auto grid max-w-6xl grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center lg:gap-16">
+            {/* Left column — H1 + sales copy */}
+            <div className="space-y-6">
+              <h1>
+                Claim Your Free Class at Mission MMA &amp; Fitness
+              </h1>
+              <p className="text-lg text-mission-gray-300 md:text-xl">
+                Your first class is on us — Brazilian Jiu-Jitsu, Muay Thai,
+                MMA, Women&apos;s BJJ, Kids, or Strength &amp; Conditioning.
+                No commitment, no pressure. Just come train.
+              </p>
+              <ul className="space-y-2 text-mission-gray-300">
+                <li className="flex items-start gap-2">
+                  <span
+                    className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-mission-red"
+                    aria-hidden="true"
+                  />
+                  We&apos;ll text you within 24 hours to schedule
+                </li>
+                <li className="flex items-start gap-2">
+                  <span
+                    className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-mission-red"
+                    aria-hidden="true"
+                  />
+                  Bring athletic clothes — we provide everything else
+                </li>
+                <li className="flex items-start gap-2">
+                  <span
+                    className="mt-2 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-mission-red"
+                    aria-hidden="true"
+                  />
+                  Beginners welcome — no martial arts experience needed
+                </li>
+              </ul>
+            </div>
+
+            {/* Right column — form */}
+            <div className="rounded-lg border border-white/10 bg-mission-gray-900/40 p-6 md:p-8">
+              <h2 className="font-display text-xl uppercase text-mission-white md:text-2xl">
+                Get Started
+              </h2>
+              <p className="mt-2 text-sm text-mission-gray-300">
+                Fill out the form and a coach will reach out shortly.
+              </p>
+              <div className="mt-6">
+                <LeadForm
+                  source="free-trial-hero"
+                  defaultInterest={interest}
+                />
+              </div>
+            </div>
+          </div>
         </section>
-        <section className="space-y-3">
-          <h2>What to Bring</h2>
-          <p className="text-muted-foreground">
-            Athletic clothes and a water bottle. We have changing facilities. No equipment needed
-            — we&apos;ll guide you through everything on your first day.
-          </p>
-        </section>
-        {/* TODO Phase 3: inline contact form replacing call/email CTA */}
-        <p className="pt-4 text-sm text-muted-foreground">
-          Explore our programs:{" "}
-          <Link href="/classes/brazilian-jiu-jitsu" className="hover:text-mission-red transition-colors">BJJ</Link> ·{" "}
-          <Link href="/classes/muay-thai" className="hover:text-mission-red transition-colors">Muay Thai</Link> ·{" "}
-          <Link href="/classes/mma" className="hover:text-mission-red transition-colors">MMA</Link> ·{" "}
-          <Link href="/classes/womens-bjj" className="hover:text-mission-red transition-colors">Women&apos;s BJJ</Link> ·{" "}
-          <Link href="/classes/kids" className="hover:text-mission-red transition-colors">Kids</Link>
-        </p>
-      </article>
-    </main>
+      </main>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { LeadForm } from "@/components/forms/lead-form";
 import { buildMetadata } from "@/lib/seo";
 import {
   JsonLdScript,
@@ -238,8 +239,31 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* CTA */}
+        {/* Contact form */}
         <section className="bg-mission-gray-900 px-4 py-16 md:px-8 md:py-24">
+          <div className="mx-auto max-w-3xl">
+            <div className="rounded-lg border border-white/10 bg-mission-black/60 p-6 md:p-10">
+              <h2>Send a Quick Message</h2>
+              <p className="mt-3 text-mission-gray-300">
+                Drop your info and we&apos;ll get back to you. For immediate
+                questions, call{" "}
+                <a
+                  href="tel:+13122651856"
+                  className="text-mission-red hover:text-mission-white"
+                >
+                  312-265-1856
+                </a>
+                .
+              </p>
+              <div className="mt-8 max-w-md">
+                <LeadForm source="contact" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="bg-mission-black px-4 py-16 md:px-8 md:py-24">
           <div className="mx-auto max-w-3xl text-center">
             <h2>Ready to Train?</h2>
             <p className="mt-4 text-mission-gray-300">

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { GraduationCap, Target, Sparkles, Users, Calendar } from "lucide-react";
+import { LeadForm } from "@/components/forms/lead-form";
 import {
   Accordion,
   AccordionContent,
@@ -21,6 +22,7 @@ export interface ClassPageContent {
   faq: { question: string; answer: string }[];
   finalCtaLabel: string;
   finalCtaHref: string;
+  embedForm?: boolean;
 }
 
 export function ClassPageTemplate({ content }: { content: ClassPageContent }) {
@@ -153,29 +155,53 @@ export function ClassPageTemplate({ content }: { content: ClassPageContent }) {
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="bg-mission-black px-4 py-16 md:px-8 md:py-24">
-        <div className="mx-auto max-w-3xl text-center">
-          <h2>
-            <GraduationCap
-              className="mx-auto mb-4 h-12 w-12 text-mission-red"
-              strokeWidth={1.5}
-              aria-hidden="true"
-            />
-            Ready to Start?
-          </h2>
-          <p className="mt-4 text-mission-gray-300">
-            Your first class is on us. No commitment, no pressure — just come
-            train.
-          </p>
-          <Link
-            href={content.finalCtaHref}
-            className="mt-8 inline-flex items-center justify-center rounded-md bg-mission-red px-10 py-4 text-base font-bold uppercase tracking-wider text-mission-white transition-all duration-300 hover:bg-mission-red-dark hover:shadow-[0_8px_32px_rgba(200,16,46,0.4)] focus:outline-none focus-visible:ring-2 focus-visible:ring-mission-white focus-visible:ring-offset-2 focus-visible:ring-offset-mission-black md:text-lg"
-          >
-            {content.finalCtaLabel}
-          </Link>
-        </div>
-      </section>
+      {/* Final CTA — form (default) or button-only (open-mat) */}
+      {content.embedForm !== false ? (
+        <section className="bg-mission-black px-4 py-16 md:px-8 md:py-24">
+          <div className="mx-auto max-w-3xl">
+            <div className="rounded-lg border border-white/10 bg-mission-gray-900/40 p-6 md:p-10">
+              <div className="text-center">
+                <h2 className="font-display text-3xl uppercase text-mission-white md:text-4xl">
+                  Ready to Start?
+                </h2>
+                <p className="mt-3 text-mission-gray-300">
+                  Your first class is on us. Drop your info — we&apos;ll text
+                  within 24 hours.
+                </p>
+              </div>
+              <div className="mx-auto mt-8 max-w-md">
+                <LeadForm
+                  source={`class-${content.slug}`}
+                  defaultInterest={content.slug}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section className="bg-mission-black px-4 py-16 md:px-8 md:py-24">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2>
+              <GraduationCap
+                className="mx-auto mb-4 h-12 w-12 text-mission-red"
+                strokeWidth={1.5}
+                aria-hidden="true"
+              />
+              Ready to Start?
+            </h2>
+            <p className="mt-4 text-mission-gray-300">
+              Your first class is on us. No commitment, no pressure — just come
+              train.
+            </p>
+            <Link
+              href={content.finalCtaHref}
+              className="mt-8 inline-flex items-center justify-center rounded-md bg-mission-red px-10 py-4 text-base font-bold uppercase tracking-wider text-mission-white transition-all duration-300 hover:bg-mission-red-dark hover:shadow-[0_8px_32px_rgba(200,16,46,0.4)] focus:outline-none focus-visible:ring-2 focus-visible:ring-mission-white focus-visible:ring-offset-2 focus-visible:ring-offset-mission-black md:text-lg"
+            >
+              {content.finalCtaLabel}
+            </Link>
+          </div>
+        </section>
+      )}
     </>
   );
 }

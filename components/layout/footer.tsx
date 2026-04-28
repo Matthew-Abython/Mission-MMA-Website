@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin, Phone, Mail } from "lucide-react";
 import { GYM } from "@/lib/schema";
+import { LeadForm } from "@/components/forms/lead-form";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -178,38 +179,7 @@ export function Footer() {
             <p className="text-sm">
               Drop your first name and phone — we&apos;ll text within 24 hours.
             </p>
-            {/* TODO Phase 3: wire this form to the n8n webhook server action.
-                Markup is structurally identical to the main lead form so the same
-                form component can be reused with a "compact" variant prop. */}
-            <form
-              className="space-y-2"
-              action="/free-trial"
-              method="get"
-              aria-label="Quick free trial signup"
-            >
-              <input
-                type="text"
-                name="firstName"
-                placeholder="First name"
-                aria-label="First name"
-                required
-                className="w-full rounded-md border border-white/10 bg-mission-black px-3 py-2 text-sm text-mission-white placeholder:text-mission-gray-500 focus:border-mission-red focus:outline-none"
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone"
-                aria-label="Phone number"
-                required
-                className="w-full rounded-md border border-white/10 bg-mission-black px-3 py-2 text-sm text-mission-white placeholder:text-mission-gray-500 focus:border-mission-red focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="w-full rounded-md bg-mission-red px-3 py-2 text-sm font-bold uppercase tracking-wider text-mission-white transition-colors hover:bg-mission-red-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-mission-white focus-visible:ring-offset-2 focus-visible:ring-offset-mission-gray-900"
-              >
-                Continue
-              </button>
-            </form>
+            <LeadForm source="footer" variant="compact" />
           </div>
         </div>
       </div>
