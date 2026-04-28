@@ -35,6 +35,7 @@ const STATS = [
     label: "Training Since",
     suffix: "",
     description: "Serving Chicago's West Loop community",
+    noFormat: true,
   },
 ];
 
@@ -69,7 +70,7 @@ export function StatCounters() {
               className="flex flex-col items-start"
             >
               <div className="font-display text-5xl font-bold leading-none text-mission-red md:text-6xl lg:text-7xl">
-                <AnimatedCounter to={stat.value} />
+                <AnimatedCounter to={stat.value} noFormat={stat.noFormat} />
                 {stat.suffix && <span>{stat.suffix}</span>}
               </div>
               <div className="mt-3 font-display text-base uppercase text-mission-white md:text-lg">

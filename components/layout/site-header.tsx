@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu } from "lucide-react";
+import { Menu, Phone } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -55,6 +55,15 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
+
+        {/* Desktop phone */}
+        <a
+          href="tel:3122651856"
+          className="hidden items-center gap-1.5 text-sm text-mission-gray-300 hover:text-mission-white md:flex"
+        >
+          <Phone className="h-4 w-4" aria-hidden="true" />
+          312-265-1856
+        </a>
 
         {/* Desktop CTA */}
         <Link
@@ -124,6 +133,17 @@ export function SiteHeader() {
                   </div>
                 </div>
               </nav>
+
+              {/* Phone number in mobile menu */}
+              <div className="border-t border-white/10 px-6 py-5">
+                <a
+                  href="tel:3122651856"
+                  className="flex items-center gap-2 text-sm text-mission-gray-300 hover:text-mission-white"
+                >
+                  <Phone className="h-4 w-4 text-mission-red" aria-hidden="true" />
+                  312-265-1856
+                </a>
+              </div>
 
               {/* Sticky CTA at the bottom of the sheet */}
               <div className="border-t border-white/10 p-6">
