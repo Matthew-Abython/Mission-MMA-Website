@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
+import { m, useReducedMotion, AnimatePresence } from "framer-motion";
 import { useState, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight, ChevronDown, Star } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -200,7 +200,7 @@ export function CoachSchedulingCard({
   };
 
   return (
-    <motion.div
+    <m.div
       variants={shouldAnimate ? containerVariants : {}}
       initial={shouldAnimate ? "hidden" : "visible"}
       animate="visible"
@@ -209,17 +209,17 @@ export function CoachSchedulingCard({
       <div className="relative h-auto">
 
         {/* ── MAIN VIEW ── */}
-        <motion.div
+        <m.div
           initial={false}
           animate={{ y: showConfirmationView ? "-20px" : "0px", opacity: showConfirmationView ? 0.3 : 1, scale: showConfirmationView ? 0.95 : 1 }}
           transition={{ type: "spring", stiffness: 300, damping: 30, mass: 0.8 }}
           className="w-full"
         >
-          <motion.div variants={shouldAnimate ? itemVariants : {}} className="p-6 pb-6">
+          <m.div variants={shouldAnimate ? itemVariants : {}} className="p-6 pb-6">
             <div className="flex items-start justify-between gap-6">
-              <motion.div whileHover={shouldAnimate ? { scale: 1.05 } : {}} className="flex-shrink-0">
+              <m.div whileHover={shouldAnimate ? { scale: 1.05 } : {}} className="flex-shrink-0">
                 <img src={coach.imageUrl} alt={coach.name} className="w-16 h-16 rounded-lg object-cover" />
-              </motion.div>
+              </m.div>
               <div className="flex-1 min-w-0 space-y-4">
                 <h2 className="text-xl font-semibold text-foreground">{coach.name}</h2>
                 <div className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
@@ -239,12 +239,12 @@ export function CoachSchedulingCard({
                 <p className="text-2xl font-bold text-emerald-500">$0</p>
               </div>
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={shouldAnimate ? itemVariants : {}} className="px-6 pb-4 relative z-50" style={{ overflow: "visible" }}>
+          <m.div variants={shouldAnimate ? itemVariants : {}} className="px-6 pb-4 relative z-50" style={{ overflow: "visible" }}>
             <label className="block text-sm text-muted-foreground mb-2">Choose your free trial class</label>
             <div className="relative z-50" ref={dropdownRef}>
-              <motion.button
+              <m.button
                 whileHover={shouldAnimate ? { scale: 1.01 } : {}}
                 whileTap={shouldAnimate ? { scale: 0.99 } : {}}
                 onClick={() => setIsLocationDropdownOpen(!isLocationDropdownOpen)}
@@ -254,10 +254,10 @@ export function CoachSchedulingCard({
               >
                 <span className="text-foreground">{selectedDiscipline}</span>
                 <ChevronDown className={cn("w-4 h-4 text-muted-foreground transition-transform", isLocationDropdownOpen && "rotate-180")} />
-              </motion.button>
+              </m.button>
               <AnimatePresence>
                 {isLocationDropdownOpen && (
-                  <motion.div
+                  <m.div
                     initial={shouldAnimate ? { opacity: 0, y: -10, scale: 0.95 } : {}}
                     animate={shouldAnimate ? { opacity: 1, y: 0, scale: 1 } : {}}
                     exit={shouldAnimate ? { opacity: 0, y: -10, scale: 0.95 } : {}}
@@ -266,7 +266,7 @@ export function CoachSchedulingCard({
                     role="listbox"
                   >
                     {missionLocations.map((discipline, index) => (
-                      <motion.button
+                      <m.button
                         key={discipline}
                         initial={shouldAnimate ? { opacity: 0, x: -10 } : {}}
                         animate={shouldAnimate ? { opacity: 1, x: 0 } : {}}
@@ -277,9 +277,9 @@ export function CoachSchedulingCard({
                         className="w-full text-left p-3 hover:bg-muted transition-colors text-foreground"
                       >
                         {discipline}
-                      </motion.button>
+                      </m.button>
                     ))}
-                  </motion.div>
+                  </m.div>
                 )}
               </AnimatePresence>
             </div>
@@ -288,33 +288,33 @@ export function CoachSchedulingCard({
                 ? "Muay Thai free trials are held every Monday at 5:30 PM"
                 : "BJJ free trials are held every Thursday at 7:30 PM"}
             </p>
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={shouldAnimate ? itemVariants : {}} className="mx-6 border-t border-border/50" />
+          <m.div variants={shouldAnimate ? itemVariants : {}} className="mx-6 border-t border-border/50" />
 
-          <motion.div variants={shouldAnimate ? itemVariants : {}} className="p-6 pb-4">
+          <m.div variants={shouldAnimate ? itemVariants : {}} className="p-6 pb-4">
             <div className="flex items-center justify-between">
-              <motion.button whileHover={shouldAnimate ? { scale: 1.05 } : {}} whileTap={shouldAnimate ? { scale: 0.95 } : {}} onClick={() => onWeekChange?.("prev")} aria-label="Previous week" className="p-2 hover:bg-muted rounded-lg transition-colors">
+              <m.button whileHover={shouldAnimate ? { scale: 1.05 } : {}} whileTap={shouldAnimate ? { scale: 0.95 } : {}} onClick={() => onWeekChange?.("prev")} aria-label="Previous week" className="p-2 hover:bg-muted rounded-lg transition-colors">
                 <ChevronLeft className="w-5 h-5 text-muted-foreground" />
-              </motion.button>
+              </m.button>
               <h3 className="font-semibold text-foreground">Upcoming Availability</h3>
-              <motion.button whileHover={shouldAnimate ? { scale: 1.05 } : {}} whileTap={shouldAnimate ? { scale: 0.95 } : {}} onClick={() => onWeekChange?.("next")} aria-label="Next week" className="p-2 hover:bg-muted rounded-lg transition-colors">
+              <m.button whileHover={shouldAnimate ? { scale: 1.05 } : {}} whileTap={shouldAnimate ? { scale: 0.95 } : {}} onClick={() => onWeekChange?.("next")} aria-label="Next week" className="p-2 hover:bg-muted rounded-lg transition-colors">
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
-              </motion.button>
+              </m.button>
             </div>
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={shouldAnimate ? itemVariants : {}} className="px-6 pb-6 space-y-4">
+          <m.div variants={shouldAnimate ? itemVariants : {}} className="px-6 pb-6 space-y-4">
             {weekSchedule.map((day) => (
-              <motion.div key={day.date} variants={shouldAnimate ? itemVariants : {}} className="space-y-3">
+              <m.div key={day.date} variants={shouldAnimate ? itemVariants : {}} className="space-y-3">
                 <div className="flex items-center justify-between">
                   <h4 className="font-medium text-foreground">{day.dayName}, {day.date}</h4>
                   {!day.hasAvailability && <span className="text-sm text-muted-foreground">No Availability</span>}
                 </div>
                 {day.hasAvailability && (
-                  <motion.div variants={shouldAnimate ? containerVariants : {}} className="flex flex-wrap gap-2">
+                  <m.div variants={shouldAnimate ? containerVariants : {}} className="flex flex-wrap gap-2">
                     {day.slots.map((slot) => (
-                      <motion.button
+                      <m.button
                         key={`${day.date}-${slot.time}`}
                         variants={shouldAnimate ? timeSlotVariants : {}}
                         whileHover={shouldAnimate && slot.available ? { scale: 1.05, y: -2 } : {}}
@@ -329,24 +329,24 @@ export function CoachSchedulingCard({
                         )}
                       >
                         {slot.time}
-                      </motion.button>
+                      </m.button>
                     ))}
-                  </motion.div>
+                  </m.div>
                 )}
-              </motion.div>
+              </m.div>
             ))}
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={shouldAnimate ? itemVariants : {}} className="border-t border-border/50 p-6">
+          <m.div variants={shouldAnimate ? itemVariants : {}} className="border-t border-border/50 p-6">
             <div className="flex gap-3">
-              <motion.button whileHover={shouldAnimate ? { scale: 1.02 } : {}} whileTap={shouldAnimate ? { scale: 0.98 } : {}} className="flex-1 bg-muted text-muted-foreground py-2.5 rounded-lg hover:bg-muted/80 transition-colors">Cancel</motion.button>
-              <motion.button whileHover={shouldAnimate ? { scale: 1.02 } : {}} whileTap={shouldAnimate ? { scale: 0.98 } : {}} className="flex-1 bg-red-600 text-white py-2.5 rounded-lg hover:bg-red-700 transition-colors font-medium">Next</motion.button>
+              <m.button whileHover={shouldAnimate ? { scale: 1.02 } : {}} whileTap={shouldAnimate ? { scale: 0.98 } : {}} className="flex-1 bg-muted text-muted-foreground py-2.5 rounded-lg hover:bg-muted/80 transition-colors">Cancel</m.button>
+              <m.button whileHover={shouldAnimate ? { scale: 1.02 } : {}} whileTap={shouldAnimate ? { scale: 0.98 } : {}} className="flex-1 bg-red-600 text-white py-2.5 rounded-lg hover:bg-red-700 transition-colors font-medium">Next</m.button>
             </div>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
 
         {/* ── CONFIRMATION VIEW ── */}
-        <motion.div
+        <m.div
           initial={false}
           animate={{ y: showConfirmationView && !showFormView ? "0%" : "100%", opacity: showConfirmationView && !showFormView ? 1 : 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30, mass: 0.8 }}
@@ -354,10 +354,10 @@ export function CoachSchedulingCard({
         >
           <div className="p-6 space-y-6">
             <div className="flex items-center justify-between">
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleBackToMain} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+              <m.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleBackToMain} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                 <ChevronLeft className="w-4 h-4" />
                 <span className="text-sm font-medium">Back</span>
-              </motion.button>
+              </m.button>
               <h3 className="text-lg font-semibold text-foreground">Confirm Booking</h3>
               <div />
             </div>
@@ -384,7 +384,7 @@ export function CoachSchedulingCard({
                 </div>
               </div>
             )}
-            <motion.button
+            <m.button
               whileHover={shouldAnimate ? { scale: 1.02, y: -1 } : {}}
               whileTap={shouldAnimate ? { scale: 0.98 } : {}}
               onClick={handleConfirmBooking}
@@ -395,12 +395,12 @@ export function CoachSchedulingCard({
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
-            </motion.button>
+            </m.button>
           </div>
-        </motion.div>
+        </m.div>
 
         {/* ── FORM VIEW ── */}
-        <motion.div
+        <m.div
           initial={false}
           animate={{ y: showFormView ? "0%" : "100%", opacity: showFormView ? 1 : 0 }}
           transition={{ type: "spring", stiffness: 300, damping: 30, mass: 0.8 }}
@@ -408,10 +408,10 @@ export function CoachSchedulingCard({
         >
           <div className="p-6 space-y-6">
             <div className="flex items-center justify-between">
-              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleBackToConfirmation} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+              <m.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleBackToConfirmation} className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
                 <ChevronLeft className="w-4 h-4" />
                 <span className="text-sm font-medium">Back</span>
-              </motion.button>
+              </m.button>
               <h3 className="text-lg font-semibold text-foreground">Your Details</h3>
               <div />
             </div>
@@ -440,7 +440,7 @@ export function CoachSchedulingCard({
                 {submitError && (
                   <p className="text-sm text-red-500">Something went wrong. Please call us at <a href="tel:3122651856" className="underline font-medium">312-265-1856</a> to book directly.</p>
                 )}
-                <motion.button
+                <m.button
                   whileHover={shouldAnimate ? { scale: 1.02, y: -1 } : {}}
                   whileTap={shouldAnimate ? { scale: 0.98 } : {}}
                   onClick={handleSubmit}
@@ -448,13 +448,13 @@ export function CoachSchedulingCard({
                   className="w-full py-3 rounded-lg font-semibold bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white transition-colors"
                 >
                   {isSubmitting ? "Submitting..." : "Complete My Free Trial Booking"}
-                </motion.button>
+                </m.button>
               </div>
             )}
           </div>
-        </motion.div>
+        </m.div>
 
       </div>
-    </motion.div>
+    </m.div>
   );
 }
