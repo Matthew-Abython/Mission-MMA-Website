@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Oswald } from "next/font/google";
 import { LazyMotion, domAnimation } from "framer-motion";
 import { Footer } from "@/components/layout/footer";
+import { MetaPixel } from "@/components/analytics/meta-pixel";
+import { GA4 } from "@/components/analytics/ga4";
 import { SiteHeader } from "@/components/layout/site-header";
 import { StickyMobileCta } from "@/components/layout/sticky-mobile-cta";
 import "./globals.css";
@@ -83,6 +85,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full bg-background text-foreground flex flex-col font-sans">
+        <MetaPixel />
+        <GA4 />
         <LazyMotion features={domAnimation} strict>
           <SiteHeader />
           {children}
