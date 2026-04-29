@@ -87,7 +87,9 @@ Mission-MMA-Website/
 │   │   ├── site-header.tsx         # Sticky header + mobile hamburger menu
 │   │   └── sticky-mobile-cta.tsx   # Floating "Book" button on mobile
 │   ├── motion/
-│   │   └── animated-counter.tsx    # Scroll-triggered number counter
+│   │   ├── animated-counter.tsx    # Scroll-triggered number counter
+│   │   ├── parallax-section.tsx    # Wrapper: useScroll → y offset (speed prop, ±80px max)
+│   │   └── parallax-text.tsx       # Velocity marquee (useVelocity+useSpring, opacity 0.06 default)
 │   ├── schedule/
 │   │   └── weekly-schedule.tsx     # Filterable 7-day class grid
 │   ├── sections/
@@ -134,6 +136,7 @@ Mission-MMA-Website/
 │       ├── 2026-04-28-free-trial-to-book-consolidation.md
 │       ├── 2026-04-28-framer-motion-variant-propagation-stagger.md
 │       ├── 2026-04-28-hero-mesh-gradient-css-keyframes.md
+│       ├── 2026-04-28-marquee-wrap-direction-math.md
 │       └── 2026-04-28-replace-placeholder-photo-with-owner.md
 │
 ├── public/
@@ -224,6 +227,12 @@ Props: `source: string`, `defaultInterest?: string`, `variant?: "standard" | "co
 
 ### `components/forms/conversion-tracking.tsx` (Client)
 Invisible component. Polls for `window.fbq` + `window.gtag`, fires `fbq("track","Lead")` and `gtag("event","generate_lead")`. Times out after 5s. Place on confirmation pages only.
+
+### `components/motion/parallax-section.tsx` (Client)
+Wraps any children in a scroll-driven y-offset. Props: `speed` (default 0.3, maps to ±24px; 1.0 = ±80px), `className`. Uses `useScroll({ target: ref, offset: ["start end","end start"] })` + `useTransform`. Passes `y: 0` when `useReducedMotion` is true.
+
+### `components/motion/parallax-text.tsx` (Client)
+Infinite horizontal marquee at Oswald `clamp(80px,10vw,140px)`. Props: `text`, `speed` (default 5, in %/s), `direction` ("left"|"right"), `color` (default "white"), `opacity` (default 0.06). Uses `useVelocity` + `useSpring` to add scroll-momentum boost (never reverses base direction). Wrap math: both directions use a 25%-window wrap in `[-25%,0%]`; rightward starts at -25% offset so the loop is seamless. `aria-hidden="true"` — decorative only. All motion disabled when `useReducedMotion` is true.
 
 ### `components/layout/site-header.tsx` (Client)
 Desktop: nav + "Book Free Trial" red button + phone. Mobile: hamburger → Sheet drawer + sticky CTA. All booking CTAs → `/book`.
