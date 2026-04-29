@@ -138,6 +138,7 @@ Mission-MMA-Website/
 │       ├── 2026-04-28-framer-motion-variant-propagation-stagger.md
 │       ├── 2026-04-28-hero-mesh-gradient-css-keyframes.md
 │       ├── 2026-04-28-css-var-in-keyframes.md
+│       ├── 2026-04-28-framer-motion-border-scale-propagation.md
 │       ├── 2026-04-28-marquee-hover-pause-css-vs-waapi.md
 │       ├── 2026-04-28-marquee-wrap-direction-math.md
 │       └── 2026-04-28-replace-placeholder-photo-with-owner.md
@@ -170,7 +171,7 @@ Server component. Sections top to bottom:
 1. `<HeroGeometric>` — full-viewport dark hero. CSS mesh background (two blurred radial gradients orbiting via `orbit1`/`orbit2` keyframes at 18s/25s + diagonal scanline overlay). Staggered Framer Motion reveal: red rule → eyebrow → H1 "FORGE YOUR / MISSION." (glow-pulse keyframe on "MISSION.") → subhead → two CTAs ("Claim Your Free Class" + "View Schedule"). Scroll-fading chevron via `useScroll`+`useTransform`. Optional `videoUrl` prop renders a muted autoplay video behind the mesh. All animations gate on `useReducedMotion`.
 2. `<ProgramGrid>` — bento grid of 7 discipline cards. Top row: 2 featured cards (BJJ + Muay Thai) in `grid-cols-2` at `aspect-video` (16/9). Bottom row: 5 smaller cards in `grid-cols-2 sm:grid-cols-3 lg:grid-cols-5` at `aspect-[4/3]`. Each card: full-bleed `Next/Image`, bottom-to-top gradient overlay, red left-border accent (CSS `group-hover:w-[3px]`), Oswald badge + H3 + Inter description. Framer Motion: `whileHover="cardHover"` on article propagates to image wrapper `m.div` (scale 1.08 zoom); card entrance via `useInView` + `custom={index}` for 0.08s per-card stagger delay. Accepts optional `images?: Partial<Record<Slug, string>>` prop to override any discipline's image URL.
 3. `<WhyTrainHere>` — 3-column value props
-4. `<StatCounters>` — animated numbers ("30+ classes/week", "100+ 5-star reviews")
+4. `<StatCounters>` — 4-col grid (2-col mobile): 30+ Weekly Classes | 100+ 5-Star Reviews | 7 Disciplines | 10+ Years Experience. Background `#111111` + SVG `feTurbulence` fractalNoise grain at 2% opacity + `ParallaxText` "MISSION MMA" watermark behind. Each card: `AnimatedCounter` at Oswald 80px white + red suffix, yellow ★ decoration (reviews), Inter 16px gray-300 label, red bottom border that scaleX expands from `origin-center` via BORDER_VARIANTS propagated from STAGGER_FAST → CARD_VARIANTS → BORDER_VARIANTS (0.4s delay trails the number).
 5. `<TestimonialMarquee>` — two-row infinite marquee. Row 1 scrolls left, Row 2 scrolls right (reversed review order). CSS `@keyframes marquee-left/right` (in globals.css) + React `useState` for hover-pause (`animationPlayState: "paused"`). Cards: 300px wide, #1A1A1A bg, `rgba(200,16,46,0.2)` border, 16px radius, 24px padding; yellow ★★★★★, Inter 15px italic quote, Oswald 14px red name. Edge-fade via `mask-image` linear-gradient. Duplicated array for seamless −50% loop.
 6. SEO prose block (server-rendered paragraphs)
 7. `<FaqSection>` — 6 FAQs from HOME_FAQ_IDS
