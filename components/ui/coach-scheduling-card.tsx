@@ -45,7 +45,7 @@ const defaultCoach: Coach = {
   location: "Chicago, IL",
   rating: 5.0,
   reviewCount: 100,
-  imageUrl: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+  imageUrl: "/said.jpg",
 };
 
 const missionLocations = ["Muay Thai", "Brazilian Jiu-Jitsu"];
