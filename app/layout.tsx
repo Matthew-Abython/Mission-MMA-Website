@@ -7,6 +7,7 @@ import { GA4 } from "@/components/analytics/ga4";
 import { SiteHeader } from "@/components/layout/site-header";
 import { StickyMobileCta } from "@/components/layout/sticky-mobile-cta";
 import { LenisProvider } from "@/components/providers/lenis-provider";
+import { ChatWidget } from "@/components/chat/chat-widget";
 import "./globals.css";
 import "lenis/dist/lenis.css";
 
@@ -96,6 +97,7 @@ export default function RootLayout({
             <StickyMobileCta />
             <Footer />
           </LenisProvider>
+          <ChatWidget />
         </LazyMotion>
       </body>
     </html>

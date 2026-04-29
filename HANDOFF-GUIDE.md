@@ -80,6 +80,8 @@ Mission-MMA-Website/
 │   ├── analytics/
 │   │   ├── ga4.tsx                 # GA4 script + gtag init
 │   │   └── meta-pixel.tsx          # Facebook Pixel init + noscript fallback
+│   ├── chat/
+│   │   └── chat-widget.tsx         # Floating chat widget — fixed bottom-right, calls n8n chatbot webhook
 │   ├── forms/
 │   │   ├── conversion-tracking.tsx # Fires fbq("Lead") + gtag("generate_lead") on mount
 │   │   └── lead-form.tsx           # Main lead capture form (RHF + Zod)
@@ -219,6 +221,21 @@ All 17 FAQ items. FAQPage JSON-LD.
 ---
 
 ## Key Components
+
+### `components/chat/chat-widget.tsx` (Client)
+Floating chat button (bottom-right) + slide-up panel. Rendered in root layout on every page.
+- Position: `bottom-20 right-4` mobile (clears `StickyMobileCta`), `bottom-6 right-6` desktop. `z-50`.
+- Red circular button: `MessageCircle` icon when closed, `X` when open
+- `cta-pulse` box-shadow animation on button only when panel is closed and `!reducedMotion`
+- Panel: `w-80 h-[420px]` desktop, `w-[calc(100vw-2rem)] h-[60vh] max-h-[500px]` mobile
+- Opens/closes via `AnimatePresence` + `m.div` (scale 0.95→1, opacity 0→1, origin bottom-right). Does NOT open on page load.
+- In-memory message history only — max 4 pairs (8 messages). No localStorage. Resets on full page reload.
+- Direct `fetch` POST to `NEXT_PUBLIC_CHATBOT_WEBHOOK_URL` with 15s `AbortController` timeout
+- Request body: `{ message: string, sessionId: string }`. Parses `response[0].botResponse` as bot reply.
+- sessionId = `` `session_${Date.now()}` `` via `useRef`, generated once at mount
+- Typing indicator: 3-dot bounce via `@keyframes typing-dot` (added to `globals.css`)
+- Error/timeout fallback: "Sorry, something went wrong. Please call us at 312-265-1856."
+- Env var: `NEXT_PUBLIC_CHATBOT_WEBHOOK_URL` (client-side, separate from lead/booking webhooks)
 
 ### `components/ui/coach-scheduling-card.tsx` (Client)
 Multi-step booking UI. State: `discipline → date/time → form → confirmation`.
@@ -396,6 +413,7 @@ NEXT_PUBLIC_SITE_URL=https://missionmmachicago.com
 NEXT_PUBLIC_META_PIXEL_ID=643275415764341
 NEXT_PUBLIC_GA4_ID=                   # Empty until GA4 property created.
 NEXT_PUBLIC_N8N_BOOKING_URL=          # Legacy — superseded by server action.
+NEXT_PUBLIC_CHATBOT_WEBHOOK_URL=      # Client-side. n8n chatbot webhook. Separate from lead/booking.
 ```
 
 ---
@@ -454,6 +472,7 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 5. ~~**ConversionTracking**~~ — ✅ **DONE** — `<ConversionTracking />` added to `CoachSchedulingCard` confirmation step (`submitSuccess === true`). Fires `fbq("track","Lead")` + `gtag("event","generate_lead")` after `/book` form submits successfully.
 6. **Instructor dynamic pages** — `app/instructors/[slug]/page.tsx` exists with no data source.
 7. **Real gym photos** — Program grid uses Pexels placeholders; hero has no video. See `TODO` comments in `app/page.tsx` above `<HeroGeometric />` and `<ProgramGrid />`.
+8. ~~**Chat widget**~~ — ✅ **DONE** — `<ChatWidget />` added to root layout. Floating red button bottom-right on every page. Posts to `NEXT_PUBLIC_CHATBOT_WEBHOOK_URL` (n8n chatbot webhook, separate from lead/booking). Fill in real URL in `.env.local` when n8n workflow is ready.
 
 ---
 
@@ -474,8 +493,9 @@ All components added or rebuilt during the UI upgrade session (2026-04-28):
 | `components/layout/site-header.tsx` | Rebuilt | Frosted-glass scroll bg; `layoutId="nav-underline"`; logo spring scale; SVG hamburger→X morph; mobile sheet stagger |
 | `components/providers/lenis-provider.tsx` | New | Lenis smooth scroll (`lerp: 0.1`); `lerp: 1` for `prefers-reduced-motion`; wraps all content in root layout |
 | `app/opengraph-image.tsx` | New | Dynamic 1200×630 OG image via `next/og`; Oswald loaded from Google Fonts CDN; matches hero aesthetic |
+| `components/chat/chat-widget.tsx` | New | Floating chat widget; `AnimatePresence` panel (scale+opacity); `cta-pulse` on button when closed; 15s AbortController timeout; in-memory 4-pair history |
 
-**globals.css keyframes added:** `orbit1`, `orbit2`, `glow-pulse`, `chevron-bounce`, `marquee-left`, `marquee-right`, `cta-pulse`, `particle-drift`
+**globals.css keyframes added:** `orbit1`, `orbit2`, `glow-pulse`, `chevron-bounce`, `marquee-left`, `marquee-right`, `cta-pulse`, `particle-drift`, `typing-dot`
 
 **LazyMotion upgraded** from `domAnimation` → `domMax` to support `layoutId` layout animations.
 
