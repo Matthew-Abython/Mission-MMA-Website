@@ -94,7 +94,7 @@ Mission-MMA-Website/
 │   ├── schedule/
 │   │   └── weekly-schedule.tsx     # Filterable 7-day class grid
 │   ├── sections/
-│   │   ├── class-page-hero.tsx     # Hero for discipline pages
+│   │   ├── class-page-hero.tsx     # 70vh discipline hero with 3-layer parallax (image/gradient/text)
 │   │   ├── class-page-template.tsx # Shared layout for all 7 class pages
 │   │   ├── faq-section.tsx         # Accordion FAQ
 │   │   ├── hero-geometric.tsx      # Home page hero with animated shapes
@@ -139,6 +139,7 @@ Mission-MMA-Website/
 │       ├── 2026-04-28-hero-mesh-gradient-css-keyframes.md
 │       ├── 2026-04-28-css-var-in-keyframes.md
 │       ├── 2026-04-28-framer-motion-border-scale-propagation.md
+│       ├── 2026-04-28-parallax-image-overflow-buffer.md
 │       ├── 2026-04-28-marquee-hover-pause-css-vs-waapi.md
 │       ├── 2026-04-28-marquee-wrap-direction-math.md
 │       └── 2026-04-28-replace-placeholder-photo-with-owner.md
@@ -249,8 +250,18 @@ Desktop: nav + "Book Free Trial" red button + phone. Mobile: hamburger → Sheet
 ### `components/layout/sticky-mobile-cta.tsx` (Client)
 Fixed bottom button on mobile. Appears at 400–500px scroll depth. Respects `prefers-reduced-motion`.
 
+### `components/sections/class-page-hero.tsx` (Client)
+Props: `title`, `subtitle?`, `imageSrc`, `imageAlt?`, `breadcrumbs?: Breadcrumb[]`, `ctaText?` (default "Book Free Trial"), `ctaHref?` (default "/book").
+
+Three-layer parallax via `useScroll({ target, offset: ["start start","end start"] })`:
+- Layer 1 image: `y=[0,80]` (slowest, image wrapper at `top:-80px h-[130%]` to prevent top-edge gap)
+- Layer 2 gradient: `y=[0,40]` (medium; dark-right gradient + diagonal red tint at 10% opacity)
+- Layer 3 text: `y=[0,20]` (barely moves)
+
+Decorations: 4px solid red left accent bar (z-30), top-left triangle via `clip-path: polygon(0 0, 100% 0, 0 100%)` at 8% mission-red opacity. Title: `clamp(48px,8vw,80px)` letter-spacing `-3px`. All y values become `0` when `useReducedMotion` is true.
+
 ### `components/sections/class-page-template.tsx`
-Shared layout for all 7 discipline pages: hero → description → schedule → FAQ → LeadForm CTA.
+Shared layout for all 7 discipline pages: hero → description → schedule → FAQ → LeadForm CTA. Passes `breadcrumbs=[{Classes,/classes},{title}]` to `ClassPageHero`.
 
 ### `components/schedule/weekly-schedule.tsx` (Client)
 Day-column grid. Filter chips at top. Powered by `WEEKLY_SCHEDULE`. Color-coded by `DISCIPLINE_COLORS`.

@@ -31,11 +31,15 @@ export function ClassPageTemplate({ content }: { content: ClassPageContent }) {
   return (
     <>
       <ClassPageHero
-        image={content.heroImage}
+        imageSrc={content.heroImage}
         imageAlt={content.heroImageAlt}
         title={content.title}
-        dek={content.dek}
-        ctaLabel="Claim Your Free Trial"
+        subtitle={content.dek}
+        breadcrumbs={[
+          { label: "Classes", href: "/classes" },
+          { label: content.title },
+        ]}
+        ctaText="Claim Your Free Trial"
         ctaHref={trialHref}
       />
 
