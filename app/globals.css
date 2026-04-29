@@ -176,3 +176,36 @@
     }
   }
 }
+
+/* Hero mesh gradient blobs — opposite-direction slow orbits */
+@keyframes orbit1 {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(60px, -40px); }
+  50%  { transform: translate(80px, 60px); }
+  75%  { transform: translate(-40px, 80px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes orbit2 {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-60px, 40px); }
+  50%  { transform: translate(-80px, -60px); }
+  75%  { transform: translate(40px, -80px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* Red glow pulse on hero "MISSION." */
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 0 0 20px rgb(200 16 46 / 0.5), 0 0 40px rgb(200 16 46 / 0.2);
+  }
+  50% {
+    text-shadow: 0 0 40px rgb(200 16 46 / 0.9), 0 0 80px rgb(200 16 46 / 0.5), 0 0 120px rgb(200 16 46 / 0.2);
+  }
+}
+
+/* Bouncing scroll chevron */
+@keyframes chevron-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(10px); }
+}

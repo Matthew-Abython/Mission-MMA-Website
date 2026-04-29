@@ -132,6 +132,7 @@ Mission-MMA-Website/
 │       ├── 2026-04-28-conversion-tracking-timing.md
 │       ├── 2026-04-28-framer-motion-variant-type-as-const.md
 │       ├── 2026-04-28-free-trial-to-book-consolidation.md
+│       ├── 2026-04-28-hero-mesh-gradient-css-keyframes.md
 │       └── 2026-04-28-replace-placeholder-photo-with-owner.md
 │
 ├── public/
@@ -159,7 +160,7 @@ Mission-MMA-Website/
 
 ### `/` — Home (`app/page.tsx`)
 Server component. Sections top to bottom:
-1. `<HeroGeometric>` — full-height animated hero, two CTA buttons
+1. `<HeroGeometric>` — full-viewport dark hero. CSS mesh background (two blurred radial gradients orbiting via `orbit1`/`orbit2` keyframes at 18s/25s + diagonal scanline overlay). Staggered Framer Motion reveal: red rule → eyebrow → H1 "FORGE YOUR / MISSION." (glow-pulse keyframe on "MISSION.") → subhead → two CTAs ("Claim Your Free Class" + "View Schedule"). Scroll-fading chevron via `useScroll`+`useTransform`. Optional `videoUrl` prop renders a muted autoplay video behind the mesh. All animations gate on `useReducedMotion`.
 2. `<ProgramGrid>` — 7 discipline cards with images
 3. `<WhyTrainHere>` — 3-column value props
 4. `<StatCounters>` — animated numbers ("30+ classes/week", "100+ 5-star reviews")
