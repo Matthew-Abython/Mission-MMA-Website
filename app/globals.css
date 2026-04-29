@@ -210,6 +210,17 @@
   50%       { transform: translateY(10px); }
 }
 
+/* Two-row testimonial marquee */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
 /* Particle field — upward drift with gentle S-curve and fade in/out.
    --p-opacity CSS custom property is set per-element for varied opacity. */
 @keyframes particle-drift {
