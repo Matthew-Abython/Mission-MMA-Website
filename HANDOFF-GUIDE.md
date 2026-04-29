@@ -132,6 +132,7 @@ Mission-MMA-Website/
 │       ├── 2026-04-28-conversion-tracking-timing.md
 │       ├── 2026-04-28-framer-motion-variant-type-as-const.md
 │       ├── 2026-04-28-free-trial-to-book-consolidation.md
+│       ├── 2026-04-28-framer-motion-variant-propagation-stagger.md
 │       ├── 2026-04-28-hero-mesh-gradient-css-keyframes.md
 │       └── 2026-04-28-replace-placeholder-photo-with-owner.md
 │
@@ -161,7 +162,7 @@ Mission-MMA-Website/
 ### `/` — Home (`app/page.tsx`)
 Server component. Sections top to bottom:
 1. `<HeroGeometric>` — full-viewport dark hero. CSS mesh background (two blurred radial gradients orbiting via `orbit1`/`orbit2` keyframes at 18s/25s + diagonal scanline overlay). Staggered Framer Motion reveal: red rule → eyebrow → H1 "FORGE YOUR / MISSION." (glow-pulse keyframe on "MISSION.") → subhead → two CTAs ("Claim Your Free Class" + "View Schedule"). Scroll-fading chevron via `useScroll`+`useTransform`. Optional `videoUrl` prop renders a muted autoplay video behind the mesh. All animations gate on `useReducedMotion`.
-2. `<ProgramGrid>` — 7 discipline cards with images
+2. `<ProgramGrid>` — bento grid of 7 discipline cards. Top row: 2 featured cards (BJJ + Muay Thai) in `grid-cols-2` at `aspect-video` (16/9). Bottom row: 5 smaller cards in `grid-cols-2 sm:grid-cols-3 lg:grid-cols-5` at `aspect-[4/3]`. Each card: full-bleed `Next/Image`, bottom-to-top gradient overlay, red left-border accent (CSS `group-hover:w-[3px]`), Oswald badge + H3 + Inter description. Framer Motion: `whileHover="cardHover"` on article propagates to image wrapper `m.div` (scale 1.08 zoom); card entrance via `useInView` + `custom={index}` for 0.08s per-card stagger delay. Accepts optional `images?: Partial<Record<Slug, string>>` prop to override any discipline's image URL.
 3. `<WhyTrainHere>` — 3-column value props
 4. `<StatCounters>` — animated numbers ("30+ classes/week", "100+ 5-star reviews")
 5. `<TestimonialMarquee>` — looping horizontal carousel
