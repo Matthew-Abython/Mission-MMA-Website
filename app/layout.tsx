@@ -6,7 +6,9 @@ import { MetaPixel } from "@/components/analytics/meta-pixel";
 import { GA4 } from "@/components/analytics/ga4";
 import { SiteHeader } from "@/components/layout/site-header";
 import { StickyMobileCta } from "@/components/layout/sticky-mobile-cta";
+import { LenisProvider } from "@/components/providers/lenis-provider";
 import "./globals.css";
+import "lenis/dist/lenis.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -88,10 +90,12 @@ export default function RootLayout({
         <MetaPixel />
         <GA4 />
         <LazyMotion features={domMax} strict>
-          <SiteHeader />
-          {children}
-          <StickyMobileCta />
-          <Footer />
+          <LenisProvider>
+            <SiteHeader />
+            {children}
+            <StickyMobileCta />
+            <Footer />
+          </LenisProvider>
         </LazyMotion>
       </body>
     </html>

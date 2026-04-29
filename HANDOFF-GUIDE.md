@@ -24,7 +24,8 @@ Paste this file into a fresh Claude session to give it complete context about th
 | UI Library | React | 19.2.4 |
 | Styling | Tailwind CSS v4 + PostCSS | 4.x |
 | Components | shadcn/ui (base-nova preset) | — |
-| Animation | Framer Motion (LazyMotion) | — |
+| Animation | Framer Motion (LazyMotion **domMax**) | — |
+| Scroll | Lenis v2 (`lenis/react` ReactLenis root) | — |
 | Forms | React Hook Form + Zod | — |
 | Icons | Lucide React | — |
 | Toasts | Sonner | — |
@@ -86,6 +87,8 @@ Mission-MMA-Website/
 │   │   ├── footer.tsx
 │   │   ├── site-header.tsx         # Sticky header + mobile hamburger menu
 │   │   └── sticky-mobile-cta.tsx   # Floating "Book" button on mobile
+│   ├── providers/
+│   │   └── lenis-provider.tsx      # Lenis smooth scroll (lerp:0.1; lerp:1 for reduced-motion)
 │   ├── motion/
 │   │   ├── animated-counter.tsx    # Scroll-triggered number counter
 │   │   ├── parallax-section.tsx    # Wrapper: useScroll → y offset (speed prop, ±80px max)
@@ -140,6 +143,7 @@ Mission-MMA-Website/
 │       ├── 2026-04-28-css-var-in-keyframes.md
 │       ├── 2026-04-28-framer-motion-border-scale-propagation.md
 │       ├── 2026-04-28-layoutid-requires-dommax.md
+│       ├── 2026-04-28-lenis-framer-motion-integration.md
 │       ├── 2026-04-28-parallax-image-overflow-buffer.md
 │       ├── 2026-04-28-marquee-hover-pause-css-vs-waapi.md
 │       ├── 2026-04-28-marquee-wrap-direction-math.md
