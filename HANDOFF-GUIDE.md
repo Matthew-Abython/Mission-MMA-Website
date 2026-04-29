@@ -449,10 +449,35 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 
 1. **`/instructors`** — placeholder. No coach data, photos, or bios. Phase 2.
 2. **GA4** — `NEXT_PUBLIC_GA4_ID` empty. No GA4 property yet.
-3. **OG image** — `public/og-image.jpg` doesn't exist. `lib/seo.ts` references it.
+3. ~~**OG image**~~ — ✅ **DONE** — `app/opengraph-image.tsx` generates a dynamic 1200×630 OG image at request time via `next/og`. `lib/seo.ts` updated to reference `/opengraph-image`.
 4. **Content markdown files** — `bjj.md`, `muay-thai.md`, etc. at project root are drafts, not integrated into any page.
-5. **ConversionTracking** — component built but not placed on any page yet.
+5. ~~**ConversionTracking**~~ — ✅ **DONE** — `<ConversionTracking />` added to `CoachSchedulingCard` confirmation step (`submitSuccess === true`). Fires `fbq("track","Lead")` + `gtag("event","generate_lead")` after `/book` form submits successfully.
 6. **Instructor dynamic pages** — `app/instructors/[slug]/page.tsx` exists with no data source.
+7. **Real gym photos** — Program grid uses Pexels placeholders; hero has no video. See `TODO` comments in `app/page.tsx` above `<HeroGeometric />` and `<ProgramGrid />`.
+
+---
+
+## Visual Enhancement Layer
+
+All components added or rebuilt during the UI upgrade session (2026-04-28):
+
+| Component | Status | Notes |
+|---|---|---|
+| `components/sections/hero-geometric.tsx` | Rebuilt | CSS mesh hero: orbiting red/dark blobs, scanline, staggered STAGGER_CONTAINER reveal, scroll-fading chevron, optional `videoUrl` prop |
+| `components/sections/program-grid.tsx` | Rebuilt | Bento grid: 2 featured (16/9) + 5 small (4/3) cards, whileHover variant propagation for image zoom, per-card stagger via `custom={index}` |
+| `components/motion/parallax-section.tsx` | New | Scroll-driven y-offset wrapper; `speed` prop (0–1 → ±80px); `useReducedMotion` gate |
+| `components/motion/parallax-text.tsx` | New | Kinetic ghost text marquee; `useVelocity` + `useSpring` momentum; bidirectional 25%-wrap loop |
+| `components/motion/particle-field.tsx` | New | CSS-only (server component); 20 static red particles; `@keyframes particle-drift`; `--p-opacity` CSS var per element |
+| `components/sections/testimonial-marquee.tsx` | Rebuilt | Two-row infinite marquee; `@keyframes marquee-left/right`; `animationPlayState` hover pause; edge mask |
+| `components/sections/stat-counters.tsx` | Rebuilt | SVG `feTurbulence` noise bg; `ParallaxText` watermark; border `scaleX` 0→1 via BORDER_VARIANTS propagation |
+| `components/sections/class-page-hero.tsx` | Rebuilt | 3-layer parallax (image +80px / gradient +40px / text +20px); left accent bar; triangle clip-path; breadcrumbs prop |
+| `components/layout/site-header.tsx` | Rebuilt | Frosted-glass scroll bg; `layoutId="nav-underline"`; logo spring scale; SVG hamburger→X morph; mobile sheet stagger |
+| `components/providers/lenis-provider.tsx` | New | Lenis smooth scroll (`lerp: 0.1`); `lerp: 1` for `prefers-reduced-motion`; wraps all content in root layout |
+| `app/opengraph-image.tsx` | New | Dynamic 1200×630 OG image via `next/og`; Oswald loaded from Google Fonts CDN; matches hero aesthetic |
+
+**globals.css keyframes added:** `orbit1`, `orbit2`, `glow-pulse`, `chevron-bounce`, `marquee-left`, `marquee-right`, `cta-pulse`, `particle-drift`
+
+**LazyMotion upgraded** from `domAnimation` → `domMax` to support `layoutId` layout animations.
 
 ---
 

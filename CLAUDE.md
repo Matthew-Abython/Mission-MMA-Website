@@ -21,3 +21,9 @@ Each lessons file should include:
 - What the fix was
 - Why it happened
 - What to watch for in the future
+
+---
+
+## 3. Handoff Guide
+
+**After completing any change to the website** — new feature, bug fix, redirect, new page, new component, or data edit — update `HANDOFF-GUIDE.md` to reflect the current state. This file is used by the owner to brief separate Claude sessions; it must always accurately describe what exists in the repo right now.

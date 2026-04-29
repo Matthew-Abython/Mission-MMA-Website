@@ -5,6 +5,12 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { STAGGER_CONTAINER, FADE_UP, EASE_MISSION } from "@/lib/motion";
 
+// VIDEO UPGRADE PATH:
+// When real gym footage is available, pass videoUrl="/hero.mp4" to this component.
+// Place the video file in /public/hero.mp4 (max 15MB, H.264, no audio track).
+// The CSS mesh/blob background will automatically be replaced by the video.
+// Recommended: export at 1920×1080, 30fps, 8–12 second loop.
+
 interface HeroGeometricProps {
   videoUrl?: string;
 }

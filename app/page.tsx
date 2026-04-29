@@ -37,8 +37,12 @@ export default function HomePage() {
     <>
       <JsonLdScript data={buildLocalBusiness()} />
 
+      {/* TODO: Add videoUrl="/hero.mp4" prop when gym footage is available. */}
       <HeroGeometric />
 
+      {/* TODO: Replace with real Mission MMA photos when available.
+          Pass images={{ "bjj": "/images/bjj.jpg", "muay-thai": "/images/muay-thai.jpg", ... }}
+          Supported slugs: "bjj" | "muay-thai" | "mma" | "womens-bjj" | "kids" | "open-mat" | "strength-conditioning" */}
       <ProgramGrid />
 
       <WhyTrainHere />
