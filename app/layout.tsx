@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Oswald } from "next/font/google";
-import { LazyMotion, domAnimation } from "framer-motion";
+import { LazyMotion, domMax } from "framer-motion";
 import { Footer } from "@/components/layout/footer";
 import { MetaPixel } from "@/components/analytics/meta-pixel";
 import { GA4 } from "@/components/analytics/ga4";
@@ -87,7 +87,7 @@ export default function RootLayout({
       <body className="min-h-full bg-background text-foreground flex flex-col font-sans">
         <MetaPixel />
         <GA4 />
-        <LazyMotion features={domAnimation} strict>
+        <LazyMotion features={domMax} strict>
           <SiteHeader />
           {children}
           <StickyMobileCta />

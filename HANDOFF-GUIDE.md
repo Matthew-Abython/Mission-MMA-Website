@@ -139,6 +139,7 @@ Mission-MMA-Website/
 │       ├── 2026-04-28-hero-mesh-gradient-css-keyframes.md
 │       ├── 2026-04-28-css-var-in-keyframes.md
 │       ├── 2026-04-28-framer-motion-border-scale-propagation.md
+│       ├── 2026-04-28-layoutid-requires-dommax.md
 │       ├── 2026-04-28-parallax-image-overflow-buffer.md
 │       ├── 2026-04-28-marquee-hover-pause-css-vs-waapi.md
 │       ├── 2026-04-28-marquee-wrap-direction-math.md
@@ -245,7 +246,15 @@ Wraps any children in a scroll-driven y-offset. Props: `speed` (default 0.3, map
 Infinite horizontal marquee at Oswald `clamp(80px,10vw,140px)`. Props: `text`, `speed` (default 5, in %/s), `direction` ("left"|"right"), `color` (default "white"), `opacity` (default 0.06). Uses `useVelocity` + `useSpring` to add scroll-momentum boost (never reverses base direction). Wrap math: both directions use a 25%-window wrap in `[-25%,0%]`; rightward starts at -25% offset so the loop is seamless. `aria-hidden="true"` — decorative only. All motion disabled when `useReducedMotion` is true.
 
 ### `components/layout/site-header.tsx` (Client)
-Desktop: nav + "Book Free Trial" red button + phone. Mobile: hamburger → Sheet drawer + sticky CTA. All booking CTAs → `/book`.
+Sticky header with scroll-driven background. Features:
+- **Scroll bg**: `AnimatePresence` mounts a blurred dark layer (`rgba(10,10,10,0.95)`, `backdrop-filter: blur(20px) saturate(180%)`) when `scrollY > 80` via `useMotionValueEvent`. Base layer is always-on `from-black/50` gradient for legibility.
+- **Logo scale**: `m.div` spring-animates to `scale: 0.85` on scroll (stiffness 400, damping 30), `originX: 0` keeps it left-aligned.
+- **Active nav underline**: `m.span layoutId="nav-underline"` slides between active `PRIMARY_NAV` items. **Requires `domMax`** in `LazyMotion` (upgraded from `domAnimation` for this feature).
+- **Desktop CTA**: "Free Trial" button has `cta-pulse` CSS @keyframes (box-shadow ring, 2s loop, defined in globals.css). Skipped when `useReducedMotion`.
+- **Hamburger icon**: Three `m.path` SVG elements animate bars → X using `rotate` + `y` Framer Motion transforms with `transformBox: fill-box, transformOrigin: center` for correct SVG pivot. Reduced motion falls back to instant Lucide `Menu`/`X` icon swap.
+- **Mobile Sheet**: nav links wrapped in `m.nav` with custom 50ms stagger container + `FADE_UP` per link. Stagger fires fresh on each open (Sheet unmounts when closed).
+
+All animations skip (static values) when `useReducedMotion` is true.
 
 ### `components/layout/sticky-mobile-cta.tsx` (Client)
 Fixed bottom button on mobile. Appears at 400–500px scroll depth. Respects `prefers-reduced-motion`.
