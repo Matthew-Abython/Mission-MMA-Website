@@ -5,7 +5,7 @@ import { z } from "zod";
 const BookingSchema = z.object({
   firstName: z.string().min(1),
   lastName: z.string().min(1),
-  email: z.string().email(),
+  phone: z.string().regex(/^[\d\s().+\-]{10,20}$/, "Please enter a valid phone number"),
   selectedDate: z.string(),
   selectedClass: z.string(),
   selectedTime: z.string(),

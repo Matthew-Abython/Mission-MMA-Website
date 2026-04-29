@@ -100,7 +100,7 @@ export function CoachSchedulingCard({
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<{ day: string; time: string; dayName: string } | null>(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(false);
@@ -150,14 +150,14 @@ export function CoachSchedulingCard({
   const handleConfirmBooking = () => setShowFormView(true);
 
   const handleSubmit = async () => {
-    if (!firstName || !lastName || !email) return;
+    if (!firstName || !lastName || !phone) return;
     setIsSubmitting(true);
     setSubmitError(false);
 
     const result = await submitBooking({
       firstName,
       lastName,
-      email,
+      phone,
       selectedDate: selectedTimeSlot?.day ?? "",
       selectedClass: selectedDiscipline,
       selectedTime: selectedTimeSlot?.time ?? "",
@@ -426,8 +426,8 @@ export function CoachSchedulingCard({
                   <input id="lastName" type="text" value={lastName} onChange={e => setLastName(e.target.value)} className="w-full p-3 bg-muted rounded-lg border border-border/50 focus:border-red-600 focus:outline-none text-foreground" placeholder="Doe" />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="block text-sm text-muted-foreground">Email Address</label>
-                  <input id="email" type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full p-3 bg-muted rounded-lg border border-border/50 focus:border-red-600 focus:outline-none text-foreground" placeholder="jane@example.com" />
+                  <label htmlFor="phone" className="block text-sm text-muted-foreground">Phone Number</label>
+                  <input id="phone" type="tel" value={phone} onChange={e => setPhone(e.target.value)} className="w-full p-3 bg-muted rounded-lg border border-border/50 focus:border-red-600 focus:outline-none text-foreground" placeholder="(555) 555-5555" />
                 </div>
                 {submitError && (
                   <p className="text-sm text-red-500">Something went wrong. Please call us at <a href="tel:3122651856" className="underline font-medium">312-265-1856</a> to book directly.</p>
@@ -436,7 +436,7 @@ export function CoachSchedulingCard({
                   whileHover={shouldAnimate ? { scale: 1.02, y: -1 } : {}}
                   whileTap={shouldAnimate ? { scale: 0.98 } : {}}
                   onClick={handleSubmit}
-                  disabled={isSubmitting || !firstName || !lastName || !email}
+                  disabled={isSubmitting || !firstName || !lastName || !phone}
                   className="w-full py-3 rounded-lg font-semibold bg-red-600 hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed text-white transition-colors"
                 >
                   {isSubmitting ? "Submitting..." : "Complete My Free Trial Booking"}
