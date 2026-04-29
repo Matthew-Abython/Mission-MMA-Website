@@ -209,3 +209,13 @@
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(10px); }
 }
+
+/* Particle field — upward drift with gentle S-curve and fade in/out.
+   --p-opacity CSS custom property is set per-element for varied opacity. */
+@keyframes particle-drift {
+  0%   { transform: translateY(0) translateX(0);     opacity: 0; }
+  15%  { opacity: var(--p-opacity, 0.4); }
+  50%  { transform: translateY(-50vh) translateX(12px); }
+  85%  { opacity: var(--p-opacity, 0.4); }
+  100% { transform: translateY(-110vh) translateX(-6px); opacity: 0; }
+}

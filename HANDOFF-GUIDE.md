@@ -89,7 +89,8 @@ Mission-MMA-Website/
 │   ├── motion/
 │   │   ├── animated-counter.tsx    # Scroll-triggered number counter
 │   │   ├── parallax-section.tsx    # Wrapper: useScroll → y offset (speed prop, ±80px max)
-│   │   └── parallax-text.tsx       # Velocity marquee (useVelocity+useSpring, opacity 0.06 default)
+│   │   ├── parallax-text.tsx       # Velocity marquee (useVelocity+useSpring, opacity 0.06 default)
+│   │   └── particle-field.tsx      # CSS-only floating particle system (server component)
 │   ├── schedule/
 │   │   └── weekly-schedule.tsx     # Filterable 7-day class grid
 │   ├── sections/
@@ -136,6 +137,7 @@ Mission-MMA-Website/
 │       ├── 2026-04-28-free-trial-to-book-consolidation.md
 │       ├── 2026-04-28-framer-motion-variant-propagation-stagger.md
 │       ├── 2026-04-28-hero-mesh-gradient-css-keyframes.md
+│       ├── 2026-04-28-css-var-in-keyframes.md
 │       ├── 2026-04-28-marquee-wrap-direction-math.md
 │       └── 2026-04-28-replace-placeholder-photo-with-owner.md
 │
@@ -227,6 +229,11 @@ Props: `source: string`, `defaultInterest?: string`, `variant?: "standard" | "co
 
 ### `components/forms/conversion-tracking.tsx` (Client)
 Invisible component. Polls for `window.fbq` + `window.gtag`, fires `fbq("track","Lead")` and `gtag("event","generate_lead")`. Times out after 5s. Place on confirmation pages only.
+
+### `components/motion/particle-field.tsx` (Server)
+Wraps children in `position:relative overflow:hidden` and renders 20 CSS-animated red circles behind them. No JS — pure `@keyframes particle-drift` defined in `globals.css`. Each particle has `--p-opacity` inline CSS variable read by the keyframe for per-particle peak opacity (0.3–0.6). `animation-fill-mode: backwards` keeps particles invisible during their delay. `Math.random()` not used — 20 hand-placed configs avoid hydration mismatch. `prefers-reduced-motion` handled by the global `animation-duration: 0.01ms` rule.
+
+Usage: `<ParticleField className="...">` — pass the section's own classes; the wrapper adds `relative overflow-hidden` automatically.
 
 ### `components/motion/parallax-section.tsx` (Client)
 Wraps any children in a scroll-driven y-offset. Props: `speed` (default 0.3, maps to ±24px; 1.0 = ±80px), `className`. Uses `useScroll({ target: ref, offset: ["start end","end start"] })` + `useTransform`. Passes `y: 0` when `useReducedMotion` is true.
