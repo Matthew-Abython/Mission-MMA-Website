@@ -166,7 +166,10 @@ export function SiteHeader() {
               width={160}
               height={48}
               className="w-[120px] md:w-[160px] h-auto object-contain object-left"
-              style={{ mixBlendMode: "screen" }}
+              style={{
+                mixBlendMode: "lighten",
+                filter: "brightness(1.08) contrast(1.1)",
+              }}
               priority
             />
           </Link>
