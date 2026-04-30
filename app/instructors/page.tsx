@@ -38,12 +38,6 @@ export default function InstructorsPage() {
         <p className="mx-auto mt-4 max-w-xl text-lg text-mission-gray-300">
           World-class coaches. Real-world experience.
         </p>
-        <Link
-          href="/book"
-          className="mt-8 inline-flex items-center rounded-md bg-mission-red px-8 py-3.5 font-display text-base font-bold uppercase tracking-wider text-white transition-colors hover:bg-mission-red-dark"
-        >
-          Book a Free Class
-        </Link>
       </section>
 
       {/* Instructor card grid */}

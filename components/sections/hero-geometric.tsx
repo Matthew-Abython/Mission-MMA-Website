@@ -130,7 +130,7 @@ export function HeroGeometric({ videoUrl }: HeroGeometricProps) {
           {...itemProps}
           className="font-display font-bold uppercase leading-none text-mission-white mb-6 text-[96px] lg:text-[140px]"
         >
-          <span className="block">FORGE YOUR</span>
+          <span className="block">MISSION MMA &amp;</span>
           <span
             className="block"
             style={
@@ -139,7 +139,7 @@ export function HeroGeometric({ videoUrl }: HeroGeometricProps) {
                 : { animation: "glow-pulse 3s ease-in-out infinite" }
             }
           >
-            MISSION.
+            FITNESS
           </span>
         </m.h1>
 
