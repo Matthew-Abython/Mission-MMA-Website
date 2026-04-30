@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "images.pexels.com" },
+      { protocol: "https", hostname: "missionmmachicago.com" },
+      { protocol: "https", hostname: "res.cloudinary.com" },
     ],
   },
   async redirects() {

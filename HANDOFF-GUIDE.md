@@ -123,6 +123,7 @@ Mission-MMA-Website/
 │
 ├── lib/
 │   ├── faq-data.ts                 # 17 FAQ items in 5 categories
+│   ├── instructors.ts              # INSTRUCTORS array — single source of truth for all instructor data
 │   ├── lead-schema.ts              # Zod schema for lead form validation
 │   ├── motion.ts                   # Framer Motion variants + easing constants
 │   ├── schedule.ts                 # WEEKLY_SCHEDULE typed data (30 classes)
@@ -154,6 +155,7 @@ Mission-MMA-Website/
 ├── public/
 │   ├── hero-poster.jpg             # Static hero image
 │   ├── said.jpg                    # Photo of gym owner Said Hatim (used in booking card)
+│   ├── Said_Hatim.png              # Said Hatim photo for instructors hub + detail page
 │   └── llms.txt                    # LLM-readable gym summary for AIO/GEO
 │
 ├── .env.local                      # Real secrets — NOT committed
@@ -216,7 +218,10 @@ Gym story, facility, Mission Empower nonprofit. LocalBusiness + MartialArtsSchoo
 All 17 FAQ items. FAQPage JSON-LD.
 
 ### `/instructors` (`app/instructors/page.tsx`)
-**Placeholder.** "Coming soon." No coach data. Phase 2.
+Fully built instructor hub. Page header (dark bg, Oswald H1, red "Book a Free Class" CTA) + responsive card grid (1-col mobile, 2-col md). Each card: square photo with `object-top` crop, name (Oswald), title (red), discipline badges, 2-paragraph `shortBio`, and "Read More →" text link to `/instructors/[slug]`. Data driven by `lib/instructors.ts`. BreadcrumbList JSON-LD emitted.
+
+### `/instructors/[slug]` (`app/instructors/[slug]/page.tsx`)
+Individual instructor page. Uses `ClassPageHero` for the hero (3-layer parallax, breadcrumbs, CTA). Bio section: discipline badges + all `fullBio` paragraphs at 18px Inter, max-w-3xl centered, + "← All Instructors" link. `generateStaticParams()` auto-generates routes from `INSTRUCTORS` array. `generateMetadata()` produces per-instructor `<head>`. BreadcrumbList + Person JSON-LD emitted. Currently has Said Hatim only.
 
 ---
 
@@ -483,12 +488,12 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 
 ## Known Gaps / TODO
 
-1. **`/instructors`** — placeholder. No coach data, photos, or bios. Phase 2.
+1. ~~**`/instructors`**~~ — ✅ **DONE** — Hub page + individual `[slug]` pages fully built. Said Hatim data wired. 4 more instructors pending photos and bios.
 2. **GA4** — `NEXT_PUBLIC_GA4_ID` pending. Create GA4 property, then add the measurement ID to Vercel env vars.
 3. ~~**OG image**~~ — ✅ **DONE** — `app/opengraph-image.tsx` generates a dynamic 1200×630 OG image at request time via `next/og`. `lib/seo.ts` updated to reference `/opengraph-image`.
 4. **Content markdown files** — `bjj.md`, `muay-thai.md`, etc. at project root are drafts, not integrated into any page.
 5. ~~**ConversionTracking**~~ — ✅ **DONE** — `<ConversionTracking />` added to `CoachSchedulingCard` confirmation step (`submitSuccess === true`). Fires `fbq("track","Lead")` + `gtag("event","generate_lead")` after `/book` form submits successfully.
-6. **Instructor dynamic pages** — `app/instructors/[slug]/page.tsx` exists with no data source.
+6. ~~**Instructor dynamic pages**~~ — ✅ **DONE** — fully built, data-driven from `lib/instructors.ts`. Said Hatim page live at `/instructors/said-hatim`.
 7. **Real gym photos** — Program grid uses Pexels placeholders; hero has no video. Replace with real gym photos. See `TODO` comments in `app/page.tsx` above `<HeroGeometric />` and `<ProgramGrid />`.
 8. ~~**Chat widget**~~ — ✅ **DONE** — `<ChatWidget />` added to root layout. All webhooks functional.
 9. **Domain connection** — Connect `missionmmachicago.com` to the Vercel project in the Vercel dashboard (Domains tab). Update DNS records at the registrar to point to Vercel.
