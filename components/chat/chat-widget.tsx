@@ -74,6 +74,7 @@ export function ChatWidget() {
       if (!response.ok) throw new Error("Non-OK response");
       const data = await response.json();
       const botText: string =
+        data?.botResponse ??
         data?.[0]?.botResponse ??
         "Sorry, something went wrong. Please call us at 312-265-1856.";
       setMessages((prev) => trimToMaxPairs([...prev, { role: "bot", text: botText }]));
