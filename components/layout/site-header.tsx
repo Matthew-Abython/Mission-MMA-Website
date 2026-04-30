@@ -161,8 +161,8 @@ export function SiteHeader() {
         >
           <Link href="/" className="flex items-center">
             <Image
-              src="/missionmmalogo.png"
-              alt="Mission MMA & Fitness"
+              src="/missionmmalogo2.png"
+              alt="Mission MMA & Fitness logo"
               width={160}
               height={48}
               className="w-[120px] md:w-[160px] h-auto object-contain object-left"
