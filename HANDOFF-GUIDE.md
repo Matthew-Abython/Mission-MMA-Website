@@ -500,7 +500,7 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 4. **Content markdown files** — `bjj.md`, `muay-thai.md`, etc. at project root are drafts, not integrated into any page.
 5. ~~**ConversionTracking**~~ — ✅ **DONE** — `<ConversionTracking />` added to `CoachSchedulingCard` confirmation step (`submitSuccess === true`). Fires `fbq("track","Lead")` + `gtag("event","generate_lead")` after `/book` form submits successfully.
 6. ~~**Instructor dynamic pages**~~ — ✅ **DONE** — fully built, data-driven from `lib/instructors.ts`. Said Hatim page live at `/instructors/said-hatim`.
-7. **Real gym photos** — Muay Thai card (`program-grid.tsx`) and Muay Thai class page hero (`app/classes/muay-thai/page.tsx`) now use `/Kickboxing_2.jpg`. Remaining program grid cards still use Pexels placeholders; hero has no video. Replace with real gym photos. See `TODO` comments in `app/page.tsx` above `<HeroGeometric />` and `<ProgramGrid />`.
+7. ~~**Real gym photos (class pages)**~~ — ✅ **DONE** — All 7 Program Grid cards and all 7 class page heroes now use real gym photos from `/public`. Mapping: `BJJ.jpg`, `Kickboxing_2.jpg`, `mixedmartialarts.jpg`, `womansbjj.jpg`, `kidsmartialarts.jpg`, `openmat.jpg`, `strengthandconditioning.jpg`. No Pexels URLs remain for any discipline. Home page hero still has no video — replace with real gym footage when available. See `TODO` comments in `app/page.tsx` above `<HeroGeometric />`.
 8. ~~**Chat widget**~~ — ✅ **DONE** — `<ChatWidget />` added to root layout. All webhooks functional.
 9. **Domain connection** — Connect `missionmmachicago.com` to the Vercel project in the Vercel dashboard (Domains tab). Update DNS records at the registrar to point to Vercel.
 

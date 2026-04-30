@@ -92,9 +92,9 @@ export const metadata: Metadata = buildClassPageMetadata({
 const CONTENT: ClassPageContent = {
   title: "Brazilian Jiu-Jitsu in Chicago — High-Quality BJJ Instruction",
   dek: "Gi and No-Gi grappling at Mission MMA & Fitness in Chicago's West Loop. Beginners through advanced. 9 BJJ-related classes per week including a dedicated women's program.",
-  heroImage:
-    "https://images.pexels.com/photos/8990063/pexels-photo-8990063.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  heroImageAlt: "Brazilian Jiu-Jitsu training at Mission MMA & Fitness",
+  heroImage: "/BJJ.jpg",
+  heroImageAlt:
+    "Brazilian Jiu-Jitsu class at Mission MMA & Fitness in Chicago",
   slug: SLUG,
   introParagraph:
     "Mission MMA & Fitness offers high-quality Brazilian Jiu-Jitsu training at 1620 W Carroll Ave in Chicago's West Loop, minutes from Fulton Market and West Town. Our Brazilian Jiu-Jitsu program — also called BJJ, jiu jitsu, jiu-jitsu, or jujitsu — teaches both Gi and No-Gi classes across morning, midday, and evening schedules. Built on the same grappling art the Gracie family brought to the world stage and that defines the modern UFC, BJJ rewards leverage and technique over strength. Beginners and experienced grapplers train together under coaches with verifiable lineage and competition experience.",

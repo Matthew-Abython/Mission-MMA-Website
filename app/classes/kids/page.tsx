@@ -91,9 +91,9 @@ const CONTENT: ClassPageContent = {
   title:
     "Kids Martial Arts in Chicago — Muay Thai and Brazilian Jiu-Jitsu for Children",
   dek: "Two real programs — Kids Muay Thai (four days a week) and Kids Brazilian Jiu-Jitsu (Saturdays) — at Mission MMA & Fitness in Chicago's West Loop. Real instruction, not babysitting.",
-  heroImage:
-    "https://images.pexels.com/photos/8612976/pexels-photo-8612976.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  heroImageAlt: "Kids martial arts training at Mission MMA & Fitness",
+  heroImage: "/kidsmartialarts.jpg",
+  heroImageAlt:
+    "Kids martial arts class at Mission MMA & Fitness in Chicago",
   slug: SLUG,
   introParagraph:
     "Mission MMA & Fitness offers two kids martial arts programs in Chicago's West Loop at 1620 W Carroll Ave: Kids Muay Thai (Thai boxing) four days a week and Kids Brazilian Jiu-Jitsu (kids BJJ / kids jiu jitsu) on Saturdays. Unlike many Chicago gyms that combine kids striking and grappling into a single watered-down session, we run them separately so kids actually learn the art. Our programs build confidence, focus, and discipline through real martial arts skills — not babysitting with belts.",

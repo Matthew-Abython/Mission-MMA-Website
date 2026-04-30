@@ -73,9 +73,9 @@ const CONTENT: ClassPageContent = {
   title:
     "Strength and Conditioning in Chicago — Built for Martial Artists at Mission MMA & Fitness",
   dek: "Functional strength and conditioning designed to support BJJ, Muay Thai, and MMA training. Tuesday and Thursday 6:30 AM at Mission MMA & Fitness in Chicago's West Loop.",
-  heroImage:
-    "https://images.pexels.com/photos/6253310/pexels-photo-6253310.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  heroImageAlt: "Strength and conditioning training at Mission MMA & Fitness",
+  heroImage: "/strengthandconditioning.jpg",
+  heroImageAlt:
+    "Strength and conditioning training at Mission MMA & Fitness in Chicago",
   slug: SLUG,
   introParagraph:
     "Mission MMA & Fitness offers functional strength and conditioning at 1620 W Carroll Ave in Chicago's West Loop. Our program — sometimes called \"Better Than Bootcamp\" — combines mobility, strength, and conditioning work designed to support and complement martial arts training. Whether you're a Brazilian Jiu-Jitsu or Muay Thai athlete looking to add structured strength work, or a Chicago resident searching for functional fitness that goes beyond generic gym workouts, our coaches build sessions around real movement patterns.",

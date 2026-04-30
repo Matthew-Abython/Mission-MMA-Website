@@ -72,9 +72,8 @@ export const metadata: Metadata = buildClassPageMetadata({
 const CONTENT: ClassPageContent = {
   title: "BJJ Open Mat in Chicago — Open Mat at Mission MMA & Fitness",
   dek: "Adult BJJ open mat Fridays at 6:30 PM, women's-only open mat Saturdays at 10:30 AM. Members and visiting grapplers welcome.",
-  heroImage:
-    "https://images.pexels.com/photos/6253307/pexels-photo-6253307.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  heroImageAlt: "BJJ open mat rolling at Mission MMA & Fitness",
+  heroImage: "/openmat.jpg",
+  heroImageAlt: "BJJ open mat rolling at Mission MMA & Fitness in Chicago",
   slug: SLUG,
   introParagraph:
     "Mission MMA & Fitness runs Brazilian Jiu-Jitsu open mat sessions at 1620 W Carroll Ave in Chicago's West Loop. Our adult BJJ open mat (Friday 6:30 PM) and women's-only jiu jitsu open mat (Saturday 10:30 AM) give grapplers structured time to roll, drill, and train without a formal class agenda. Whether you're a Mission member looking for extra mat time or a visiting BJJ practitioner from another Chicago gym, you're welcome to roll with us.",

@@ -84,9 +84,9 @@ const CONTENT: ClassPageContent = {
   title:
     "Women's Brazilian Jiu-Jitsu in Chicago — Train at Mission MMA & Fitness",
   dek: "Women's-only BJJ classes in Chicago's West Loop. Two weekly sessions plus a Saturday women's open mat — same instruction quality as the coed program.",
-  heroImage:
-    "https://images.pexels.com/photos/7991578/pexels-photo-7991578.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  heroImageAlt: "Women's Brazilian Jiu-Jitsu training at Mission MMA & Fitness",
+  heroImage: "/womansbjj.jpg",
+  heroImageAlt:
+    "Women's Brazilian Jiu-Jitsu class at Mission MMA & Fitness in Chicago",
   slug: SLUG,
   introParagraph:
     "Mission MMA & Fitness offers a dedicated Women's Brazilian Jiu-Jitsu program at 1620 W Carroll Ave in Chicago's West Loop. Whether you're searching for women's BJJ, women's jiu-jitsu, women's-only jiu jitsu classes, or women's self-defense in Chicago, our program is built specifically for women — taught in a women-only environment with women-only training partners. We run two weekly women's BJJ classes plus a Saturday women's open mat, alongside a full coed program for members who want both.",

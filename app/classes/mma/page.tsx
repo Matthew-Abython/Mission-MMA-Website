@@ -83,9 +83,8 @@ export const metadata: Metadata = buildClassPageMetadata({
 const CONTENT: ClassPageContent = {
   title: "MMA Training in Chicago — Mixed Martial Arts at Mission MMA & Fitness",
   dek: "Striking, grappling, and full-rules MMA at Mission MMA & Fitness in Chicago's West Loop. Built on legitimate BJJ and Muay Thai foundations in the same facility.",
-  heroImage:
-    "https://images.pexels.com/photos/9012462/pexels-photo-9012462.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  heroImageAlt: "MMA training at Mission MMA & Fitness",
+  heroImage: "/mixedmartialarts.jpg",
+  heroImageAlt: "MMA sparring class at Mission MMA & Fitness in Chicago",
   slug: SLUG,
   introParagraph:
     "Mission MMA & Fitness offers mixed martial arts (MMA) training at 1620 W Carroll Ave in Chicago's West Loop. MMA combines the striking of Muay Thai with the grappling of Brazilian Jiu-Jitsu, the takedowns of wrestling, and the conditioning to put it all together. Whether you're new to martial arts and curious about the sport that defines the modern UFC, or an experienced striker or grappler looking to round out your skill set, our MMA program meets you where you are.",

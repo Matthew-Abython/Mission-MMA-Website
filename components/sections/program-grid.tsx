@@ -30,8 +30,7 @@ const PROGRAMS: Program[] = [
     badge: "BJJ",
     title: "Brazilian Jiu-Jitsu",
     description: "Gi and No-Gi grappling for every level.",
-    defaultImage:
-      "https://images.pexels.com/photos/6253310/pexels-photo-6253310.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    defaultImage: "/BJJ.jpg",
     featured: true,
   },
   {
@@ -47,8 +46,7 @@ const PROGRAMS: Program[] = [
     badge: "MMA",
     title: "Mixed Martial Arts",
     description: "Striking and grappling combined under one roof.",
-    defaultImage:
-      "https://images.pexels.com/photos/6295922/pexels-photo-6295922.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    defaultImage: "/mixedmartialarts.jpg",
     featured: false,
   },
   {
@@ -56,8 +54,7 @@ const PROGRAMS: Program[] = [
     badge: "Women's BJJ",
     title: "Women's BJJ",
     description: "Dedicated women's-only classes and open mat.",
-    defaultImage:
-      "https://images.pexels.com/photos/7045398/pexels-photo-7045398.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    defaultImage: "/womansbjj.jpg",
     featured: false,
   },
   {
@@ -65,8 +62,7 @@ const PROGRAMS: Program[] = [
     badge: "Kids",
     title: "Kids Martial Arts",
     description: "Separate Muay Thai and BJJ programs for children.",
-    defaultImage:
-      "https://images.pexels.com/photos/8764846/pexels-photo-8764846.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    defaultImage: "/kidsmartialarts.jpg",
     featured: false,
   },
   {
@@ -74,8 +70,7 @@ const PROGRAMS: Program[] = [
     badge: "Open Mat",
     title: "Open Mat",
     description: "Friday adult and Saturday women's open rolling.",
-    defaultImage:
-      "https://images.pexels.com/photos/6253307/pexels-photo-6253307.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    defaultImage: "/openmat.jpg",
     featured: false,
   },
   {
@@ -83,8 +78,7 @@ const PROGRAMS: Program[] = [
     badge: "S&C",
     title: "Strength & Conditioning",
     description: "Functional fitness built for martial artists.",
-    defaultImage:
-      "https://images.pexels.com/photos/4384679/pexels-photo-4384679.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    defaultImage: "/strengthandconditioning.jpg",
     featured: false,
   },
 ];
