@@ -79,7 +79,7 @@ export default async function InstructorDetailPage({ params }: Props) {
       <ClassPageHero
         title={instructor.name}
         subtitle={instructor.title}
-        imageSrc={instructor.photo}
+        imageSrc={instructor.heroPhoto ?? instructor.photo}
         imageAlt={`${instructor.name}, ${instructor.title} at Mission MMA & Fitness Chicago`}
         breadcrumbs={[
           { label: "Instructors", href: "/instructors" },

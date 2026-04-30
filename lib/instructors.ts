@@ -2,8 +2,10 @@ export interface Instructor {
   slug: string;
   name: string;
   title: string;
-  /** Path relative to /public, e.g. "/Said_Hatim.png" */
+  /** Path relative to /public — used for the hub card thumbnail */
   photo: string;
+  /** Optional hero background image for the individual page. Falls back to photo if omitted. */
+  heroPhoto?: string;
   /** First 2 paragraphs — shown on hub card */
   shortBio: string[];
   /** All paragraphs — shown on individual page in full */
@@ -17,6 +19,7 @@ export const INSTRUCTORS: Instructor[] = [
     name: "Said Hatim",
     title: "Head Coach & Owner",
     photo: "/Said_Hatim.png",
+    heroPhoto: "/Site_Said_smile.jpg",
     disciplines: ["Brazilian Jiu-Jitsu", "Muay Thai", "MMA"],
     shortBio: [
       "With nearly four decades of martial arts experience, Said Hatim is one of the most accomplished and respected instructors in Chicago MMA, Brazilian Jiu-Jitsu, and Muay Thai training.",
