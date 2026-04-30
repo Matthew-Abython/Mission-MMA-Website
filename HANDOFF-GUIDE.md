@@ -227,7 +227,7 @@ Individual instructor page — **two-section layout** (standard for all future i
 
 **Section 2 — Two-column** (`background: #111111`): left col `md:w-2/5` — portrait photo in `relative h-[420px] md:h-[580px] overflow-hidden rounded-lg` container with `fill` + `object-cover` + `objectPosition` from `instructor.heroPhotoPosition`; right col `md:w-3/5` — full `fullBio` at 18px Inter / lineHeight 1.8 / `--mission-gray-300` + "← All Instructors" link. Stacks vertically on mobile.
 
-`generateStaticParams()` auto-generates routes from `INSTRUCTORS`. `generateMetadata()` produces per-instructor `<head>`. BreadcrumbList + Person JSON-LD emitted. Currently has Said Hatim only.
+`generateStaticParams()` auto-generates routes from `INSTRUCTORS`. `generateMetadata()` produces per-instructor `<head>`. BreadcrumbList + Person JSON-LD emitted. All 6 instructor slugs defined; photos for the 5 new instructors pending placement in `/public`.
 
 ---
 
@@ -494,7 +494,7 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 
 ## Known Gaps / TODO
 
-1. ~~**`/instructors`**~~ — ✅ **DONE** — Hub page + individual `[slug]` pages fully built. Said Hatim data wired. 4 more instructors pending photos and bios. **Photo prep rule:** `heroPhotoPosition: "right center"` for right-anchored subjects, `"left center"` for left, omit for centered (defaults to `"center"`). `imagePosition` prop also available on all `ClassPageHero` usages.
+1. ~~**`/instructors`**~~ — ✅ **DONE** — Hub + individual pages fully built. All 6 instructors populated: `said-hatim`, `milos-jeftic`, `gerardo-cepeda`, `sydney-yockey`, `juan-zaragoza`, `romero-stancle`. Photos for the 5 new instructors still need to be placed in `/public` (filenames with underscores: `Molos_Jeftic.png`, `Gerardo_Cepeda.png`, `Sydney_Yockey.png`, `Juan_Zaragoza.png`, `Romero_Stancle.png`). **Photo prep rule:** `heroPhotoPosition: "right center"` for right-anchored subjects, `"left center"` for left, `"center top"` for top-anchored, omit for centered. `imagePosition` prop also available on all `ClassPageHero` usages.
 2. **GA4** — `NEXT_PUBLIC_GA4_ID` pending. Create GA4 property, then add the measurement ID to Vercel env vars.
 3. ~~**OG image**~~ — ✅ **DONE** — `app/opengraph-image.tsx` generates a dynamic 1200×630 OG image at request time via `next/og`. `lib/seo.ts` updated to reference `/opengraph-image`.
 4. **Content markdown files** — `bjj.md`, `muay-thai.md`, etc. at project root are drafts, not integrated into any page.
