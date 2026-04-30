@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, Phone, X } from "lucide-react";
 import {
@@ -158,11 +159,16 @@ export function SiteHeader() {
           transition={{ type: "spring" as const, stiffness: 400, damping: 30 }}
           style={{ originX: 0 }}
         >
-          <Link
-            href="/"
-            className="font-display text-lg uppercase tracking-wider text-mission-white hover:text-mission-red md:text-xl"
-          >
-            Mission MMA
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/missionmmalogo.png"
+              alt="Mission MMA & Fitness"
+              width={160}
+              height={48}
+              className="w-[120px] md:w-[160px] h-auto object-contain object-left"
+              style={{ mixBlendMode: "screen" }}
+              priority
+            />
           </Link>
         </m.div>
 
