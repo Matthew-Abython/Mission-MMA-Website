@@ -64,8 +64,8 @@ Mission-MMA-Website/
 │   │   ├── page.tsx                # Legacy — redirected to /book via next.config.ts
 │   │   └── thank-you/page.tsx      # Legacy — redirected to /book via next.config.ts
 │   ├── instructors/
-│   │   ├── page.tsx                # Placeholder ("coming soon")
-│   │   └── [slug]/page.tsx         # Dynamic instructor page (no data yet)
+│   │   ├── page.tsx                # Instructor hub — header + 2-col card grid, no CTA button
+│   │   └── [slug]/page.tsx         # Individual instructor page — dark header + two-column photo/bio layout
 │   ├── schedule/
 │   │   └── page.tsx
 │   ├── favicon.ico
@@ -150,12 +150,34 @@ Mission-MMA-Website/
 │       ├── 2026-04-28-parallax-image-overflow-buffer.md
 │       ├── 2026-04-28-marquee-hover-pause-css-vs-waapi.md
 │       ├── 2026-04-28-marquee-wrap-direction-math.md
-│       └── 2026-04-28-replace-placeholder-photo-with-owner.md
+│       ├── 2026-04-28-replace-placeholder-photo-with-owner.md
+│       ├── 2026-04-29-chatbot-widget.md
+│       ├── 2026-04-29-ui-enhancement-session.md
+│       ├── 2026-04-30-adding-bulk-instructors.md
+│       ├── 2026-04-30-instructor-hero-photo-position.md
+│       ├── 2026-04-30-instructor-individual-page-two-column-layout.md
+│       ├── 2026-04-30-instructors-hub-individual-pages.md
+│       ├── 2026-04-30-image-filename-case-linux.md
+│       └── 2026-04-30-logo-png-blend-mode.md
 │
 ├── public/
-│   ├── hero-poster.jpg             # Static hero image
-│   ├── said.jpg                    # Photo of gym owner Said Hatim (used in booking card)
+│   ├── hero-poster.jpg             # Static hero image (home page fallback)
+│   ├── said.jpg                    # Said Hatim photo used in CoachSchedulingCard
 │   ├── Said_Hatim.png              # Said Hatim photo for instructors hub + detail page
+│   ├── Site_Said_smile.jpg         # Said Hatim hero photo on /instructors/said-hatim
+│   ├── missionmmalogo2.png         # Current header logo (PNG with baked-in dark bg — uses mixBlendMode:lighten)
+│   ├── BJJ.jpg                     # Program grid + /classes/brazilian-jiu-jitsu hero
+│   ├── Kickboxing_2.jpg            # Program grid + /classes/muay-thai hero
+│   ├── mixedmartialarts.jpg        # Program grid + /classes/mma hero (was .JPG — renamed)
+│   ├── womansbjj.jpg               # Program grid + /classes/womens-bjj hero
+│   ├── kidsmartialarts.jpg         # Program grid + /classes/kids hero
+│   ├── openmat.jpg                 # Program grid + /classes/open-mat hero
+│   ├── strengthandconditioning.jpg # Program grid + /classes/strength-conditioning hero
+│   ├── Gerardo_Cepeda.png          # Instructor photo
+│   ├── Juan_Zaragoza.png           # Instructor photo
+│   ├── Molos_Jeftic.png            # Instructor photo
+│   ├── Romero_Stancle.png          # Instructor photo
+│   ├── Sydney_Yockey.png           # Instructor photo
 │   └── llms.txt                    # LLM-readable gym summary for AIO/GEO
 │
 ├── .env.local                      # Real secrets — NOT committed
@@ -178,7 +200,7 @@ Mission-MMA-Website/
 
 ### `/` — Home (`app/page.tsx`)
 Server component. Sections top to bottom:
-1. `<HeroGeometric>` — full-viewport dark hero. CSS mesh background (two blurred radial gradients orbiting via `orbit1`/`orbit2` keyframes at 18s/25s + diagonal scanline overlay). Staggered Framer Motion reveal: red rule → eyebrow → H1 "FORGE YOUR / MISSION." (glow-pulse keyframe on "MISSION.") → subhead → two CTAs ("Claim Your Free Class" + "View Schedule"). Scroll-fading chevron via `useScroll`+`useTransform`. Optional `videoUrl` prop renders a muted autoplay video behind the mesh. All animations gate on `useReducedMotion`.
+1. `<HeroGeometric>` — full-viewport dark hero. CSS mesh background (two blurred radial gradients orbiting via `orbit1`/`orbit2` keyframes at 18s/25s + diagonal scanline overlay). Staggered Framer Motion reveal: red rule → eyebrow → H1 **"MISSION MMA & / FITNESS"** (glow-pulse keyframe on "FITNESS") → subhead → two CTAs ("Claim Your Free Class" + "View Schedule"). Scroll-fading chevron via `useScroll`+`useTransform`. Optional `videoUrl` prop renders a muted autoplay video behind the mesh. All animations gate on `useReducedMotion`.
 2. `<ProgramGrid>` — bento grid of 7 discipline cards. Top row: 2 featured cards (BJJ + Muay Thai) in `grid-cols-2` at `aspect-video` (16/9). Bottom row: 5 smaller cards in `grid-cols-2 sm:grid-cols-3 lg:grid-cols-5` at `aspect-[4/3]`. Each card: full-bleed `Next/Image`, bottom-to-top gradient overlay, red left-border accent (CSS `group-hover:w-[3px]`), Oswald badge + H3 + Inter description. Framer Motion: `whileHover="cardHover"` on article propagates to image wrapper `m.div` (scale 1.08 zoom); card entrance via `useInView` + `custom={index}` for 0.08s per-card stagger delay. Accepts optional `images?: Partial<Record<Slug, string>>` prop to override any discipline's image URL.
 3. `<WhyTrainHere>` — 3-column value props
 4. `<StatCounters>` — 4-col grid (2-col mobile): 30+ Weekly Classes | 100+ 5-Star Reviews | 7 Disciplines | 10+ Years Experience. Background `#111111` + SVG `feTurbulence` fractalNoise grain at 2% opacity + `ParallaxText` "MISSION MMA" watermark behind. Each card: `AnimatedCounter` at Oswald 80px white + red suffix, yellow ★ decoration (reviews), Inter 16px gray-300 label, red bottom border that scaleX expands from `origin-center` via BORDER_VARIANTS propagated from STAGGER_FAST → CARD_VARIANTS → BORDER_VARIANTS (0.4s delay trails the number).
@@ -218,7 +240,7 @@ Gym story, facility, Mission Empower nonprofit. LocalBusiness + MartialArtsSchoo
 All 17 FAQ items. FAQPage JSON-LD.
 
 ### `/instructors` (`app/instructors/page.tsx`)
-Fully built instructor hub. Page header (dark bg, Oswald H1, red "Book a Free Class" CTA) + responsive card grid (1-col mobile, 2-col md). Each card: square photo with `object-top` crop, name (Oswald), title (red), discipline badges, 2-paragraph `shortBio`, and "Read More →" text link to `/instructors/[slug]`. Data driven by `lib/instructors.ts`. BreadcrumbList JSON-LD emitted.
+Fully built instructor hub. Page header (dark bg, Oswald H1, subtitle — **no CTA button**) + responsive card grid (1-col mobile, 2-col md). Each card: square photo with `object-top` crop, name (Oswald), title (red), discipline badges, 2-paragraph `shortBio`, and "Read More →" text link to `/instructors/[slug]`. Data driven by `lib/instructors.ts`. BreadcrumbList JSON-LD emitted.
 
 ### `/instructors/[slug]` (`app/instructors/[slug]/page.tsx`)
 Individual instructor page — **two-section layout** (standard for all future instructor pages, no ClassPageHero):
@@ -279,12 +301,13 @@ Infinite horizontal marquee at Oswald `clamp(80px,10vw,140px)`. Props: `text`, `
 
 ### `components/layout/site-header.tsx` (Client)
 Sticky header with scroll-driven background. Features:
+- **Logo**: `<Image src="/missionmmalogo2.png">` wrapped in `<Link href="/">`. Rendered at `w-[120px]` mobile / `w-[160px]` desktop. `style={{ mixBlendMode: "lighten", filter: "brightness(1.08) contrast(1.1)" }}` removes the baked-in dark background from the PNG. Spring-scale `m.div` shrinks to 0.85 at scroll > 80px (`originX: 0`). **Do not remove the blend mode when swapping logo files.**
+- **Nav links**: Primary nav only (Home, Classes, Schedule, etc.). The "Book Free Trial" text link was removed — only the pulsing CTA button remains.
 - **Scroll bg**: `AnimatePresence` mounts a blurred dark layer (`rgba(10,10,10,0.95)`, `backdrop-filter: blur(20px) saturate(180%)`) when `scrollY > 80` via `useMotionValueEvent`. Base layer is always-on `from-black/50` gradient for legibility.
-- **Logo scale**: `m.div` spring-animates to `scale: 0.85` on scroll (stiffness 400, damping 30), `originX: 0` keeps it left-aligned.
 - **Active nav underline**: `m.span layoutId="nav-underline"` slides between active `PRIMARY_NAV` items. **Requires `domMax`** in `LazyMotion` (upgraded from `domAnimation` for this feature).
 - **Desktop CTA**: "Free Trial" button has `cta-pulse` CSS @keyframes (box-shadow ring, 2s loop, defined in globals.css). Skipped when `useReducedMotion`.
 - **Hamburger icon**: Three `m.path` SVG elements animate bars → X using `rotate` + `y` Framer Motion transforms with `transformBox: fill-box, transformOrigin: center` for correct SVG pivot. Reduced motion falls back to instant Lucide `Menu`/`X` icon swap.
-- **Mobile Sheet**: nav links wrapped in `m.nav` with custom 50ms stagger container + `FADE_UP` per link. Stagger fires fresh on each open (Sheet unmounts when closed).
+- **Mobile Sheet**: nav links only (no Book Free Trial link). Wrapped in `m.nav` with custom 50ms stagger container + `FADE_UP` per link. Stagger fires fresh on each open (Sheet unmounts when closed).
 
 All animations skip (static values) when `useReducedMotion` is true.
 
@@ -482,11 +505,15 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 
 **7. Pexels image URLs** — use `images.pexels.com/photos/ID/...` not the pexels.com page URL.
 
+**8. Image filenames are case-sensitive on Vercel (Linux)** — `.JPG` ≠ `.jpg`. Always use lowercase extensions. Rename before committing. macOS won't catch this locally.
+
+**9. Logo PNG with baked-in background** — use `style={{ mixBlendMode: "lighten", filter: "brightness(1.08) contrast(1.1)" }}` on the `<Image>` element. `lighten` blend + filter makes the charcoal background pixels disappear against the true-black header. Do NOT remove this style when swapping logo files — it must persist.
+
 ---
 
 ## Deployment Status
 
-- **Vercel:** ✅ Deployed to preview URL. All env vars set except `NEXT_PUBLIC_GA4_ID`.
+- **Vercel:** ✅ Live at [mission-mma-website.vercel.app](https://mission-mma-website.vercel.app). All env vars set except `NEXT_PUBLIC_GA4_ID`. Deployed via `vercel --prod` CLI (GitHub integration works but MCP list API caps at 15 results — use CLI directly if deployment isn't appearing).
 - **Domain:** ⏳ `missionmmachicago.com` not yet connected in Vercel — pending DNS cutover.
 - **n8n webhooks:** ✅ All webhooks (lead, booking, chatbot) functional and wired up.
 
@@ -494,7 +521,7 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 
 ## Known Gaps / TODO
 
-1. ~~**`/instructors`**~~ — ✅ **DONE** — Hub + individual pages fully built. All 6 instructors populated: `said-hatim`, `milos-jeftic`, `gerardo-cepeda`, `sydney-yockey`, `juan-zaragoza`, `romero-stancle`. Photos for the 5 new instructors still need to be placed in `/public` (filenames with underscores: `Molos_Jeftic.png`, `Gerardo_Cepeda.png`, `Sydney_Yockey.png`, `Juan_Zaragoza.png`, `Romero_Stancle.png`). **Photo prep rule:** `heroPhotoPosition: "right center"` for right-anchored subjects, `"left center"` for left, `"center top"` for top-anchored, omit for centered. `imagePosition` prop also available on all `ClassPageHero` usages.
+1. ~~**`/instructors`**~~ — ✅ **DONE** — Hub + individual pages fully built. All 6 instructors populated: `said-hatim`, `milos-jeftic`, `gerardo-cepeda`, `sydney-yockey`, `juan-zaragoza`, `romero-stancle`. All instructor photos are in `/public`. **Photo prep rule:** `heroPhotoPosition: "right center"` for right-anchored subjects, `"left center"` for left, `"center top"` for top-anchored, omit for centered.
 2. **GA4** — `NEXT_PUBLIC_GA4_ID` pending. Create GA4 property, then add the measurement ID to Vercel env vars.
 3. ~~**OG image**~~ — ✅ **DONE** — `app/opengraph-image.tsx` generates a dynamic 1200×630 OG image at request time via `next/og`. `lib/seo.ts` updated to reference `/opengraph-image`.
 4. **Content markdown files** — `bjj.md`, `muay-thai.md`, etc. at project root are drafts, not integrated into any page.
@@ -520,7 +547,7 @@ All components added or rebuilt during the UI upgrade session (2026-04-28):
 | `components/sections/testimonial-marquee.tsx` | Rebuilt | Two-row infinite marquee; `@keyframes marquee-left/right`; `animationPlayState` hover pause; edge mask |
 | `components/sections/stat-counters.tsx` | Rebuilt | SVG `feTurbulence` noise bg; `ParallaxText` watermark; border `scaleX` 0→1 via BORDER_VARIANTS propagation |
 | `components/sections/class-page-hero.tsx` | Rebuilt | 3-layer parallax (image +80px / gradient +40px / text +20px); left accent bar; triangle clip-path; breadcrumbs prop |
-| `components/layout/site-header.tsx` | Rebuilt | Frosted-glass scroll bg; `layoutId="nav-underline"`; logo spring scale; SVG hamburger→X morph; mobile sheet stagger |
+| `components/layout/site-header.tsx` | Rebuilt + updated | Frosted-glass scroll bg; `layoutId="nav-underline"`; image logo (`missionmmalogo2.png`) with `mixBlendMode:lighten` + filter; logo spring scale; SVG hamburger→X morph; mobile sheet stagger; "Book Free Trial" nav link removed |
 | `components/providers/lenis-provider.tsx` | New | Lenis smooth scroll (`lerp: 0.1`); `lerp: 1` for `prefers-reduced-motion`; wraps all content in root layout |
 | `app/opengraph-image.tsx` | New | Dynamic 1200×630 OG image via `next/og`; Oswald loaded from Google Fonts CDN; matches hero aesthetic |
 | `components/chat/chat-widget.tsx` | New | Floating chat widget; `AnimatePresence` panel (scale+opacity); `cta-pulse` on button when closed; 15s AbortController timeout; in-memory 4-pair history |
@@ -528,6 +555,20 @@ All components added or rebuilt during the UI upgrade session (2026-04-28):
 **globals.css keyframes added:** `orbit1`, `orbit2`, `glow-pulse`, `chevron-bounce`, `marquee-left`, `marquee-right`, `cta-pulse`, `particle-drift`, `typing-dot`
 
 **LazyMotion upgraded** from `domAnimation` → `domMax` to support `layoutId` layout animations.
+
+---
+
+## UI Refinements (2026-04-30)
+
+Changes made after the initial build to clean up the UI:
+
+| What | File | Detail |
+|---|---|---|
+| Hero headline | `components/sections/hero-geometric.tsx` | Changed from "FORGE YOUR / MISSION." to "MISSION MMA & / FITNESS". Glow-pulse now on "FITNESS". |
+| Header logo | `components/layout/site-header.tsx` | Replaced text "Mission MMA" with `<Image src="/missionmmalogo2.png">`. Uses `mixBlendMode:lighten` + brightness/contrast filter to remove baked-in dark bg. |
+| Header nav | `components/layout/site-header.tsx` | Removed "Book Free Trial" text link from desktop nav AND mobile sheet. Pulsing "Free Trial" CTA button remains. |
+| Instructors header | `app/instructors/page.tsx` | Removed "Book a Free Class" CTA button from the page header. Heading and subtitle remain. |
+| All gym photos | `components/sections/program-grid.tsx` + 7 class pages | Replaced all Pexels placeholder URLs with real gym photos from `/public`. See `/public` file list above. |
 
 ---
 
