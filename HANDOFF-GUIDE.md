@@ -221,7 +221,13 @@ All 17 FAQ items. FAQPage JSON-LD.
 Fully built instructor hub. Page header (dark bg, Oswald H1, red "Book a Free Class" CTA) + responsive card grid (1-col mobile, 2-col md). Each card: square photo with `object-top` crop, name (Oswald), title (red), discipline badges, 2-paragraph `shortBio`, and "Read More →" text link to `/instructors/[slug]`. Data driven by `lib/instructors.ts`. BreadcrumbList JSON-LD emitted.
 
 ### `/instructors/[slug]` (`app/instructors/[slug]/page.tsx`)
-Individual instructor page. Uses `ClassPageHero` for the hero (3-layer parallax, breadcrumbs, CTA). Bio section: discipline badges + all `fullBio` paragraphs at 18px Inter, max-w-3xl centered, + "← All Instructors" link. `generateStaticParams()` auto-generates routes from `INSTRUCTORS` array. `generateMetadata()` produces per-instructor `<head>`. BreadcrumbList + Person JSON-LD emitted. Currently has Said Hatim only.
+Individual instructor page — **two-section layout** (standard for all future instructor pages, no ClassPageHero):
+
+**Section 1 — Dark header bar** (`bg-mission-black`): breadcrumb (Instructors → Name), H1 in Oswald uppercase white, title in `--mission-red`, discipline badges, "Book a Free Class" red CTA. No background photo.
+
+**Section 2 — Two-column** (`background: #111111`): left col `md:w-2/5` — portrait photo in `relative h-[420px] md:h-[580px] overflow-hidden rounded-lg` container with `fill` + `object-cover` + `objectPosition` from `instructor.heroPhotoPosition`; right col `md:w-3/5` — full `fullBio` at 18px Inter / lineHeight 1.8 / `--mission-gray-300` + "← All Instructors" link. Stacks vertically on mobile.
+
+`generateStaticParams()` auto-generates routes from `INSTRUCTORS`. `generateMetadata()` produces per-instructor `<head>`. BreadcrumbList + Person JSON-LD emitted. Currently has Said Hatim only.
 
 ---
 
