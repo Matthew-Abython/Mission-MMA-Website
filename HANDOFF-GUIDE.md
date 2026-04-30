@@ -405,13 +405,23 @@ Same pattern. Fields: firstName, lastName, phone, selectedDate, selectedClass, s
 
 ---
 
-## Environment Variables (`.env.local`)
+## Environment Variables
 
+### Vercel (production — set in Vercel dashboard)
+| Variable | Status | Value |
+|---|---|---|
+| `NEXT_PUBLIC_SITE_URL` | ✅ Set | `https://missionmmachicago.com` |
+| `NEXT_PUBLIC_META_PIXEL_ID` | ✅ Set | `643275415764341` |
+| `N8N_WEBHOOK_URL` | ✅ Set | n8n dashboard — lead/booking webhook URL |
+| `NEXT_PUBLIC_CHATBOT_WEBHOOK_URL` | ✅ Set | n8n dashboard — chatbot webhook URL |
+| `NEXT_PUBLIC_GA4_ID` | ⏳ Pending | Set once GA4 property is created |
+
+### Local (`.env.local` — not committed)
 ```env
 N8N_WEBHOOK_URL=                      # Server-only. Lead + booking webhook.
 NEXT_PUBLIC_SITE_URL=https://missionmmachicago.com
 NEXT_PUBLIC_META_PIXEL_ID=643275415764341
-NEXT_PUBLIC_GA4_ID=                   # Empty until GA4 property created.
+NEXT_PUBLIC_GA4_ID=                   # Pending GA4 property creation.
 NEXT_PUBLIC_N8N_BOOKING_URL=          # Legacy — superseded by server action.
 NEXT_PUBLIC_CHATBOT_WEBHOOK_URL=      # Client-side. n8n chatbot webhook. Separate from lead/booking.
 ```
@@ -463,16 +473,25 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 
 ---
 
+## Deployment Status
+
+- **Vercel:** ✅ Deployed to preview URL. All env vars set except `NEXT_PUBLIC_GA4_ID`.
+- **Domain:** ⏳ `missionmmachicago.com` not yet connected in Vercel — pending DNS cutover.
+- **n8n webhooks:** ✅ All webhooks (lead, booking, chatbot) functional and wired up.
+
+---
+
 ## Known Gaps / TODO
 
 1. **`/instructors`** — placeholder. No coach data, photos, or bios. Phase 2.
-2. **GA4** — `NEXT_PUBLIC_GA4_ID` empty. No GA4 property yet.
+2. **GA4** — `NEXT_PUBLIC_GA4_ID` pending. Create GA4 property, then add the measurement ID to Vercel env vars.
 3. ~~**OG image**~~ — ✅ **DONE** — `app/opengraph-image.tsx` generates a dynamic 1200×630 OG image at request time via `next/og`. `lib/seo.ts` updated to reference `/opengraph-image`.
 4. **Content markdown files** — `bjj.md`, `muay-thai.md`, etc. at project root are drafts, not integrated into any page.
 5. ~~**ConversionTracking**~~ — ✅ **DONE** — `<ConversionTracking />` added to `CoachSchedulingCard` confirmation step (`submitSuccess === true`). Fires `fbq("track","Lead")` + `gtag("event","generate_lead")` after `/book` form submits successfully.
 6. **Instructor dynamic pages** — `app/instructors/[slug]/page.tsx` exists with no data source.
-7. **Real gym photos** — Program grid uses Pexels placeholders; hero has no video. See `TODO` comments in `app/page.tsx` above `<HeroGeometric />` and `<ProgramGrid />`.
-8. ~~**Chat widget**~~ — ✅ **DONE** — `<ChatWidget />` added to root layout. Floating red button bottom-right on every page. Posts to `NEXT_PUBLIC_CHATBOT_WEBHOOK_URL` (n8n chatbot webhook, separate from lead/booking). Fill in real URL in `.env.local` when n8n workflow is ready.
+7. **Real gym photos** — Program grid uses Pexels placeholders; hero has no video. Replace with real gym photos. See `TODO` comments in `app/page.tsx` above `<HeroGeometric />` and `<ProgramGrid />`.
+8. ~~**Chat widget**~~ — ✅ **DONE** — `<ChatWidget />` added to root layout. All webhooks functional.
+9. **Domain connection** — Connect `missionmmachicago.com` to the Vercel project in the Vercel dashboard (Domains tab). Update DNS records at the registrar to point to Vercel.
 
 ---
 
