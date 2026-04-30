@@ -196,13 +196,6 @@ export function SiteHeader() {
             );
           })}
 
-          {/* "Book Free Trial" in nav — styled as a text link, not the CTA button */}
-          <Link
-            href="/book"
-            className="text-sm font-medium uppercase tracking-wider text-mission-red transition-colors hover:text-mission-white"
-          >
-            Book Free Trial
-          </Link>
         </nav>
 
         {/* ── Desktop phone ─────────────────────────────────────────────── */}
@@ -276,15 +269,6 @@ export function SiteHeader() {
                       </Link>
                     </m.div>
                   ))}
-                  <m.div variants={reduced ? undefined : FADE_UP}>
-                    <Link
-                      href="/book"
-                      onClick={() => setOpen(false)}
-                      className="block rounded-md px-3 py-3 text-base font-medium uppercase tracking-wider text-mission-red hover:bg-white/5 hover:text-mission-white"
-                    >
-                      Book Free Trial
-                    </Link>
-                  </m.div>
                 </div>
 
                 {/* Program links */}
