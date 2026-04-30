@@ -286,7 +286,7 @@ All animations skip (static values) when `useReducedMotion` is true.
 Fixed bottom button on mobile. Appears at 400–500px scroll depth. Respects `prefers-reduced-motion`.
 
 ### `components/sections/class-page-hero.tsx` (Client)
-Props: `title`, `subtitle?`, `imageSrc`, `imageAlt?`, `breadcrumbs?: Breadcrumb[]`, `ctaText?` (default "Book Free Trial"), `ctaHref?` (default "/book").
+Props: `title`, `subtitle?`, `imageSrc`, `imageAlt?`, `breadcrumbs?: Breadcrumb[]`, `ctaText?` (default "Book Free Trial"), `ctaHref?` (default "/book"), `imagePosition?` (CSS `object-position`, default `"center"`).
 
 Three-layer parallax via `useScroll({ target, offset: ["start start","end start"] })`:
 - Layer 1 image: `y=[0,80]` (slowest, image wrapper at `top:-80px h-[130%]` to prevent top-edge gap)
@@ -488,7 +488,7 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 
 ## Known Gaps / TODO
 
-1. ~~**`/instructors`**~~ — ✅ **DONE** — Hub page + individual `[slug]` pages fully built. Said Hatim data wired. 4 more instructors pending photos and bios.
+1. ~~**`/instructors`**~~ — ✅ **DONE** — Hub page + individual `[slug]` pages fully built. Said Hatim data wired. 4 more instructors pending photos and bios. **Photo prep rule:** `heroPhotoPosition: "right center"` for right-anchored subjects, `"left center"` for left, omit for centered (defaults to `"center"`). `imagePosition` prop also available on all `ClassPageHero` usages.
 2. **GA4** — `NEXT_PUBLIC_GA4_ID` pending. Create GA4 property, then add the measurement ID to Vercel env vars.
 3. ~~**OG image**~~ — ✅ **DONE** — `app/opengraph-image.tsx` generates a dynamic 1200×630 OG image at request time via `next/og`. `lib/seo.ts` updated to reference `/opengraph-image`.
 4. **Content markdown files** — `bjj.md`, `muay-thai.md`, etc. at project root are drafts, not integrated into any page.

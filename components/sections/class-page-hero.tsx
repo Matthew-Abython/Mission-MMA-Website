@@ -27,6 +27,8 @@ export interface ClassPageHeroProps {
   ctaText?: string;
   /** CTA button destination. Default: "/book" */
   ctaHref?: string;
+  /** CSS object-position for the hero image. Default: "center" */
+  imagePosition?: string;
 }
 
 export function ClassPageHero({
@@ -37,6 +39,7 @@ export function ClassPageHero({
   breadcrumbs,
   ctaText = "Book Free Trial",
   ctaHref = "/book",
+  imagePosition = "center",
 }: ClassPageHeroProps) {
   const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion() ?? false;
@@ -98,6 +101,7 @@ export function ClassPageHero({
           priority
           className="object-cover"
           sizes="100vw"
+          style={{ objectPosition: imagePosition }}
         />
       </m.div>
 

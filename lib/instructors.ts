@@ -6,6 +6,8 @@ export interface Instructor {
   photo: string;
   /** Optional hero background image for the individual page. Falls back to photo if omitted. */
   heroPhoto?: string;
+  /** CSS object-position for the hero image, e.g. "right center". Defaults to "center". */
+  heroPhotoPosition?: string;
   /** First 2 paragraphs — shown on hub card */
   shortBio: string[];
   /** All paragraphs — shown on individual page in full */
@@ -20,6 +22,7 @@ export const INSTRUCTORS: Instructor[] = [
     title: "Head Coach & Owner",
     photo: "/Said_Hatim.png",
     heroPhoto: "/Site_Said_smile.jpg",
+    heroPhotoPosition: "right center",
     disciplines: ["Brazilian Jiu-Jitsu", "Muay Thai", "MMA"],
     shortBio: [
       "With nearly four decades of martial arts experience, Said Hatim is one of the most accomplished and respected instructors in Chicago MMA, Brazilian Jiu-Jitsu, and Muay Thai training.",

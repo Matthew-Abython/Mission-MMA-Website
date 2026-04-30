@@ -87,6 +87,7 @@ export default async function InstructorDetailPage({ params }: Props) {
         ]}
         ctaText="Book a Free Class"
         ctaHref="/book"
+        imagePosition={instructor.heroPhotoPosition ?? "center"}
       />
 
       {/* Bio section */}
