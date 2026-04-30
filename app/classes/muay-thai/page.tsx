@@ -92,9 +92,9 @@ const CONTENT: ClassPageContent = {
   title:
     "Muay Thai in Chicago — Authentic Thai Boxing Instruction at Mission MMA & Fitness",
   dek: "Authentic Thai boxing at Mission MMA & Fitness in Chicago's West Loop. Nine adult classes per week plus a dedicated sparring class — the full art, not cardio kickboxing.",
-  heroImage:
-    "https://images.pexels.com/photos/4754149/pexels-photo-4754149.jpeg?auto=compress&cs=tinysrgb&w=1920",
-  heroImageAlt: "Muay Thai padwork training at Mission MMA & Fitness",
+  heroImage: "/Kickboxing_2.jpg",
+  heroImageAlt:
+    "Muay Thai kickboxing class at Mission MMA & Fitness in Chicago",
   slug: SLUG,
   introParagraph:
     "Mission MMA & Fitness offers authentic Muay Thai training at 1620 W Carroll Ave in Chicago's West Loop. Known as Thai boxing or Muay Thai kickboxing, this striking art teaches the use of fists, elbows, knees, and shins through traditional Thai padwork, clinch work, and live sparring. Whether you're a complete beginner looking for high-quality kickboxing in Chicago or an experienced striker seeking legitimate Muay Thai instruction, our coaches teach the full art — not a watered-down cardio version. We run nine adult Muay Thai classes a week plus a dedicated sparring class.",

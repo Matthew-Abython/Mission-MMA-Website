@@ -39,8 +39,7 @@ const PROGRAMS: Program[] = [
     badge: "Muay Thai",
     title: "Muay Thai",
     description: "Authentic striking — fists, elbows, knees, and shins.",
-    defaultImage:
-      "https://images.pexels.com/photos/6456021/pexels-photo-6456021.jpeg?auto=compress&cs=tinysrgb&w=1200",
+    defaultImage: "/Kickboxing_2.jpg",
     featured: true,
   },
   {
