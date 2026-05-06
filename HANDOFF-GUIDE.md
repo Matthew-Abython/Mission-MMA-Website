@@ -394,7 +394,12 @@ interface Testimonial {
 12 entries. Used by `TestimonialMarquee` (rows: slice(0,6) left + slice(6) right) and `app/reviews/page.tsx` (all 12 cards). Discipline drives avatar background colors in the marquee.
 
 ### `lib/schema.tsx`
-`GYM` constant = single source of truth for gym identity (name, description, URL, address, geo, phone, email, socials). The `description` field is used in `buildLocalBusiness()` JSON-LD.
+`GYM` constant = single source of truth for gym identity (name, description, URL, address, geo, phone, email, socials).
+- `logo`: `https://missionmmachicago.com/missionmmalogo2.png` (actual PNG in /public — not logo.svg)
+- `image`: `https://missionmmachicago.com/opengraph-image` (dynamic next/og route — no file extension)
+- `sameAs`: Facebook, Instagram, **x.com**/MissionMMAChi (not twitter.com), YouTube
+
+`buildLocalBusiness()` emits: LocalBusiness + MartialArtsSchool, includes `description`, `foundingDate: "2016"`.
 Builders: `buildLocalBusiness()`, `buildCourse()`, `buildFaqPage()`, `buildBreadcrumbList()`, `buildPerson()`, `buildScheduleEvent()`, `buildAggregateRatingWithReviews()`, `buildAggregateRating()` (standalone, used on `/reviews`).
 Renderer: `<JsonLdScript data={...} />`.
 

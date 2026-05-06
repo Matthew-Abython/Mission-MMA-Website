@@ -21,8 +21,8 @@ export const GYM = {
   description:
     "Mission MMA & Fitness is a 4,500 sq ft martial arts academy established in 2016 in Chicago's West Loop, training on world-class Yokkao Muay Thai equipment with free street parking and steps from the Green/Pink Line CTA.",
   url: "https://missionmmachicago.com",
-  logo: "https://missionmmachicago.com/logo.svg",
-  image: "https://missionmmachicago.com/og-image.jpg",
+  logo: "https://missionmmachicago.com/missionmmalogo2.png",
+  image: "https://missionmmachicago.com/opengraph-image",
   telephone: "+1-312-265-1856",
   email: "info@missionmmachicago.com",
   address: {
@@ -40,7 +40,7 @@ export const GYM = {
   sameAs: [
     "https://www.facebook.com/MissionMMAchicago",
     "https://www.instagram.com/missionmmachi",
-    "https://twitter.com/MissionMMAChi",
+    "https://x.com/MissionMMAChi",
     "https://www.youtube.com/channel/UCfPaDzFvM5dpNllcSno5LXg",
   ],
 } as const;
@@ -135,6 +135,7 @@ export function buildLocalBusiness(): JsonLd {
       ...GYM.geo,
     },
     priceRange: GYM.priceRange,
+    foundingDate: "2016",
     sameAs: [...GYM.sameAs],
     areaServed: {
       "@type": "City",
