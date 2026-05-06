@@ -101,6 +101,7 @@ Mission-MMA-Website/
 │   ├── schedule/
 │   │   └── weekly-schedule.tsx     # Filterable 7-day class grid
 │   ├── sections/
+│   │   ├── social-proof-strip.tsx  # 6-stat horizontal band (server component) — between hero and program grid
 │   │   ├── class-page-hero.tsx     # 70vh discipline hero with 3-layer parallax (image/gradient/text)
 │   │   ├── class-page-template.tsx # Shared layout for all 7 class pages
 │   │   ├── faq-section.tsx         # Accordion FAQ
@@ -126,6 +127,7 @@ Mission-MMA-Website/
 ├── lib/
 │   ├── faq-data.ts                 # 17 FAQ items in 5 categories
 │   ├── instructors.ts              # INSTRUCTORS array — single source of truth for all instructor data
+│   ├── testimonials.ts             # TESTIMONIALS array (12 entries) — single source of truth for marquee + reviews page
 │   ├── lead-schema.ts              # Zod schema for lead form validation
 │   ├── motion.ts                   # Framer Motion variants + easing constants
 │   ├── schedule.ts                 # WEEKLY_SCHEDULE typed data (30 classes)
@@ -202,11 +204,12 @@ Mission-MMA-Website/
 
 ### `/` — Home (`app/page.tsx`)
 Server component. Sections top to bottom:
-1. `<HeroGeometric>` — full-viewport dark hero. CSS mesh background (two blurred radial gradients orbiting via `orbit1`/`orbit2` keyframes at 18s/25s + diagonal scanline overlay). Staggered Framer Motion reveal: red rule → eyebrow → H1 **"MISSION MMA & / FITNESS"** (glow-pulse keyframe on "FITNESS") → subhead → two CTAs ("Claim Your Free Class" + "View Schedule"). Scroll-fading chevron via `useScroll`+`useTransform`. Optional `videoUrl` prop renders a muted autoplay video behind the mesh. All animations gate on `useReducedMotion`.
+1. `<SocialProofStrip>` — static `bg-[#111111]` horizontal band between hero and program grid. Six stat items (5.0★, 200+ Reviews, 4,500 sq ft, Since 2016, 7 Disciplines, Free Parking) with `|` separators on desktop. Horizontally scrollable on mobile via `overflow-x-auto` + `min-w-max` inner container. Pure server component, no JS.
+2. `<HeroGeometric>` — full-viewport dark hero. CSS mesh background (two blurred radial gradients orbiting via `orbit1`/`orbit2` keyframes at 18s/25s + diagonal scanline overlay). Staggered Framer Motion reveal: red rule → eyebrow → H1 **"MISSION MMA & / FITNESS"** (glow-pulse keyframe on "FITNESS") → subhead → two CTAs ("Claim Your Free Class" + "View Schedule"). Scroll-fading chevron via `useScroll`+`useTransform`. Optional `videoUrl` prop renders a muted autoplay video behind the mesh. All animations gate on `useReducedMotion`.
 2. `<ProgramGrid>` — bento grid of 7 discipline cards. Top row: 2 featured cards (BJJ + Muay Thai) in `grid-cols-2` at `aspect-video` (16/9). Bottom row: 5 smaller cards in `grid-cols-2 sm:grid-cols-3 lg:grid-cols-5` at `aspect-[4/3]`. Each card: full-bleed `Next/Image`, bottom-to-top gradient overlay, red left-border accent (CSS `group-hover:w-[3px]`), Oswald badge + H3 + Inter description. Framer Motion: `whileHover="cardHover"` on article propagates to image wrapper `m.div` (scale 1.08 zoom); card entrance via `useInView` + `custom={index}` for 0.08s per-card stagger delay. Accepts optional `images?: Partial<Record<Slug, string>>` prop to override any discipline's image URL.
 3. `<WhyTrainHere>` — 3-column value props
 4. `<StatCounters>` — 4-col grid (2-col mobile): 30+ Weekly Classes | 100+ 5-Star Reviews | 7 Disciplines | 10+ Years Experience. Background `#111111` + SVG `feTurbulence` fractalNoise grain at 2% opacity + `ParallaxText` "MISSION MMA" watermark behind. Each card: `AnimatedCounter` at Oswald 80px white + red suffix, yellow ★ decoration (reviews), Inter 16px gray-300 label, red bottom border that scaleX expands from `origin-center` via BORDER_VARIANTS propagated from STAGGER_FAST → CARD_VARIANTS → BORDER_VARIANTS (0.4s delay trails the number).
-5. `<TestimonialMarquee>` — two-row infinite marquee. Row 1 scrolls left, Row 2 scrolls right (reversed review order). CSS `@keyframes marquee-left/right` (in globals.css) + React `useState` for hover-pause (`animationPlayState: "paused"`). Cards: 300px wide, #1A1A1A bg, `rgba(200,16,46,0.2)` border, 16px radius, 24px padding; yellow ★★★★★, Inter 15px italic quote, Oswald 14px red name. Edge-fade via `mask-image` linear-gradient. Duplicated array for seamless −50% loop.
+5. `<TestimonialMarquee>` — two-row infinite marquee. Data from `lib/testimonials.ts` (12 entries). Row 1 = `slice(0,6)` scrolls left; Row 2 = `slice(6)` scrolls right. CSS `@keyframes marquee-left/right` (in globals.css) + React `useState` for hover-pause (`animationPlayState: "paused"`). Cards: 300px wide, #1A1A1A bg, `rgba(200,16,46,0.2)` border, 16px radius, 24px padding; discipline-colored avatar circle (muay-thai=#7a1218, bjj=#1a3a5c, kids=#1a4a2a, womens=#4a1a3a, events/general=#3d3d3d), yellow ★★★★★, Inter 15px italic quote, Oswald 14px red name. Edge-fade via `mask-image` linear-gradient.
 6. SEO prose block (server-rendered paragraphs)
 7. `<FaqSection>` — 6 FAQs from HOME_FAQ_IDS
 8. `<LeadForm source="home-below-fold">` — lead capture
@@ -318,6 +321,9 @@ Wraps any children in a scroll-driven y-offset. Props: `speed` (default 0.3, map
 ### `components/motion/parallax-text.tsx` (Client)
 Infinite horizontal marquee at Oswald `clamp(80px,10vw,140px)`. Props: `text`, `speed` (default 5, in %/s), `direction` ("left"|"right"), `color` (default "white"), `opacity` (default 0.06). Uses `useVelocity` + `useSpring` to add scroll-momentum boost (never reverses base direction). Wrap math: both directions use a 25%-window wrap in `[-25%,0%]`; rightward starts at -25% offset so the loop is seamless. `aria-hidden="true"` — decorative only. All motion disabled when `useReducedMotion` is true.
 
+### `components/sections/social-proof-strip.tsx` (Server)
+Static six-stat horizontal band. `bg-[#111111]`, `border-y rgba(200,16,46,0.15)`. Outer: `overflow-x-auto`. Inner: `flex justify-between max-w-7xl min-w-max gap-8`. Six items (value in Oswald 22px, label in Inter 11px gray-500 uppercase). Pipe separators `hidden md:block w-px h-6 bg-mission-gray-700` between items. No JS.
+
 ### `components/layout/site-header.tsx` (Client)
 Sticky header with scroll-driven background. Features:
 - **Logo**: `<Image src="/missionmmalogo2.png">` wrapped in `<Link href="/">`. Rendered at `w-[120px]` mobile / `w-[160px]` desktop. `style={{ mixBlendMode: "lighten", filter: "brightness(1.08) contrast(1.1)" }}` removes the baked-in dark background from the PNG. Spring-scale `m.div` shrinks to 0.85 at scroll > 80px (`originX: 0`). **Do not remove the blend mode when swapping logo files.**
@@ -377,8 +383,18 @@ interface ScheduleEntry {
 17 `FaqItem` objects. Categories: `general`(7), `bjj`(3), `muay-thai`(2), `kids`(1), `membership`(3).
 `HOME_FAQ_IDS` = 6-item subset shown on home page.
 
+### `lib/testimonials.ts`
+Single source of truth for all testimonial/review data.
+```typescript
+interface Testimonial {
+  id: string; name: string; initials: string; text: string;
+  discipline: "bjj" | "muay-thai" | "kids" | "womens" | "events" | "general";
+}
+```
+12 entries. Used by `TestimonialMarquee` (rows: slice(0,6) left + slice(6) right) and `app/reviews/page.tsx` (all 12 cards). Discipline drives avatar background colors in the marquee.
+
 ### `lib/schema.tsx`
-`GYM` constant = single source of truth for gym identity (name, URL, address, geo, phone, email, socials).
+`GYM` constant = single source of truth for gym identity (name, description, URL, address, geo, phone, email, socials). The `description` field is used in `buildLocalBusiness()` JSON-LD.
 Builders: `buildLocalBusiness()`, `buildCourse()`, `buildFaqPage()`, `buildBreadcrumbList()`, `buildPerson()`, `buildScheduleEvent()`, `buildAggregateRatingWithReviews()`, `buildAggregateRating()` (standalone, used on `/reviews`).
 Renderer: `<JsonLdScript data={...} />`.
 

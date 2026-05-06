@@ -5,6 +5,7 @@ import {
   buildLocalBusiness,
 } from "@/lib/schema";
 import { HeroGeometric } from "@/components/sections/hero-geometric";
+import { SocialProofStrip } from "@/components/sections/social-proof-strip";
 import { ProgramGrid } from "@/components/sections/program-grid";
 import { WhyTrainHere } from "@/components/sections/why-train-here";
 import { StatCounters } from "@/components/sections/stat-counters";
@@ -39,6 +40,8 @@ export default function HomePage() {
 
       {/* TODO: Add videoUrl="/hero.mp4" prop when gym footage is available. */}
       <HeroGeometric />
+
+      <SocialProofStrip />
 
       {/* TODO: Replace with real Mission MMA photos when available.
           Pass images={{ "bjj": "/images/bjj.jpg", "muay-thai": "/images/muay-thai.jpg", ... }}

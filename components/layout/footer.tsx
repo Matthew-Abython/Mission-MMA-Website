@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MapPin, Phone, Mail } from "lucide-react";
+import { MapPin, Phone, Mail, MessageSquare } from "lucide-react";
 import { GYM } from "@/lib/schema";
 
 function FacebookIcon({ className }: { className?: string }) {
@@ -121,7 +121,42 @@ export function Footer() {
                   {GYM.email}
                 </a>
               </div>
+              <div className="flex items-center gap-3">
+                <MessageSquare
+                  className="h-4 w-4 shrink-0 text-mission-red"
+                  aria-hidden="true"
+                />
+                <a
+                  href="sms:+17736099133"
+                  className="text-sm hover:text-mission-white"
+                >
+                  Text Us: (773) 609-9133
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone
+                  className="h-4 w-4 shrink-0 text-mission-red"
+                  aria-hidden="true"
+                />
+                <span className="text-sm">
+                  <a
+                    href="tel:+13122852423"
+                    className="hover:text-mission-white"
+                  >
+                    (312) 285-2423
+                  </a>{" "}
+                  <span style={{ color: "var(--mission-gray-500)" }}>
+                    (4:30–9:30pm)
+                  </span>
+                </span>
+              </div>
             </address>
+            <p
+              className="text-xs"
+              style={{ color: "var(--mission-gray-500)" }}
+            >
+              Green/Pink Line · Ashland Bus (Route 9) · Free Street Parking
+            </p>
             <div className="flex gap-3 pt-2">
               {SOCIAL_LINKS.map(({ href, label, Icon }) => (
                 <a
@@ -177,8 +212,13 @@ export function Footer() {
       <div className="border-t border-white/10">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-6 text-xs text-mission-gray-500 md:flex-row md:px-8">
           <div>
-            &copy; {new Date().getFullYear()} Mission MMA &amp; Fitness, Inc. All
-            rights reserved.
+            <div>
+              &copy; {new Date().getFullYear()} Mission MMA &amp; Fitness, Inc. All
+              rights reserved.
+            </div>
+            <div className="mt-1" style={{ fontSize: "11px", color: "var(--mission-gray-500)" }}>
+              Est. 2016 &middot; 4,500 sq ft &middot; 1620 W Carroll Ave, Chicago IL 60612
+            </div>
           </div>
           <div className="flex items-center gap-4">
             <span>Chicago, IL</span>

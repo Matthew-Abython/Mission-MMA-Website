@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useReducedMotion } from "framer-motion";
+import { TESTIMONIALS, type Testimonial } from "@/lib/testimonials";
 
 /**
  * Two-row infinite marquee. Row 1 scrolls left, Row 2 scrolls right.
@@ -11,37 +12,14 @@ import { useReducedMotion } from "framer-motion";
  * the CSS animation-play-state property.
  */
 
-interface Testimonial {
-  author: string;
-  body: string;
-}
-
-const TESTIMONIALS: Testimonial[] = [
-  {
-    author: "Ricardo H.",
-    body: "Mission MMA is a top-tier facility for serious martial arts training. The coaches care about each student's development, the culture is welcoming for beginners, and the BJJ instruction is excellent.",
-  },
-  {
-    author: "Jackie V.",
-    body: "Great gym with phenomenal instructors. I started with no background in martial arts and the women's BJJ class made it easy to begin. The community is supportive and the training is real.",
-  },
-  {
-    author: "Kimmy P.",
-    body: "Mission has been amazing for my Muay Thai journey. The coaches push you and the technique focus is real. I've grown as a fighter and as a person training here.",
-  },
-  {
-    author: "Jae R.",
-    body: "Best gym in the West Loop. The BJJ program is legitimate and the coaches actually teach — they don't just throw you on the mats. Worth every minute of the commute.",
-  },
-  {
-    author: "Edirin I.",
-    body: "Trained Muay Thai here for over a year. The instruction is authentic, the sparring is controlled, and the community is genuine. Cannot recommend enough.",
-  },
-  {
-    author: "Jessica S.",
-    body: "I love this gym. The women's BJJ class is exactly what I was looking for — real training in a comfortable environment. The coaches are knowledgeable and patient.",
-  },
-];
+const DISCIPLINE_COLORS: Record<Testimonial["discipline"], string> = {
+  "muay-thai": "#7a1218",
+  bjj:         "#1a3a5c",
+  kids:        "#1a4a2a",
+  womens:      "#4a1a3a",
+  events:      "#3d3d3d",
+  general:     "#3d3d3d",
+};
 
 // Edge-fade mask applied to the overflow container
 const EDGE_MASK =
@@ -58,6 +36,14 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         padding: "24px",
       }}
     >
+      {/* Avatar initials circle */}
+      <div
+        className="flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold text-white"
+        style={{ backgroundColor: DISCIPLINE_COLORS[testimonial.discipline] }}
+      >
+        {testimonial.initials}
+      </div>
+
       {/* Five yellow stars */}
       <div aria-label="5 out of 5 stars">
         <span aria-hidden="true" className="text-base leading-none text-yellow-400">
@@ -70,7 +56,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         className="italic leading-relaxed text-mission-white"
         style={{ fontSize: "15px" }}
       >
-        &ldquo;{testimonial.body}&rdquo;
+        &ldquo;{testimonial.text}&rdquo;
       </blockquote>
 
       {/* Reviewer name */}
@@ -78,7 +64,7 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
         className="font-display uppercase text-mission-red"
         style={{ fontSize: "14px", letterSpacing: "0.05em" }}
       >
-        — {testimonial.author}
+        — {testimonial.name}
       </footer>
     </article>
   );
@@ -119,9 +105,10 @@ export function TestimonialMarquee() {
   const reduced = useReducedMotion() ?? false;
   const [paused, setPaused] = useState(false);
 
-  // Duplicate each row so -50% translate is a seamless loop
-  const row1 = [...TESTIMONIALS, ...TESTIMONIALS];
-  const row2 = [...[...TESTIMONIALS].reverse(), ...[...TESTIMONIALS].reverse()];
+  // Row 1: first 6 items, duplicated for seamless loop
+  const row1 = [...TESTIMONIALS.slice(0, 6), ...TESTIMONIALS.slice(0, 6)];
+  // Row 2: last 6 items, duplicated for seamless loop
+  const row2 = [...TESTIMONIALS.slice(6), ...TESTIMONIALS.slice(6)];
 
   const playState = paused ? "paused" : "running";
 
@@ -151,7 +138,7 @@ export function TestimonialMarquee() {
           reduced={reduced}
         />
 
-        {/* Row 2 — right, reversed order for visual variety */}
+        {/* Row 2 — right */}
         <div style={{ marginTop: "20px" }}>
           <MarqueeRow
             testimonials={row2}

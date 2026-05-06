@@ -7,6 +7,7 @@ import {
   GYM,
 } from "@/lib/schema";
 import { LeadForm } from "@/components/forms/lead-form";
+import { TESTIMONIALS } from "@/lib/testimonials";
 
 export const metadata: Metadata = buildMetadata({
   title: "Reviews · Mission MMA & Fitness Chicago",
@@ -14,54 +15,6 @@ export const metadata: Metadata = buildMetadata({
     "See what Chicago martial artists say about Mission MMA & Fitness. 5.0 stars on Google with 200+ reviews. BJJ, Muay Thai, MMA, and kids classes in the West Loop.",
   path: "/reviews",
 });
-
-const REVIEWS = [
-  {
-    name: "Ian S.",
-    initials: "IS",
-    text: "This is by far the best MMA/kickboxing gym I have ever been to. The spacious, clean, and elegant facility fitted with Yokkao Muay Thai equipment is great! The strength and mobility area with kettlebells and steel maces is fantastic! Coach Said Hatim's kickboxing instruction is world-class.",
-  },
-  {
-    name: "Anish K.",
-    initials: "AK",
-    text: "Said Hatim is an amazing coach. His instruction style is highly motivating and his technique is unparalleled. I highly recommend Mission MMA for anyone interested in real martial arts — for sports, fitness, and self defense. Top notch facility with awesome instructors and the best equipment money can buy.",
-  },
-  {
-    name: "Mission Member",
-    initials: "MM",
-    text: "Mission MMA is a great place to learn Muay Thai, BJJ, wrestling, and how to creatively mix techniques together. The coaches possess high-level, practical knowledge which they share in a very welcoming, friendly manner. Teammates feel like an extended family.",
-  },
-  {
-    name: "Corporate Event Guest",
-    initials: "CE",
-    text: "The instructors here were AMAZING! Very professional, kind, funny, and wonderful to work with. The gym itself was well maintained and very clean. I would highly recommend other companies to schedule team events with Mission MMA.",
-  },
-  {
-    name: "Women's Self-Defense Attendee",
-    initials: "WS",
-    text: "Mission gave an AMAZING self defense class! We went with a group of coworkers — all females — and the class was extremely informative, practical, and so fun! Each of us left feeling empowered, stronger, and excited to come back. Thank you for a perfect experience!",
-  },
-  {
-    name: "Kids BJJ Parent",
-    initials: "KP",
-    text: "This is the top jiu-jitsu and MMA gym I have enrolled my son into — and we have been to 4 other gyms. I am overly impressed. The trainers are professional, respectful, and enjoy what they do. Even the other students are good people.",
-  },
-  {
-    name: "Open Mat Drop-in",
-    initials: "OM",
-    text: "Incredible find! I dropped in while on a work trip to one of their BJJ open mats and had a blast. Staff and students are top notch. Their Muay Thai and jiu-jitsu instructors accommodate all skill levels perfectly.",
-  },
-  {
-    name: "Said Hatim Student",
-    initials: "SH",
-    text: "Said Hatim is an excellent teacher who genuinely cares about the progress and well-being of his students. He combines fun and creative workouts with world-class instruction and honest, motivating guidance. I would recommend his program to anyone.",
-  },
-  {
-    name: "Chicago Martial Artist",
-    initials: "CM",
-    text: "This gym has it all — a great, clean, and vibrant environment. The coaches are truly elite. I went to other gyms that had decent coaches but these guys will just keep you hooked. These coaches and members are my family.",
-  },
-];
 
 export default function ReviewsPage() {
   return (
@@ -108,9 +61,9 @@ export default function ReviewsPage() {
       <section className="px-6 py-20" style={{ backgroundColor: "#111111" }}>
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {REVIEWS.map((review) => (
+            {TESTIMONIALS.map((review) => (
               <article
-                key={review.name}
+                key={review.id}
                 className="flex flex-col gap-4 rounded-lg p-6"
                 style={{
                   backgroundColor: "#1A1A1A",

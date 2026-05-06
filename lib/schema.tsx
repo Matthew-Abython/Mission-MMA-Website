@@ -18,6 +18,8 @@
 export const GYM = {
   name: "Mission MMA & Fitness",
   legalName: "Mission MMA & Fitness",
+  description:
+    "Mission MMA & Fitness is a 4,500 sq ft martial arts academy established in 2016 in Chicago's West Loop, training on world-class Yokkao Muay Thai equipment with free street parking and steps from the Green/Pink Line CTA.",
   url: "https://missionmmachicago.com",
   logo: "https://missionmmachicago.com/logo.svg",
   image: "https://missionmmachicago.com/og-image.jpg",
@@ -118,6 +120,7 @@ export function buildLocalBusiness(): JsonLd {
     "@id": `${GYM.url}/#gym`,
     name: GYM.name,
     legalName: GYM.legalName,
+    description: GYM.description,
     url: GYM.url,
     logo: GYM.logo,
     image: GYM.image,
