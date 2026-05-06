@@ -187,7 +187,7 @@ Mission-MMA-Website/
 ├── .env.local                      # Real secrets — NOT committed
 ├── .env.local.example              # Template showing required vars
 ├── next.config.ts                  # Image domains + 301 redirects
-├── middleware.ts                   # Case-sensitive redirects (3 rules)
+├── proxy.ts                        # Case-sensitive redirects (3 rules) — Next.js 16 replacement for middleware.ts
 ├── components.json                 # shadcn config (base-nova, lucide, @/ alias)
 ├── CLAUDE.md                       # Claude Code project instructions
 ├── HANDOFF-GUIDE.md                # This file
@@ -463,14 +463,16 @@ Same pattern. Fields: firstName, lastName, phone, selectedDate, selectedClass, s
 | `/Gallery` | `/about` |
 | `/blog` | `/` |
 
-### In `middleware.ts` (case-sensitive — avoids self-redirect loops)
+### In `proxy.ts` (case-sensitive — avoids self-redirect loops)
 | From | To |
 |---|---|
 | `/classes/Brazilian-Jiu-Jitsu` | `/classes/brazilian-jiu-jitsu` |
 | `/classes/MMA` | `/classes/mma` |
 | `/Contact` | `/contact` |
 
-**Critical rule:** If `source.toLowerCase() === destination`, put the rule in `middleware.ts`, NOT `next.config.ts`. Next.js redirects are case-insensitive and will cause an infinite loop.
+**Critical rule:** If `source.toLowerCase() === destination`, put the rule in `proxy.ts`, NOT `next.config.ts`. Next.js redirects are case-insensitive and will cause an infinite loop.
+
+**Next.js 16 note:** In Next.js 16, `middleware.ts` was renamed to `proxy.ts`. The export is also renamed: `export function proxy(request)` instead of `export function middleware(request)`. The `config.matcher` export is the same.
 
 ---
 
@@ -526,7 +528,7 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 
 ## Critical Lessons
 
-**1. Next.js redirect self-loop** — `source.toLowerCase() === destination` causes infinite 308. Use `middleware.ts` for those rules.
+**1. Next.js redirect self-loop** — `source.toLowerCase() === destination` causes infinite 308. Use `proxy.ts` for those rules (Next.js 16 renamed `middleware.ts` → `proxy.ts`; export is `function proxy()` not `function middleware()`).
 
 **2. /free-trial → /book** — `/book` is canonical. All CTAs point there. Booking webhook is server-side (`N8N_WEBHOOK_URL`), not `NEXT_PUBLIC_`.
 
@@ -543,6 +545,8 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 **8. Image filenames are case-sensitive on Vercel (Linux)** — `.JPG` ≠ `.jpg`. Always use lowercase extensions. Rename before committing. macOS won't catch this locally.
 
 **9. Logo PNG with baked-in background** — use `style={{ mixBlendMode: "lighten", filter: "brightness(1.08) contrast(1.1)" }}` on the `<Image>` element. `lighten` blend + filter makes the charcoal background pixels disappear against the true-black header. Do NOT remove this style when swapping logo files — it must persist.
+
+**10. `proxy.ts` must be committed as a source file** — it does not get reconstructed from `.next/` build artifacts if accidentally excluded via `.gitignore` or deletion. The compiled output in `.next/server/middleware.js` is not a source file and is not tracked by git. If `proxy.ts` goes missing, the 3 case-sensitive redirects silently stop working and cannot be recovered from the build cache. Also: in Next.js 16, the file is `proxy.ts` (not `middleware.ts`) — creating both files simultaneously causes a build error.
 
 ---
 
