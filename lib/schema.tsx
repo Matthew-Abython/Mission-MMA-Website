@@ -356,9 +356,9 @@ export function buildAggregateRating(): JsonLd {
         postalCode: "60612",
       },
     },
-    ratingValue: "5.0",
+    ratingValue: "4.9",
     bestRating: "5",
-    ratingCount: "200",
+    ratingCount: "103",
   };
 }
 

@@ -1,8 +1,8 @@
-# 2026-05-06 — Schema Fixes: Logo, OG Image, foundingDate, X Social Link
+# 2026-05-06 — Schema Fixes: Logo, OG Image, foundingDate, X Social Link, Accurate Rating Values
 
 ## What was changed
 
-Four fixes to `lib/schema.tsx` GYM constant and `buildLocalBusiness()`:
+Five fixes to `lib/schema.tsx` GYM constant, `buildLocalBusiness()`, and `buildAggregateRating()`:
 
 ### 1. Logo URL
 - **Before:** `"https://missionmmachicago.com/logo.svg"`
@@ -23,7 +23,13 @@ Four fixes to `lib/schema.tsx` GYM constant and `buildLocalBusiness()`:
 - **After:** `"https://x.com/MissionMMAChi"`
 - **Why:** Twitter rebranded to X and moved to x.com. Using the old twitter.com URL still resolves via redirect, but x.com is now canonical for `sameAs` schema.
 
+### 5. AggregateRating values
+- **Before:** `ratingValue: "5.0"`, `ratingCount: "200"`
+- **After:** `ratingValue: "4.9"`, `ratingCount: "103"`
+- **Why:** 5.0 with 200 reviews was a placeholder. The actual verified figures are 4.9 stars from 103 Google reviews. Schema.org rating data must match what's publicly verifiable — inflated numbers can be flagged as misleading by Google's rich result validators.
+
 ## What to watch for in the future
 - When adding or swapping the logo, update `GYM.logo` in `lib/schema.tsx` to match the actual filename in `/public`.
 - The OG image is a dynamic route — never use a `.jpg` or `.png` extension for it in schema.
 - `sameAs` URLs should use canonical domain names (x.com not twitter.com, instagram.com not instagr.am, etc.).
+- `ratingValue` and `ratingCount` in `buildAggregateRating()` are hardcoded — update them whenever the review count changes significantly. Also update the hero stat bar in `app/reviews/page.tsx` to keep them in sync.

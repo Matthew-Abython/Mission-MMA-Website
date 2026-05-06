@@ -400,6 +400,7 @@ interface Testimonial {
 - `sameAs`: Facebook, Instagram, **x.com**/MissionMMAChi (not twitter.com), YouTube
 
 `buildLocalBusiness()` emits: LocalBusiness + MartialArtsSchool, includes `description`, `foundingDate: "2016"`.
+`buildAggregateRating()` hardcoded values: `ratingValue: "4.9"`, `ratingCount: "103"` — update when review count changes significantly (also update `app/reviews/page.tsx` hero stat bar to keep in sync).
 Builders: `buildLocalBusiness()`, `buildCourse()`, `buildFaqPage()`, `buildBreadcrumbList()`, `buildPerson()`, `buildScheduleEvent()`, `buildAggregateRatingWithReviews()`, `buildAggregateRating()` (standalone, used on `/reviews`).
 Renderer: `<JsonLdScript data={...} />`.
 
