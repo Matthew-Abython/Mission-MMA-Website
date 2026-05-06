@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Car, Bus, Train, MessageSquare } from "lucide-react";
 import { LeadForm } from "@/components/forms/lead-form";
 import { buildMetadata } from "@/lib/seo";
 import {
@@ -9,14 +9,19 @@ import {
   buildBreadcrumbList,
   GYM,
 } from "@/lib/schema";
-import {
-  WEEKLY_SCHEDULE,
-  DAYS_OF_WEEK,
-  DAY_LABELS,
-  type DayOfWeek,
-} from "@/lib/schedule";
 
 const URL = `${GYM.url}/contact`;
+
+// Official business hours (source: Yelp listing — distinct from class schedule)
+const CONTACT_HOURS = [
+  { label: "Monday",    hours: "9:00 AM – 8:30 PM" },
+  { label: "Tuesday",   hours: "6:30 AM – 8:30 PM" },
+  { label: "Wednesday", hours: "6:00 AM – 8:30 PM" },
+  { label: "Thursday",  hours: "7:00 AM – 8:30 PM" },
+  { label: "Friday",    hours: "7:00 AM – 7:30 PM" },
+  { label: "Saturday",  hours: "7:00 AM – 2:00 PM" },
+  { label: "Sunday",    hours: "Closed" },
+];
 
 export const metadata: Metadata = buildMetadata({
   title: "Contact Mission MMA & Fitness — Visit Our West Loop Chicago Gym",
@@ -31,36 +36,7 @@ export const metadata: Metadata = buildMetadata({
   ],
 });
 
-function deriveHours(): { day: DayOfWeek; label: string; hours: string }[] {
-  return DAYS_OF_WEEK.map((day) => {
-    const classes = WEEKLY_SCHEDULE.filter((c) => c.day === day).sort((a, b) =>
-      a.time.localeCompare(b.time),
-    );
-    if (classes.length === 0) {
-      return { day, label: DAY_LABELS[day], hours: "Closed" };
-    }
-    const first = classes[0];
-    const last = classes[classes.length - 1];
-    const [lastH, lastM] = last.time.split(":").map((n) => parseInt(n, 10));
-    const lastEndMinutes = lastH * 60 + lastM + (last.durationMinutes ?? 60);
-    const lastEndHour = Math.floor(lastEndMinutes / 60);
-    const lastEndMin = lastEndMinutes % 60;
-    const formatTime = (h: number, m: number) => {
-      const period = h >= 12 ? "PM" : "AM";
-      const displayHour = h === 0 ? 12 : h > 12 ? h - 12 : h;
-      return `${displayHour}:${m.toString().padStart(2, "0")} ${period}`;
-    };
-    const [firstH, firstM] = first.time.split(":").map((n) => parseInt(n, 10));
-    return {
-      day,
-      label: DAY_LABELS[day],
-      hours: `${formatTime(firstH, firstM)} – ${formatTime(lastEndHour, lastEndMin)}`,
-    };
-  });
-}
-
 export default function ContactPage() {
-  const hours = deriveHours();
   const mapsEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(
     "Mission MMA & Fitness, 1620 W Carroll Ave, Chicago, IL 60612",
   )}&output=embed`;
@@ -178,8 +154,8 @@ export default function ContactPage() {
                     hours.
                   </p>
                   <ul className="mt-3 space-y-1.5 text-mission-gray-300">
-                    {hours.map((h) => (
-                      <li key={h.day} className="flex items-baseline gap-3">
+                    {CONTACT_HOURS.map((h) => (
+                      <li key={h.label} className="flex items-baseline gap-3">
                         <span className="w-24 font-medium text-mission-white">
                           {h.label}
                         </span>
@@ -214,6 +190,79 @@ export default function ContactPage() {
           </div>
         </section>
 
+        {/* Getting Here */}
+        <section className="bg-mission-black px-4 py-16 md:px-8 md:py-20">
+          <div className="mx-auto max-w-7xl">
+            <h2
+              className="font-display uppercase text-white mb-6"
+              style={{ fontSize: "24px" }}
+            >
+              Getting Here
+            </h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {/* Parking */}
+              <div className="flex flex-col gap-2 rounded-lg p-5" style={{ backgroundColor: "#1A1A1A" }}>
+                <Car className="h-5 w-5" style={{ color: "var(--mission-red)" }} aria-hidden="true" />
+                <p className="font-display uppercase text-white" style={{ fontSize: "16px" }}>
+                  Free Street Parking
+                </p>
+                <p style={{ fontSize: "14px", color: "var(--mission-gray-300)" }}>
+                  Parking available directly outside the building.
+                </p>
+              </div>
+
+              {/* Bus */}
+              <div className="flex flex-col gap-2 rounded-lg p-5" style={{ backgroundColor: "#1A1A1A" }}>
+                <Bus className="h-5 w-5" style={{ color: "var(--mission-red)" }} aria-hidden="true" />
+                <p className="font-display uppercase text-white" style={{ fontSize: "16px" }}>
+                  Ashland Bus (Route 9)
+                </p>
+                <p style={{ fontSize: "14px", color: "var(--mission-gray-300)" }}>
+                  2-minute walk from the stop.
+                </p>
+              </div>
+
+              {/* Train */}
+              <div className="flex flex-col gap-2 rounded-lg p-5" style={{ backgroundColor: "#1A1A1A" }}>
+                <Train className="h-5 w-5" style={{ color: "var(--mission-red)" }} aria-hidden="true" />
+                <p className="font-display uppercase text-white" style={{ fontSize: "16px" }}>
+                  Green/Pink Line CTA
+                </p>
+                <p style={{ fontSize: "14px", color: "var(--mission-gray-300)" }}>
+                  3-minute walk from the station.
+                </p>
+              </div>
+
+              {/* Text or Call */}
+              <div className="flex flex-col gap-2 rounded-lg p-5" style={{ backgroundColor: "#1A1A1A" }}>
+                <MessageSquare className="h-5 w-5" style={{ color: "var(--mission-red)" }} aria-hidden="true" />
+                <p className="font-display uppercase text-white" style={{ fontSize: "16px" }}>
+                  Text or Call
+                </p>
+                <p style={{ fontSize: "14px", color: "var(--mission-gray-300)" }}>
+                  SMS:{" "}
+                  <a
+                    href="sms:+17736099133"
+                    className="hover:underline"
+                    style={{ color: "var(--mission-red)" }}
+                  >
+                    (773) 609-9133
+                  </a>
+                  <br />
+                  Live line 4:30–9:30pm:{" "}
+                  <a
+                    href="tel:+13122852423"
+                    className="hover:underline"
+                    style={{ color: "var(--mission-red)" }}
+                  >
+                    (312) 285-2423
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* What to expect */}
         <section className="bg-mission-black px-4 py-16 md:px-8 md:py-24">
           <div className="mx-auto max-w-3xl space-y-6 text-mission-gray-300">
@@ -242,6 +291,39 @@ export default function ContactPage() {
         {/* Contact form */}
         <section className="bg-mission-gray-900 px-4 py-16 md:px-8 md:py-24">
           <div className="mx-auto max-w-3xl">
+            {/* Group / corporate events callout */}
+            <div
+              className="rounded-r-lg p-6 my-8"
+              style={{
+                borderLeft: "4px solid var(--mission-red)",
+                backgroundColor: "#1A1A1A",
+              }}
+            >
+              <h3
+                className="font-display uppercase text-white mb-2"
+                style={{ fontSize: "20px" }}
+              >
+                Corporate &amp; Group Events
+              </h3>
+              <p
+                className="leading-relaxed mb-4"
+                style={{ fontSize: "14px", color: "var(--mission-gray-300)" }}
+              >
+                Mission MMA offers private self-defense workshops, team-building
+                sessions, and women&apos;s empowerment classes for companies
+                across Chicago. Our instructors bring professional, fun, and
+                practical instruction to groups of any size — no experience
+                necessary.
+              </p>
+              <a
+                href="mailto:info@missionmmachicago.com"
+                className="inline-flex items-center gap-2 text-sm font-medium hover:underline"
+                style={{ color: "var(--mission-red)" }}
+              >
+                Inquire about group events →
+              </a>
+            </div>
+
             <div className="rounded-lg border border-white/10 bg-mission-black/60 p-6 md:p-10">
               <h2>Send a Quick Message</h2>
               <p className="mt-3 text-mission-gray-300">

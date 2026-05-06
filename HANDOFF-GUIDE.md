@@ -233,7 +233,13 @@ Step 1: choose discipline → Step 2: pick date + time → Step 3: firstName, la
 Still renders a `<LeadForm>` but is permanently redirected to `/book` via `next.config.ts` — effectively unreachable.
 
 ### `/contact` (`app/contact/page.tsx`)
-Address, phone, hours from WEEKLY_SCHEDULE, Google Maps iframe, "What to Expect", `<LeadForm source="contact">`.
+Address, phone, email, hours, Google Maps iframe, "Getting Here" transit tiles, "What to Expect", group events callout, `<LeadForm source="contact">`.
+
+**Hours:** Static `CONTACT_HOURS` const in the file (source: official Yelp listing). Do NOT derive from `lib/schedule.ts` — class schedule hours ≠ business hours.
+
+**Getting Here section:** 4-tile grid (2-col sm+) — Free Street Parking, Ashland Bus Route 9, Green/Pink Line CTA, Text or Call. Tile 4 contains two phone links: SMS `(773) 609-9133` and live line `(312) 285-2423` (4:30–9:30pm).
+
+**Group Events callout:** Red left-border card above the LeadForm. "Inquire about group events →" links to `mailto:info@missionmmachicago.com`.
 
 ### `/about` (`app/about/page.tsx`)
 Gym story, facility, Mission Empower nonprofit. LocalBusiness + MartialArtsSchool + NGO + BreadcrumbList JSON-LD.
