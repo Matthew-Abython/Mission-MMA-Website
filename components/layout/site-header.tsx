@@ -27,6 +27,7 @@ const PRIMARY_NAV = [
   { href: "/instructors", label: "Coaches" },
   { href: "/about",       label: "About" },
   { href: "/contact",     label: "Contact" },
+  { href: "/reviews",     label: "Reviews" },
   { href: "/faq",         label: "FAQ" },
 ];
 

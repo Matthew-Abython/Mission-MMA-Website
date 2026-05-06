@@ -60,6 +60,8 @@ Mission-MMA-Website/
 │   │   └── page.tsx
 │   ├── faq/
 │   │   └── page.tsx
+│   ├── reviews/
+│   │   └── page.tsx                # /reviews page — hero stat bar, 9 review cards, Google CTA, LeadForm
 │   ├── free-trial/
 │   │   ├── page.tsx                # Legacy — redirected to /book via next.config.ts
 │   │   └── thank-you/page.tsx      # Legacy — redirected to /book via next.config.ts
@@ -239,6 +241,17 @@ Gym story, facility, Mission Empower nonprofit. LocalBusiness + MartialArtsSchoo
 ### `/faq` (`app/faq/page.tsx`)
 All 17 FAQ items. FAQPage JSON-LD.
 
+### `/reviews` (`app/reviews/page.tsx`)
+Static server component. Four sections:
+1. **Hero stat bar** — `bg-[--mission-black]`, red bottom border, centered "5.0 ★" at 80px Oswald red, "200+ Google Reviews" at 20px Inter gray-300, "Chicago's highest-rated martial arts gym" at 16px gray-500.
+2. **Review cards grid** — `bg-[#111111]`, `max-w-7xl`, `grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6`. 9 hardcoded cards in a `REVIEWS` const. Each card: `bg-[#1A1A1A]`, red-tint border, avatar (red circle + initials), `★★★★★` yellow stars, italic quote, red Oswald reviewer name pushed to bottom with `mt-auto`.
+3. **Google CTA bar** — `bg-[--mission-black]`, Oswald 28px heading, Inter 16px gray-500 subtext, red `<a href="#">` "Write a Google Review →" button (Said must supply real Google review URL).
+4. **Lead form** — `bg-[#111111]`, Oswald 32px "Ready to Start Your Journey?" heading, `<LeadForm source="reviews-page" />`.
+
+JSON-LD: `buildAggregateRating()` + `buildBreadcrumbList([Home, Reviews])`.
+
+**Note:** The "Write a Google Review" button href is `#` — Said Hatim needs to supply the direct Google review link once the Google Business Profile is confirmed.
+
 ### `/instructors` (`app/instructors/page.tsx`)
 Fully built instructor hub. Page header (dark bg, Oswald H1, subtitle — **no CTA button**) + responsive card grid (1-col mobile, 2-col md). Each card: square photo with `object-top` crop, name (Oswald), title (red), discipline badges, 2-paragraph `shortBio`, and "Read More →" text link to `/instructors/[slug]`. Data driven by `lib/instructors.ts`. BreadcrumbList JSON-LD emitted.
 
@@ -360,7 +373,7 @@ interface ScheduleEntry {
 
 ### `lib/schema.tsx`
 `GYM` constant = single source of truth for gym identity (name, URL, address, geo, phone, email, socials).
-Builders: `buildLocalBusiness()`, `buildCourse()`, `buildFaqPage()`, `buildBreadcrumbList()`, `buildPerson()`, `buildScheduleEvent()`, `buildAggregateRatingWithReviews()`.
+Builders: `buildLocalBusiness()`, `buildCourse()`, `buildFaqPage()`, `buildBreadcrumbList()`, `buildPerson()`, `buildScheduleEvent()`, `buildAggregateRatingWithReviews()`, `buildAggregateRating()` (standalone, used on `/reviews`).
 Renderer: `<JsonLdScript data={...} />`.
 
 ### `lib/seo.ts`
@@ -422,7 +435,7 @@ Same pattern. Fields: firstName, lastName, phone, selectedDate, selectedClass, s
 | `/classes/Mission-Empower` | `/about` |
 | `/classes/Training-with-Head-Coach` | `/contact` |
 | `/Home/Schedule` | `/schedule` |
-| `/Home/Reviews` | `/` |
+| `/Home/Reviews` | `/reviews` |
 | `/FAQ` | `/contact` |
 | `/Home/Offer` | `/free-trial` |
 | `/Gallery` | `/about` |

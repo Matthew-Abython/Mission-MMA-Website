@@ -80,7 +80,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/Home/Reviews",
-        destination: "/",
+        destination: "/reviews",
         permanent: true,
       },
       {

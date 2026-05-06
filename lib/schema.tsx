@@ -333,6 +333,31 @@ export function buildAggregateRatingWithReviews(
   };
 }
 
+/**
+ * Standalone AggregateRating for the /reviews page.
+ * Uses itemReviewed to associate the rating with the gym entity.
+ */
+export function buildAggregateRating(): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "AggregateRating",
+    itemReviewed: {
+      "@type": "MartialArtsSchool",
+      name: "Mission MMA & Fitness",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "1620 W Carroll Ave",
+        addressLocality: "Chicago",
+        addressRegion: "IL",
+        postalCode: "60612",
+      },
+    },
+    ratingValue: "5.0",
+    bestRating: "5",
+    ratingCount: "200",
+  };
+}
+
 // ─────────────────────────────────────────────────────────
 // Renderer component
 // ─────────────────────────────────────────────────────────

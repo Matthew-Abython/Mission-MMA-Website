@@ -32,6 +32,8 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: "CCBot", allow: "/" },
       { userAgent: "cohere-ai", allow: "/" },
       { userAgent: "FacebookBot", allow: "/" },
+      { userAgent: "OAI-SearchBot", allow: "/" },
+      { userAgent: "Applebot-Extended", allow: "/" },
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
   };
