@@ -182,7 +182,14 @@ Mission-MMA-Website/
 │   ├── Molos_Jeftic.png            # Instructor photo
 │   ├── Romero_Stancle.png          # Instructor photo
 │   ├── Sydney_Yockey.png           # Instructor photo
-│   └── llms.txt                    # LLM-readable gym summary for AIO/GEO
+│   ├── llms.txt                    # LLM-readable gym summary for AIO/GEO
+│   └── videos/
+│       ├── mission_hero.mp4        # Homepage hero atmospheric video (Phase 1) — tracked via Git LFS
+│       ├── mission_hero.jpg        # Poster frame for mission_hero.mp4 (720×1280, 102KB)
+│       ├── mission_walkthrough.mp4 # Gym walkthrough video (Phase 2) — tracked via Git LFS
+│       ├── mission_walkthrough.jpg # Poster frame for mission_walkthrough.mp4 (720×1280, 65KB)
+│       ├── mission_promo.mp4       # Polished promo with embedded text (Phase 3) — tracked via Git LFS
+│       └── mission_promo.jpg       # Poster frame for mission_promo.mp4 (720×1280, 117KB)
 │
 ├── .env.local                      # Real secrets — NOT committed
 ├── .env.local.example              # Template showing required vars
@@ -505,6 +512,18 @@ NEXT_PUBLIC_CHATBOT_WEBHOOK_URL=      # Client-side. n8n chatbot webhook. Separa
 
 ---
 
+## Video Assets
+
+| File | Purpose | Used by |
+|---|---|---|
+| `public/videos/mission_hero.mp4` | Homepage hero atmospheric video (Phase 1) | `HeroGeometric` (TBD) |
+| `public/videos/mission_walkthrough.mp4` | Gym walkthrough (Phase 2) | `/about` page (TBD) |
+| `public/videos/mission_promo.mp4` | Polished promo with embedded text (Phase 3) | Homepage showcase section (TBD) |
+
+All MP4 files in `public/videos/` are tracked via Git LFS. Posters are paired `.jpg` siblings with matching basenames.
+
+---
+
 ## Design System
 
 ### Brand Colors (dark theme enforced — no light mode)
@@ -575,6 +594,7 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 7. ~~**Real gym photos (class pages)**~~ — ✅ **DONE** — All 7 Program Grid cards and all 7 class page heroes now use real gym photos from `/public`. Mapping: `BJJ.jpg`, `Kickboxing_2.jpg`, `mixedmartialarts.jpg`, `womansbjj.jpg`, `kidsmartialarts.jpg`, `openmat.jpg`, `strengthandconditioning.jpg`. No Pexels URLs remain for any discipline. Home page hero still has no video — replace with real gym footage when available. See `TODO` comments in `app/page.tsx` above `<HeroGeometric />`.
 8. ~~**Chat widget**~~ — ✅ **DONE** — `<ChatWidget />` added to root layout. All webhooks functional.
 9. **Domain connection** — Connect `missionmmachicago.com` to the Vercel project in the Vercel dashboard (Domains tab). Update DNS records at the registrar to point to Vercel.
+10. ~~**Video assets**~~ — ✅ **DONE** — Three MP4s placed in `public/videos/` and tracked via Git LFS. Poster frames extracted with ffmpeg at the 2-second mark. Phase 1 (hero integration), Phase 2 (walkthrough on /about), Phase 3 (showcase section) are separate prompts.
 
 ---
 
