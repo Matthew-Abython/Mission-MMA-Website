@@ -2,6 +2,7 @@
 
 import { m, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { STAGGER_CONTAINER, FADE_UP, EASE_MISSION } from "@/lib/motion";
 
@@ -10,9 +11,14 @@ import { STAGGER_CONTAINER, FADE_UP, EASE_MISSION } from "@/lib/motion";
 // Place the video file in /public/hero.mp4 (max 15MB, H.264, no audio track).
 // The CSS mesh/blob background will automatically be replaced by the video.
 // Recommended: export at 1920×1080, 30fps, 8–12 second loop.
+//
+// IMAGE PATH:
+// Pass imageUrl="/mission_gym_hero.jpg" for a still photo background.
+// Priority: videoUrl > imageUrl > CSS mesh fallback.
 
 interface HeroGeometricProps {
   videoUrl?: string;
+  imageUrl?: string;
 }
 
 // Width-reveal variant for the decorative rule — used instead of FADE_UP
@@ -25,7 +31,7 @@ const RULE_VARIANTS = {
   },
 };
 
-export function HeroGeometric({ videoUrl }: HeroGeometricProps) {
+export function HeroGeometric({ videoUrl, imageUrl }: HeroGeometricProps) {
   const reduced = useReducedMotion() ?? false;
   const { scrollY } = useScroll();
   const chevronOpacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -45,45 +51,43 @@ export function HeroGeometric({ videoUrl }: HeroGeometricProps) {
 
       {/* === BACKGROUND === */}
 
-      {/* Orbiting mesh blobs — CSS keyframe, skipped for reduced-motion */}
-      {!reduced && (
+      {videoUrl ? (
+        /* Case 1: Video background */
         <>
+          {/* Orbiting mesh blobs — CSS keyframe, skipped for reduced-motion */}
+          {!reduced && (
+            <>
+              <div
+                aria-hidden="true"
+                className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full"
+                style={{
+                  background: "radial-gradient(circle, #C8102E 0%, transparent 70%)",
+                  filter: "blur(80px)",
+                  opacity: 0.15,
+                  animation: "orbit1 18s ease-in-out infinite",
+                }}
+              />
+              <div
+                aria-hidden="true"
+                className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full"
+                style={{
+                  background: "radial-gradient(circle, #1a0305 0%, transparent 70%)",
+                  filter: "blur(100px)",
+                  opacity: 0.15,
+                  animation: "orbit2 25s ease-in-out infinite",
+                }}
+              />
+            </>
+          )}
+          {/* Diagonal scanline texture */}
           <div
             aria-hidden="true"
-            className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full"
+            className="absolute inset-0 pointer-events-none"
             style={{
-              background: "radial-gradient(circle, #C8102E 0%, transparent 70%)",
-              filter: "blur(80px)",
-              opacity: 0.15,
-              animation: "orbit1 18s ease-in-out infinite",
+              backgroundImage:
+                "repeating-linear-gradient(135deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)",
             }}
           />
-          <div
-            aria-hidden="true"
-            className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full"
-            style={{
-              background: "radial-gradient(circle, #1a0305 0%, transparent 70%)",
-              filter: "blur(100px)",
-              opacity: 0.15,
-              animation: "orbit2 25s ease-in-out infinite",
-            }}
-          />
-        </>
-      )}
-
-      {/* Diagonal scanline texture */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage:
-            "repeating-linear-gradient(135deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)",
-        }}
-      />
-
-      {/* Optional video background */}
-      {videoUrl && (
-        <>
           <video
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover"
@@ -96,6 +100,60 @@ export function HeroGeometric({ videoUrl }: HeroGeometricProps) {
             style={{ opacity: 0.3 }}
           />
           <div aria-hidden="true" className="absolute inset-0 bg-mission-black/60" />
+        </>
+      ) : imageUrl ? (
+        /* Case 2: Still photo background — no blobs, no scanline */
+        <>
+          <Image
+            src={imageUrl}
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+            quality={90}
+          />
+          {/* Layered darkening overlays for legibility over bright mat photo */}
+          <div aria-hidden="true" className="absolute inset-0 z-[1] bg-black/55" />
+          <div aria-hidden="true" className="absolute inset-0 z-[1] bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+        </>
+      ) : (
+        /* Case 3: CSS mesh gradient fallback */
+        <>
+          {/* Orbiting mesh blobs — CSS keyframe, skipped for reduced-motion */}
+          {!reduced && (
+            <>
+              <div
+                aria-hidden="true"
+                className="absolute top-1/4 -left-1/4 w-[600px] h-[600px] rounded-full"
+                style={{
+                  background: "radial-gradient(circle, #C8102E 0%, transparent 70%)",
+                  filter: "blur(80px)",
+                  opacity: 0.15,
+                  animation: "orbit1 18s ease-in-out infinite",
+                }}
+              />
+              <div
+                aria-hidden="true"
+                className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full"
+                style={{
+                  background: "radial-gradient(circle, #1a0305 0%, transparent 70%)",
+                  filter: "blur(100px)",
+                  opacity: 0.15,
+                  animation: "orbit2 25s ease-in-out infinite",
+                }}
+              />
+            </>
+          )}
+          {/* Diagonal scanline texture */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(135deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px)",
+            }}
+          />
         </>
       )}
 

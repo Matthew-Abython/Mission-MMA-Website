@@ -165,6 +165,7 @@ Mission-MMA-Website/
 │       └── 2026-04-30-logo-png-blend-mode.md
 │
 ├── public/
+│   ├── mission_gym_hero.jpg        # Homepage hero background — empty mat floor with Mission logo, West Loop facility
 │   ├── hero-poster.jpg             # Static hero image (home page fallback)
 │   ├── said.jpg                    # Said Hatim photo used in CoachSchedulingCard
 │   ├── Said_Hatim.png              # Said Hatim photo for instructors hub + detail page
@@ -212,7 +213,7 @@ Mission-MMA-Website/
 ### `/` — Home (`app/page.tsx`)
 Server component. Sections top to bottom:
 1. `<SocialProofStrip>` — static `bg-[#111111]` horizontal band between hero and program grid. Six stat items (5.0★, 200+ Reviews, 4,500 sq ft, Since 2016, 7 Disciplines, Free Parking) with `|` separators on desktop. Horizontally scrollable on mobile via `overflow-x-auto` + `min-w-max` inner container. Pure server component, no JS.
-2. `<HeroGeometric>` — full-viewport dark hero. CSS mesh background (two blurred radial gradients orbiting via `orbit1`/`orbit2` keyframes at 18s/25s + diagonal scanline overlay). Staggered Framer Motion reveal: red rule → eyebrow → H1 **"MISSION MMA & / FITNESS"** (glow-pulse keyframe on "FITNESS") → subhead → two CTAs ("Claim Your Free Class" + "View Schedule"). Scroll-fading chevron via `useScroll`+`useTransform`. Optional `videoUrl` prop renders a muted autoplay video behind the mesh. All animations gate on `useReducedMotion`.
+2. `<HeroGeometric imageUrl="/mission_gym_hero.jpg">` — full-viewport dark hero. **Background priority: `videoUrl` > `imageUrl` > CSS mesh fallback.** Currently using `imageUrl` (gym mat photo). When `imageUrl` is active: full-bleed `next/image` (fill, priority, 1920px) behind two stacked dark overlays (`bg-black/55` + `bg-gradient-to-t from-black/80`); no blobs or scanline. When `videoUrl` is active: muted autoplay video behind the CSS mesh (unchanged). When neither: CSS mesh (two blurred radial gradients orbiting via `orbit1`/`orbit2` keyframes at 18s/25s + diagonal scanline). Staggered Framer Motion reveal: red rule → eyebrow → H1 **"MISSION MMA & / FITNESS"** (glow-pulse keyframe on "FITNESS") → subhead → two CTAs ("Claim Your Free Class" + "View Schedule"). Scroll-fading chevron via `useScroll`+`useTransform`. All animations gate on `useReducedMotion`.
 2. `<ProgramGrid>` — bento grid of 7 discipline cards. Top row: 2 featured cards (BJJ + Muay Thai) in `grid-cols-2` at `aspect-video` (16/9). Bottom row: 5 smaller cards in `grid-cols-2 sm:grid-cols-3 lg:grid-cols-5` at `aspect-[4/3]`. Each card: full-bleed `Next/Image`, bottom-to-top gradient overlay, red left-border accent (CSS `group-hover:w-[3px]`), Oswald badge + H3 + Inter description. Framer Motion: `whileHover="cardHover"` on article propagates to image wrapper `m.div` (scale 1.08 zoom); card entrance via `useInView` + `custom={index}` for 0.08s per-card stagger delay. Accepts optional `images?: Partial<Record<Slug, string>>` prop to override any discipline's image URL.
 3. `<WhyTrainHere>` — 3-column value props
 4. `<StatCounters>` — 4-col grid (2-col mobile): 30+ Weekly Classes | 100+ 5-Star Reviews | 7 Disciplines | 10+ Years Experience. Background `#111111` + SVG `feTurbulence` fractalNoise grain at 2% opacity + `ParallaxText` "MISSION MMA" watermark behind. Each card: `AnimatedCounter` at Oswald 80px white + red suffix, yellow ★ decoration (reviews), Inter 16px gray-300 label, red bottom border that scaleX expands from `origin-center` via BORDER_VARIANTS propagated from STAGGER_FAST → CARD_VARIANTS → BORDER_VARIANTS (0.4s delay trails the number).
@@ -591,7 +592,7 @@ The `<html>` element always has `.dark`. All styling is dark-first.
 4. **Content markdown files** — `bjj.md`, `muay-thai.md`, etc. at project root are drafts, not integrated into any page.
 5. ~~**ConversionTracking**~~ — ✅ **DONE** — `<ConversionTracking />` added to `CoachSchedulingCard` confirmation step (`submitSuccess === true`). Fires `fbq("track","Lead")` + `gtag("event","generate_lead")` after `/book` form submits successfully.
 6. ~~**Instructor dynamic pages**~~ — ✅ **DONE** — fully built, data-driven from `lib/instructors.ts`. Said Hatim page live at `/instructors/said-hatim`.
-7. ~~**Real gym photos (class pages)**~~ — ✅ **DONE** — All 7 Program Grid cards and all 7 class page heroes now use real gym photos from `/public`. Mapping: `BJJ.jpg`, `Kickboxing_2.jpg`, `mixedmartialarts.jpg`, `womansbjj.jpg`, `kidsmartialarts.jpg`, `openmat.jpg`, `strengthandconditioning.jpg`. No Pexels URLs remain for any discipline. Home page hero still has no video — replace with real gym footage when available. See `TODO` comments in `app/page.tsx` above `<HeroGeometric />`.
+7. ~~**Real gym photos (class pages)**~~ — ✅ **DONE** — All 7 Program Grid cards and all 7 class page heroes now use real gym photos from `/public`. Mapping: `BJJ.jpg`, `Kickboxing_2.jpg`, `mixedmartialarts.jpg`, `womansbjj.jpg`, `kidsmartialarts.jpg`, `openmat.jpg`, `strengthandconditioning.jpg`. No Pexels URLs remain for any discipline. ~~Home page hero still has no video~~ — ✅ **DONE (2026-05-11)** — Home page hero now shows `mission_gym_hero.jpg` (mat floor photo) via the new `imageUrl` prop on `<HeroGeometric>`. When a video hype reel is ready, change `imageUrl` to `videoUrl` in `app/page.tsx` — one-line swap. See `TODO` comment in `app/page.tsx`.
 8. ~~**Chat widget**~~ — ✅ **DONE** — `<ChatWidget />` added to root layout. All webhooks functional.
 9. **Domain connection** — Connect `missionmmachicago.com` to the Vercel project in the Vercel dashboard (Domains tab). Update DNS records at the registrar to point to Vercel.
 10. ~~**Video assets**~~ — ✅ **DONE** — Three MP4s placed in `public/videos/` and tracked via Git LFS. Poster frames extracted with ffmpeg at the 2-second mark. Phase 1 (hero integration), Phase 2 (walkthrough on /about), Phase 3 (showcase section) are separate prompts.
@@ -604,7 +605,7 @@ All components added or rebuilt during the UI upgrade session (2026-04-28):
 
 | Component | Status | Notes |
 |---|---|---|
-| `components/sections/hero-geometric.tsx` | Rebuilt | CSS mesh hero: orbiting red/dark blobs, scanline, staggered STAGGER_CONTAINER reveal, scroll-fading chevron, optional `videoUrl` prop |
+| `components/sections/hero-geometric.tsx` | Rebuilt + updated | CSS mesh hero: orbiting red/dark blobs, scanline, staggered STAGGER_CONTAINER reveal, scroll-fading chevron. Props: `videoUrl?` (video over mesh) + `imageUrl?` (still photo with layered dark overlays, replaces blobs/scanline). Priority: videoUrl > imageUrl > mesh. |
 | `components/sections/program-grid.tsx` | Rebuilt | Bento grid: 2 featured (16/9) + 5 small (4/3) cards, whileHover variant propagation for image zoom, per-card stagger via `custom={index}` |
 | `components/motion/parallax-section.tsx` | New | Scroll-driven y-offset wrapper; `speed` prop (0–1 → ±80px); `useReducedMotion` gate |
 | `components/motion/parallax-text.tsx` | New | Kinetic ghost text marquee; `useVelocity` + `useSpring` momentum; bidirectional 25%-wrap loop |
@@ -634,6 +635,7 @@ Changes made after the initial build to clean up the UI:
 | Header nav | `components/layout/site-header.tsx` | Removed "Book Free Trial" text link from desktop nav AND mobile sheet. Pulsing "Free Trial" CTA button remains. |
 | Instructors header | `app/instructors/page.tsx` | Removed "Book a Free Class" CTA button from the page header. Heading and subtitle remain. |
 | All gym photos | `components/sections/program-grid.tsx` + 7 class pages | Replaced all Pexels placeholder URLs with real gym photos from `/public`. See `/public` file list above. |
+| **Hero background (2026-05-11)** | `components/sections/hero-geometric.tsx` + `app/page.tsx` | Replaced CSS mesh gradient with real gym mat photo (`mission_gym_hero.jpg`) via new `imageUrl` prop. Layered overlays (`bg-black/55` + gradient-to-t from-black/80) ensure legibility. Blobs and scanline suppressed when imageUrl active. Video path remains for future hype reel. |
 
 ---
 

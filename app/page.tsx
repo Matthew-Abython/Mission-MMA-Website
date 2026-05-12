@@ -38,8 +38,9 @@ export default function HomePage() {
     <>
       <JsonLdScript data={buildLocalBusiness()} />
 
-      {/* TODO: Add videoUrl="/hero.mp4" prop when gym footage is available. */}
-      <HeroGeometric />
+      {/* TODO: Add videoUrl="/hero.mp4" prop when gym footage is available. When video is ready,
+          swap imageUrl for videoUrl — the image will become the silent fallback automatically. */}
+      <HeroGeometric imageUrl="/mission_gym_hero.jpg" />
 
       <SocialProofStrip />
 
