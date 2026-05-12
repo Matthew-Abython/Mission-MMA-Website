@@ -7,7 +7,6 @@ import {
   buildBreadcrumbList,
   GYM,
 } from "@/lib/schema";
-import { InlineVideoPlayer } from "@/components/media/inline-video-player";
 
 const URL = `${GYM.url}/about`;
 
@@ -94,9 +93,8 @@ export default function AboutPage() {
         </section>
 
         {/* Facility */}
-        <section className="bg-mission-black">
-          {/* Top prose: heading + first paragraph */}
-          <div className="mx-auto max-w-3xl px-4 md:px-8 pt-16 md:pt-24 pb-0 space-y-6 text-mission-gray-300">
+        <section className="bg-mission-black px-4 py-16 md:px-8 md:py-24">
+          <div className="mx-auto max-w-3xl space-y-6 text-mission-gray-300">
             <h2>Our Facility</h2>
             <p>
               The Mission MMA mat space is built for serious training. Full-size
@@ -105,22 +103,6 @@ export default function AboutPage() {
               support the Muay Thai program. Strength and conditioning equipment
               shares the floor for cross-training between disciplines.
             </p>
-          </div>
-
-          {/* Gym walkthrough video — autoplays muted on scroll into view, loops */}
-          <InlineVideoPlayer
-            src="/videos/mission_walkthrough.mp4"
-            poster="/videos/mission_walkthrough.jpg"
-            orientation="portrait"
-            maxHeightDesktop={600}
-            maxHeightMobile={500}
-            loop
-            autoPlayOnScroll
-            ariaLabel="Walkthrough of the Mission MMA & Fitness gym facility in Chicago"
-          />
-
-          {/* Bottom prose: second paragraph */}
-          <div className="mx-auto max-w-3xl px-4 md:px-8 pb-16 md:pb-24 pt-0 text-mission-gray-300">
             <p>
               Locker rooms with showers mean you can train before or after work
               without compromise. Free street parking and proximity to the Pink
