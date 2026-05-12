@@ -87,6 +87,8 @@ Mission-MMA-Website/
 │   ├── forms/
 │   │   ├── conversion-tracking.tsx # Fires fbq("Lead") + gtag("generate_lead") on mount
 │   │   └── lead-form.tsx           # Main lead capture form (RHF + Zod)
+│   ├── media/
+│   │   └── inline-video-player.tsx # Reusable portrait/landscape video player: autoplay-on-scroll, reduced-motion safe
 │   ├── layout/
 │   │   ├── footer.tsx
 │   │   ├── site-header.tsx         # Sticky header + mobile hamburger menu
@@ -252,7 +254,7 @@ Address, phone, email, hours, Google Maps iframe, "Getting Here" transit tiles, 
 **Group Events callout:** Red left-border card above the LeadForm. "Inquire about group events →" links to `mailto:info@missionmmachicago.com`.
 
 ### `/about` (`app/about/page.tsx`)
-Gym story, facility, Mission Empower nonprofit. LocalBusiness + MartialArtsSchool + NGO + BreadcrumbList JSON-LD.
+Gym story, facility, Mission Empower nonprofit. LocalBusiness + MartialArtsSchool + NGO + BreadcrumbList JSON-LD. Facility description section contains the silent gym walkthrough video, autoplayed muted on scroll-into-view, looping, with controls.
 
 ### `/faq` (`app/faq/page.tsx`)
 All 17 FAQ items. FAQPage JSON-LD.
@@ -283,6 +285,24 @@ Individual instructor page — **two-section layout** (standard for all future i
 ---
 
 ## Key Components
+
+### `components/media/inline-video-player.tsx` (Client)
+Reusable video embed component for portrait or landscape videos.
+
+Props:
+- `src: string` — video URL (e.g. `/videos/mission_walkthrough.mp4`)
+- `poster: string` — poster image URL shown before play starts
+- `orientation?: "portrait" | "landscape"` — default `"portrait"`. Sets `aspect-[9/16]` or `aspect-video`.
+- `maxHeightDesktop?: number` — default 600. Constrains `maxWidth = maxHeight × (9/16)` so height is bounded.
+- `maxHeightMobile?: number` — default 500. Reserved for future enhancement; current implementation uses `80vw` width on all screens.
+- `loop?: boolean` — default `true`. Passed to the native `<video>` element.
+- `autoPlayOnScroll?: boolean` — default `true`. Uses `IntersectionObserver` (threshold 0.4) to play when ≥40% visible, pause when scrolled out. Saves battery. Disabled entirely when `useReducedMotion` returns true — reduced-motion users see the poster and must click play.
+- `className?: string` — appended to the outermost wrapper.
+- `ariaLabel?: string` — accessible label on the `<video>` element.
+
+The component renders a dark `bg-mission-gray-900` backdrop with a `border-l-2 border-mission-red` left accent and a bottom red-to-transparent gradient accent. Video uses `preload="metadata"` (no preload of full file), `muted`, `playsInline` (iOS no-fullscreen), native `controls`, and `object-contain` inside the aspect-ratio box.
+
+---
 
 ### `components/chat/chat-widget.tsx` (Client)
 Floating chat button (bottom-right) + slide-up panel. Rendered in root layout on every page.
@@ -517,7 +537,7 @@ NEXT_PUBLIC_CHATBOT_WEBHOOK_URL=      # Client-side. n8n chatbot webhook. Separa
 | File | Purpose | Used by |
 |---|---|---|
 | `public/videos/mission_hero.mp4` | Homepage hero atmospheric video (Phase 1) | `HeroGeometric` (TBD) |
-| `public/videos/mission_walkthrough.mp4` | Gym walkthrough (Phase 2) | `/about` page (TBD) |
+| `public/videos/mission_walkthrough.mp4` | Gym walkthrough (Phase 2) | `/about` page facility section (live as of Phase 2) |
 | `public/videos/mission_promo.mp4` | Polished promo with embedded text (Phase 3) | Homepage showcase section (TBD) |
 
 All MP4 files in `public/videos/` are tracked via Git LFS. Posters are paired `.jpg` siblings with matching basenames.
